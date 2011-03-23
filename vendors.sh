@@ -34,6 +34,11 @@ install_git()
     cd ..
 }
 
+# Silex
+# XXX: URL currently not available, load from fixup
+# cd vendor && wget http://github.com/fabpot/silex/blob/master/silex.phar && cd ..
+cd vendor && wget http://seric.at/ffs/upload/silex.phar && cd ..
+
 # DroidCouch
 install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
 cd couchdb-odm && git submodule init && git submodule update && cd ..
