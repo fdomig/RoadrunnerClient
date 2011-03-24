@@ -25,3 +25,11 @@ $config->setHttpClient($httpClient);
 
 $dm = \Doctrine\ODM\CouchDB\DocumentManager::create($config);
 
+// helper functions
+function link_to($url, $name) {
+	return sprintf('<a href="%s">%s</a>', url_for($url), $name);
+}
+
+function url_for($url) {
+	return 'http://' . $_SERVER['HTTP_HOST'] . '/' . trim($url, '/');
+}

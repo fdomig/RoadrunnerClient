@@ -6,23 +6,24 @@ use Roadrunner\Model\Container;
 $app = new Application();
 
 $app->get('/', function() {
-	return '<a href="/items/list">List all items</a>';
+	return link_to('item/add', 'Add new Item');
 });
 
-$app->get('/item/list', function() use ($dm) {
-	$item = new Item();
-	$item->setCode(4711);
-	$dm->persist($item);
-	$dm->flush();
+$app->get('/item/add', function() {
+	return '<form action="'.url_for('/item/create').'" method="post">
+		<input type="text" value="" name="id" />
+		<input type="submit" value="Create Item" /></form>';
 });
 
-$app->get('/item/create/{id}', function($id) {
+$app->post('/item/create', function() use ($app) {
 	require_once __DIR__ . '/../lib/phpqrcode/qrlib.php';
+	$request = $app->getRequest();
+	$id = $request->get('id');
 	$file = md5($id) . '.png';
 	if (!file_exists($file)) {
 		QRcode::png($id, __DIR__ . '/../web/cache/' . $file, 'L', 4, 2);
 	}
-	return '<img src="/cache/'.$file.'" />';
+	return '<img src="' . url_for('/cache/'.$file) . '" />';
 });
 
 $app->error(function($e) {
