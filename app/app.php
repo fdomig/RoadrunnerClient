@@ -18,8 +18,11 @@ $app->get('/item/list', function() use ($dm) {
 
 $app->get('/item/create/{id}', function($id) {
 	require_once __DIR__ . '/../lib/phpqrcode/qrlib.php';
-	QRcode::png($id, __DIR__ . '/../web/cache/code.png', 'L', 4, 2);
-	return '<img src="/cache/code.png" />';
+	$file = md5($id) . '.png';
+	if (!file_exists($file)) {
+		QRcode::png($id, __DIR__ . '/../web/cache/' . $file, 'L', 4, 2);
+	}
+	return '<img src="/cache/'.$file.'" />';
 });
 
 $app->error(function($e) {

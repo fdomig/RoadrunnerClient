@@ -8,6 +8,7 @@ if [ "$1" = "--reinstall" ]; then
 fi
 
 mkdir -p web/cache && chmod -R 777 web/cache
+mkdir -p log && chmod -R 777 log
 mkdir -p vendor && cd vendor
 
 
