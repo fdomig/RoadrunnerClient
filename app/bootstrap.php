@@ -1,10 +1,16 @@
 <?php
+require_once __DIR__ . '/../vendor/silex.phar';
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once __DIR__ . '/../vendor/silex.phar';
-
 use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+use Doctrine\ODM\CouchDB\DocumentManager;
+
 use Roadrunner\Database\CouchDB;
 
 // class loader
@@ -15,6 +21,7 @@ $loader->registerNamespaces(array(
 		__DIR__ . '/../vendor/couchdb-odm/lib',
 		__DIR__ . '/../vendor/couchdb-odm/lib/vendor/doctrine-common/lib'
 	),
+	'Monolog'      => __DIR__ . '/../vendor/Monolog/src',
 ));
 $loader->register();
 
@@ -23,7 +30,14 @@ $config = new \Doctrine\ODM\CouchDB\Configuration();
 $httpClient = new \Doctrine\ODM\CouchDB\HTTP\SocketClient();
 $config->setHttpClient($httpClient);
 
-$dm = \Doctrine\ODM\CouchDB\DocumentManager::create($config);
+$dm = DocumentManager::create($config);
+
+// logger
+$log = new Logger('roadrunner');
+$log->pushHandler(new StreamHandler(
+	'file://' . __DIR__ . '/../log/error.log',
+	Logger::ERROR
+));
 
 // helper functions
 function link_to($url, $name) {

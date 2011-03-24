@@ -1,20 +1,33 @@
 <?php
 use Silex\Application;
+
+use Symfony\Component\BrowserKit\Response;
+
 use Roadrunner\Model\Item;
 use Roadrunner\Model\Container;
 
+
 $app = new Application();
 
+/**
+ * Root controller
+ */
 $app->get('/', function() {
 	return link_to('item/add', 'Add new Item');
 });
 
+/**
+ * Add item controller
+ */
 $app->get('/item/add', function() {
 	return '<form action="'.url_for('/item/create').'" method="post">
 		<input type="text" value="" name="id" />
 		<input type="submit" value="Create Item" /></form>';
 });
 
+/**
+ * Create item controller
+ */ 
 $app->post('/item/create', function() use ($app) {
 	require_once __DIR__ . '/../lib/phpqrcode/qrlib.php';
 	$request = $app->getRequest();
@@ -26,12 +39,27 @@ $app->post('/item/create', function() use ($app) {
 	return '<img src="' . url_for('/cache/'.$file) . '" />';
 });
 
-$app->error(function($e) {
-	return $e->getCode() . " - An error occured: " . $e->getMessage();
+/**
+ * Error controller
+ */
+$app->error(function(Exception $e) use ($log) {
+	if ($e instanceof NotFoundHttpException) {
+		return new Response('What you are looking for does not exist', 404);
+	}
+	
+	$log->addError(json_encode(array(
+		'class'   => get_class($e),
+		'message' => $e->getMessage(),
+		'code'    => $e->getCode(),
+	)));
+	
+	return new Response('Something bad happend.', 500);
 });
 
-$app->after(function() {
-	
+/**
+ * After controller
+ */ 
+$app->after(function() {	
 });
 
 $app->run();
