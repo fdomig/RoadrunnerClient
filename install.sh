@@ -7,7 +7,9 @@ if [ "$1" = "--reinstall" ]; then
 	rm -rf vendor
 fi
 
+mkdir -p web/cache && chmod -R 777 web/cache
 mkdir -p vendor && cd vendor
+
 
 ##
 # @param destination directory (e.g. "doctrine")
@@ -37,8 +39,11 @@ install_git()
 # Silex
 # XXX: URL currently not available, load from fixup
 # cd vendor && wget http://github.com/fabpot/silex/blob/master/silex.phar && cd ..
-cd vendor && wget http://seric.at/ffs/upload/silex.phar && cd ..
+wget http://seric.at/ffs/upload/silex.phar
 
 # DroidCouch
 install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
 cd couchdb-odm && git submodule init && git submodule update && cd ..
+
+
+cd ..
