@@ -1,20 +1,10 @@
 <?php
 
-use Silex\Application;
-
 use Symfony\Component\BrowserKit\Response;
 
 use Roadrunner\Model\Item;
 use Roadrunner\Model\Container;
 use Roadrunner\Controller\ItemController;
-
-
-$app = new Application();
-
-$app['couchdb_conf'] = array(
-	'host' => 'roadrunner.server',
-	'port' => '5984',
-);
 
 /**
  * Root controller
@@ -24,11 +14,12 @@ $app->get('/', array(new ItemController($app), 'executeIndex'));
 /**
  * Add item controller
  */
-$app->get('/item/add', function() {
-	return '<form action="'.url_for('/item/create').'" method="post">
-		<input type="text" value="" name="id" />
-		<input type="submit" value="Create Item" /></form>';
-});
+$app->get('/item/add', array(new ItemController($app), 'executeAdd'));
+
+/**
+ * Add item controller
+ */
+$app->get('/item/list', array(new ItemController($app), 'executeList'));
 
 /**
  * Create item controller
@@ -47,12 +38,12 @@ $app->post('/item/create', function() use ($app) {
 /**
  * Error controller
  */
-$app->error(function(Exception $e) use ($log) {
+$app->error(function(Exception $e) use ($app) {
 	if ($e instanceof NotFoundHttpException) {
 		return new Response('What you are looking for does not exist', 404);
 	}
 	
-	$log->addError(json_encode(array(
+	$app['log']->addError(json_encode(array(
 		'class'   => get_class($e),
 		'message' => $e->getMessage(),
 		'code'    => $e->getCode(),

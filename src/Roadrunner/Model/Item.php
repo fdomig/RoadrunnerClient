@@ -2,18 +2,30 @@
 namespace Roadrunner\Model;
 
 /**
- * @Document(indexed=true)
+ * @Document
  */
 class Item {
 	
-	/** @Id @Field */
-	public $code;
+	/** @Id */
+	private $id;
 	
-	/** @ReferenceOne(targetDocument="Container") */
-	public $container;
+	/** @Field(type="string") */
+	private $name;
 	
-	public function setCode($code) {
-		$this->code = $code;
+	public function setId($id) {
+		$this->id = $id;
 	}
 	
+	public function getId() {
+		return $this->id;
+	}
+	
+	public function setName($name) {
+		$this->name = $name;
+	}
+	
+	public function getName() {
+		return $this->name;
+	}
+		
 }

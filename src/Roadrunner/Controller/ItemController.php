@@ -8,11 +8,14 @@ class ItemController extends BaseController {
 	}
 	
 	public function executeList() {
-		
+		$manager = $this->getDocumentManager();
+		$manager->getRepository('Roadrunner\Model\Item');
 	}
 	
 	public function executeAdd() {
-		
+		return '<form action="'.url_for('/item/create').'" method="post">
+			<input type="text" value="" name="id" />
+			<input type="submit" value="Create Item" /></form>';
 	}
 	
 	public function executeCreate() {

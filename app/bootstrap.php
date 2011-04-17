@@ -4,18 +4,20 @@ require_once __DIR__ . '/../vendor/silex.phar';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-use Symfony\Component\ClassLoader\UniversalClassLoader;
+use Silex\Application;
+
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ODM\CouchDB\DocumentManager;
+use Doctrine\ODM\CouchDB\Mapping\Driver\AnnotationDriver;
+use Doctrine\ODM\CouchDB\HTTP\SocketClient;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-use Doctrine\ODM\CouchDB\DocumentManager;
-
-use Roadrunner\Database\CouchDB;
+$app = new Application();
 
 // class loader
-$loader = new UniversalClassLoader();
-$loader->registerNamespaces(array(
+$app['autoloader']->registerNamespaces(array(
 	'Roadrunner'      => __DIR__ . '/../src',
 	'Doctrine'    => array(
 		__DIR__ . '/../vendor/couchdb-odm/lib',
@@ -23,18 +25,17 @@ $loader->registerNamespaces(array(
 	),
 	'Monolog'      => __DIR__ . '/../vendor/Monolog/src',
 ));
-$loader->register();
 
 // couch db
-$config = new \Doctrine\ODM\CouchDB\Configuration();
-$httpClient = new \Doctrine\ODM\CouchDB\HTTP\SocketClient();
+$config = new Doctrine\ODM\CouchDB\Configuration();
+$config->setMetadataDriverImpl(new AnnotationDriver(new AnnotationReader()));
+$httpClient = new SocketClient('roadrunner.server', '5984');
 $config->setHttpClient($httpClient);
-
-$dm = DocumentManager::create($config);
+$app['document_manager'] = $dm = DocumentManager::create($config);
 
 // logger
-$log = new Logger('roadrunner');
-$log->pushHandler(new StreamHandler(
+$app['log'] = new Logger('roadrunner');
+$app['log']->pushHandler(new StreamHandler(
 	'file://' . __DIR__ . '/../log/error.log',
 	Logger::ERROR
 ));

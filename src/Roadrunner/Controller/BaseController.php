@@ -5,11 +5,11 @@ use Silex\Application;
 
 abstract class BaseController {
 
-	/** @var Request $request */
+	/** @var Silex\Application $application */
 	private $app;
 
 	/**
-	 * @param Application $app
+	 * @param Silex\Application $app
 	 */
 	public final function __construct(Application $app) {
 		$this->app = $app;
@@ -19,6 +19,13 @@ abstract class BaseController {
 	 * @return Symfony\Component\BrowserKit\Request $request
 	 */
 	protected function getRequest() {
-		return $app->getReques();
+		return $this->app->getReques();
+	}
+	
+	/**
+	 *  @return Doctrine\ODM\CouchDB\DocumentManager $manager;
+	 */
+	protected function getDocumentManager() {
+		return $this->app['document_manager'];
 	}
 }
