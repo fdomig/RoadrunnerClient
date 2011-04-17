@@ -1,20 +1,25 @@
 <?php
+
 use Silex\Application;
 
 use Symfony\Component\BrowserKit\Response;
 
 use Roadrunner\Model\Item;
 use Roadrunner\Model\Container;
+use Roadrunner\Controller\ItemController;
 
 
 $app = new Application();
 
+$app['couchdb_conf'] = array(
+	'host' => 'roadrunner.server',
+	'port' => '5984',
+);
+
 /**
  * Root controller
  */
-$app->get('/', function() {
-	return link_to('item/add', 'Add new Item');
-});
+$app->get('/', array(new ItemController($app), 'executeIndex'));
 
 /**
  * Add item controller
