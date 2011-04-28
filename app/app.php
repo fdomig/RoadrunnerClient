@@ -24,16 +24,7 @@ $app->get('/item/list', array(new ItemController($app), 'executeList'));
 /**
  * Create item controller
  */ 
-$app->post('/item/create', function() use ($app) {
-	require_once __DIR__ . '/../lib/phpqrcode/qrlib.php';
-	$request = $app->getRequest();
-	$id = $request->get('id');
-	$file = md5($id) . '.png';
-	if (!file_exists($file)) {
-		QRcode::png($id, __DIR__ . '/../web/cache/' . $file, 'L', 4, 2);
-	}
-	return '<img src="' . url_for('/cache/'.$file) . '" />';
-});
+$app->post('/item/create', array(new ItemController($app), 'executeCreate'));
 
 /**
  * Error controller

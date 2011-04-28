@@ -12,9 +12,8 @@ class Item {
 	/** @Field(type="string") */
 	private $name;
 	
-	public function setId($id) {
-		$this->id = $id;
-	}
+	/** @Field(type="string") */
+	private $type = 'item';
 	
 	public function getId() {
 		return $this->id;

@@ -6,13 +6,10 @@ ini_set('display_errors', 1);
 
 use Silex\Application;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ODM\CouchDB\DocumentManager;
-use Doctrine\ODM\CouchDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\CouchDB\HTTP\SocketClient;
-
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+
+use Roadrunner\Model\OdmFactory;
 
 $app = new Application();
 
@@ -27,11 +24,7 @@ $app['autoloader']->registerNamespaces(array(
 ));
 
 // couch db
-$config = new Doctrine\ODM\CouchDB\Configuration();
-$config->setMetadataDriverImpl(new AnnotationDriver(new AnnotationReader()));
-$httpClient = new SocketClient('roadrunner.server', '5984');
-$config->setHttpClient($httpClient);
-$app['document_manager'] = $dm = DocumentManager::create($config);
+$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', 'roadrunner.server');
 
 // logger
 $app['log'] = new Logger('roadrunner');

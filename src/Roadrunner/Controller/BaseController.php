@@ -16,10 +16,11 @@ abstract class BaseController {
 	}
 	
 	/**
+	 * @param string $name
 	 * @return Symfony\Component\BrowserKit\Request $request
 	 */
-	protected function getRequest() {
-		return $this->app->getReques();
+	protected function getRequest($name) {
+		return $this->app['request']->get($name);
 	}
 	
 	/**
