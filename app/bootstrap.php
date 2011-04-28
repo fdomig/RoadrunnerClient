@@ -41,3 +41,7 @@ function link_to($url, $name) {
 function url_for($url) {
 	return 'http://' . $_SERVER['HTTP_HOST'] . '/' . trim($url, '/');
 }
+
+function url_for_db($id) {
+	return 'http://roadrunner.server:5984/roadrunner/' . $id;
+}

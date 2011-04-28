@@ -15,6 +15,12 @@ class Item {
 	/** @Field(type="string") */
 	private $type = 'item';
 	
+	/** @Field(type="int") */
+	private $tempMin;
+
+	/** @Field(type="int") */	
+	private $tempMax;
+	
 	public function getId() {
 		return $this->id;
 	}
@@ -26,5 +32,20 @@ class Item {
 	public function getName() {
 		return $this->name;
 	}
+	
+	public function setTempMin($temp) {
+		$this->tempMin = $temp;
+	}
+
+	public function getTempMin() {
+		return $this->tempMin;
+	}
 		
+	public function setTempMax($temp) {
+		$this->tempMax = $temp;
+	}
+		
+	public function getTempMax() {
+		return $this->tempMax;
+	}
 }
