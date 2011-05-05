@@ -22,6 +22,10 @@ class ItemController extends BaseController {
 			<input type="submit" value="Create Item" /></form>';
 	}
 	
+	public function executeTest() {
+		return $this->render('item.twig', array("name"=>"Ein Test"));
+	}
+	
 	public function executeCreate()
 	{			
 		$name = $this->getRequest('name');

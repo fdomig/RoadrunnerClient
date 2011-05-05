@@ -29,4 +29,13 @@ abstract class BaseController {
 	protected function getDocumentManager() {
 		return $this->app['document_manager'];
 	}
+	
+	/**
+	 * @return string - The HTML
+	 * @param string $template
+	 * @param array $values
+	 */
+	protected function render($template, array $values)  {
+    	return $this->app['twig']->render($template, $values);
+	}
 }

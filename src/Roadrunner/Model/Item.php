@@ -15,10 +15,10 @@ class Item {
 	/** @Field(type="string") */
 	private $type = 'item';
 	
-	/** @Field(type="int") */
+	/** @Field(type="integer") */
 	private $tempMin;
 
-	/** @Field(type="int") */	
+	/** @Field(type="integer") */	
 	private $tempMax;
 	
 	public function getId() {
