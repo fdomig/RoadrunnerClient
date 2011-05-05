@@ -15,6 +15,12 @@ use Silex\Extension\TwigExtension;
 
 $app = new Application();
 
+$app['config'] = array(
+	'db.server' => 'roadrunner.server',
+	'db.port' => '5984',
+	'db.database' => 'roadrunner',
+);
+
 // class loader
 $app['autoloader']->registerNamespaces(array(
 	'Roadrunner'      => __DIR__ . '/../src',
@@ -26,7 +32,7 @@ $app['autoloader']->registerNamespaces(array(
 ));
 
 // couch db
-$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', '127.0.0.1');
+$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', 'roadrunner.server');
 
 // twig
 $app->register(new TwigExtension(), array(
@@ -51,5 +57,5 @@ function url_for($url) {
 }
 
 function url_for_db($id) {
-	return 'http://127.0.0.1:5984/roadrunner/' . $id;
+	return 'http://roadrunner.server:5984/roadrunner/' . $id;
 }

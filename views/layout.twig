@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Roadrunner</title>
+		<link href="/css/blueprint/screen.css" rel="stylesheet" type="text/css" media="screen, projection" />
+		<link href="/css/blueprint/print.css" rel="stylesheet" type="text/css" media="print" />
+		<!--[if lt IE 8]><link href="/css/blueprint/ie.css" rel="stylesheet" type="text/css" media="screen, projection" /><![endiff]-->
+		<link href="/css/layout.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+	<div id="wrapper" class="container">
+			
+		<div id="header" class="prepend-1 append-1">
+			<h1>The Roadrunner Project</h1>
+		</div>
+			
+		<div id="menu" class="prepend-1 append-1">
+			<ul>
+				<li><a href="/item/list">List items</a></li>
+				<li><a href="/item/add">Create item</a></li>
+			</ul>
+		</div>
+			
+		<div id="content" class="prepend-1 append-1">
+			{% block content %}
+				Default
+			{% endblock %}
+		</div>
+		
+		<div id="footer" class="prepend-1 append-1">
+			&copy; 2011 The Roadrunner Project Team
+		</div>
+		
+	</div>
+	
+</body>
+</html>

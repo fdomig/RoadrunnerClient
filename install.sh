@@ -42,7 +42,9 @@ rm -rf silex.phar
 wget http://silex-project.org/get/silex.phar
 
 # DroidCouch
-install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
+# install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
+# use fdomigs fork as long as there is no IntegerType in the official repository
+install_git couchdb-odm https://github.com/fdomig/couchdb-odm.git origin/IntegerType
 cd couchdb-odm && git submodule init && git submodule update && cd ..
 
 # Monolog

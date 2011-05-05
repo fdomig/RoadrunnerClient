@@ -1,0 +1,29 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+	<form action="{{ form_action }}" method="post">
+		<fieldset>
+			<div>
+				Name<br />
+				<input type="text" value="" name="name" />
+			</div>
+			
+			<div>
+				TempMin<br />
+				<input type="text" value="" name="tempMin" />
+			</div>
+		
+			<div>
+				TempMax<br />
+				<input type="text" value="" name="tempMax" />
+			</div>
+		
+			<div>
+				<input type="submit" value="Create Item" />
+			</div>
+		
+		</fieldset>
+	</form>
+
+{% endblock %}

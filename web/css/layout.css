@@ -1,0 +1,23 @@
+body {
+	background-color: #eee;
+}
+
+#wrapper {
+	background-color: #fff;
+}
+
+#header {
+}
+
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+	padding: 10px 0;
+}
+
+#menu ul li {
+	display: inline;
+    margin: 0;
+    padding: 0;
+	padding-right: 10px;
+}

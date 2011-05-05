@@ -1,0 +1,11 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+	<ul>
+		{% for item in item_list %}
+			<li>{{ item.value.name }}: {{ item.value.barcode }}</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
