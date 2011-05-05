@@ -24,7 +24,7 @@ $app['autoloader']->registerNamespaces(array(
 ));
 
 // couch db
-$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', 'roadrunner.server');
+$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', '127.0.0.1');
 
 // logger
 $app['log'] = new Logger('roadrunner');
@@ -43,5 +43,5 @@ function url_for($url) {
 }
 
 function url_for_db($id) {
-	return 'http://roadrunner.server:5984/roadrunner/' . $id;
+	return 'http://127.0.0.1:5984/roadrunner/' . $id;
 }
