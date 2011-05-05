@@ -11,6 +11,8 @@ use Monolog\Handler\StreamHandler;
 
 use Roadrunner\Model\OdmFactory;
 
+use Silex\Extension\TwigExtension;
+
 $app = new Application();
 
 // class loader
@@ -20,11 +22,17 @@ $app['autoloader']->registerNamespaces(array(
 		__DIR__ . '/../vendor/couchdb-odm/lib',
 		__DIR__ . '/../vendor/couchdb-odm/lib/vendor/doctrine-common/lib'
 	),
-	'Monolog'      => __DIR__ . '/../vendor/Monolog/src',
+	'Monolog'      => __DIR__ . '/../vendor/Monolog/src'
 ));
 
 // couch db
 $app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', '127.0.0.1');
+
+// twig
+$app->register(new TwigExtension(), array(
+    'twig.path'       => __DIR__.'/../views',
+    'twig.class_path' => __DIR__.'/../vendor/Twig/lib',
+));
 
 // logger
 $app['log'] = new Logger('roadrunner');

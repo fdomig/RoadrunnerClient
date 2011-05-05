@@ -48,4 +48,7 @@ cd couchdb-odm && git submodule init && git submodule update && cd ..
 # Monolog
 install_git Monolog https://github.com/Seldaek/monolog.git origin/master
 
+# Twig
+install_git Twig https://github.com/fabpot/Twig.git origin/master
+
 cd ..
