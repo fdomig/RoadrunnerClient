@@ -5,6 +5,7 @@ use Symfony\Component\BrowserKit\Response;
 use Roadrunner\Model\Item;
 use Roadrunner\Model\Container;
 use Roadrunner\Controller\ItemController;
+use Roadrunner\Controller\LogController;
 
 /**
  * Root controller
@@ -17,7 +18,7 @@ $app->get('/', array(new ItemController($app), 'executeIndex'));
 $app->get('/item/add', array(new ItemController($app), 'executeAdd'));
 
 /**
- * Add item controller
+ * List item controller
  */
 $app->get('/item/list', array(new ItemController($app), 'executeList'));
 
@@ -25,6 +26,11 @@ $app->get('/item/list', array(new ItemController($app), 'executeList'));
  * Create item controller
  */ 
 $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
+
+/**
+ * List log controller
+ */
+$app->get('/log/list', array(new LogController($app), 'executeList'));
 
 /**
  * Error controller

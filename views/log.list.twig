@@ -1,0 +1,11 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+	<ul>
+		{% for log in log_list %}
+			<li>{{ log.value.timestamp }}</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
