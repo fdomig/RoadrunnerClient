@@ -7,27 +7,21 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
 /**
  * @Document
  */
-class Item {
+class Item extends BaseDocument {
 	
-	/** @Id */
-	private $id;
+	public final function __construct() {
+        parent::__construct('item');
+    }
 	
 	/** @Field(type="string") */
 	private $name;
-	
-	/** @Field(type="string") */
-	private $type = 'item';
-	
+		
 	/** @Field(type="integer") */
 	private $tempMin;
 
 	/** @Field(type="integer") */	
 	private $tempMax;
-	
-	public function getId() {
-		return $this->id;
-	}
-	
+		
 	public function setName($name) {
 		$this->name = $name;
 	}
@@ -66,16 +60,6 @@ class Item {
 	
 	static public function getAll($manager)
 	{
-		return self::createQuery($manager)->execute();
-	}
-	
-	static private function createQuery($manager) {
-		return new Query(
-			$manager->getConfiguration()->getHTTPClient(),
-			$manager->getConfiguration()->getDatabase(),
-			'roadrunner',
-			'items',
-			new DoctrineAssociations()
-		);
+		return parent::createQuery($manager, 'items')->execute();
 	}
 }

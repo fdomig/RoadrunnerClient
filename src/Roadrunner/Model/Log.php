@@ -7,14 +7,12 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
 /**
  * @Document
  */
-class Log {
+class Log extends BaseDocument {
 	
-	/** @Id */
-	private $id;
-	
-	/** @Field(type="string") */
-	private $type = 'log';
-	
+	public final function __construct() {
+        parent::__construct('log');
+    }
+		
 	/** @Field(type="string") */
 	private $logType;
 	
@@ -23,11 +21,7 @@ class Log {
 
 	/** @Field(type="datetime") */	
 	private $timestamp;
-	
-	public function getId() {
-		return $this->id;
-	}
-		
+			
 	public function getLogType() {
 		return $this->logType;
 	}
@@ -40,18 +34,10 @@ class Log {
 		return $this->timestamp;
 	}
 		
-	static public function getAll($manager)
-	{
-		return self::createQuery($manager)->execute();
-	}
-	
-	static private function createQuery($manager) {
-		return new Query(
-			$manager->getConfiguration()->getHTTPClient(),
-			$manager->getConfiguration()->getDatabase(),
-			'roadrunner',
-			'logs',
-			new DoctrineAssociations()
-		);
+	static public function getForItemId($itemId, $manager)  {
+		return parent::createQuery($manager,'logs')
+			->setStartKey($itemId)
+			->setEndKey(array($itemId))
+			->execute();
 	}
 }
