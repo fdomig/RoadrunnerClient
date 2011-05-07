@@ -30,7 +30,7 @@ $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
 /**
  * List log controller
  */
-$app->get('/log/list', array(new LogController($app), 'executeList'));
+$app->get('/log/list/{itemId}', array(new LogController($app), 'executeList'));
 
 /**
  * Error controller

@@ -5,9 +5,10 @@ use Roadrunner\Model\Log;
 
 class LogController extends BaseController {
 	
-	public function executeList() {		
+	public function executeList() {	
+		$itemId = $this->getRequest('itemId');	
 		return $this->render('log.list.twig', array(
-			'log_list' => Log::getAll($this->getDocumentManager()),
+			'log_list' => Log::getForItemId($itemId, $this->getDocumentManager()),
 		));
 	}
 }
