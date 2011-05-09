@@ -1,0 +1,24 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>Timestamp</th>
+				<th>Type</th>
+				<th>value</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for log in log_list %}
+				<tr>
+					<td>{{log.value.timestamp}}</td>
+					<td>{{log.value.logType}}</td>
+					<td>{{log.value.value}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
