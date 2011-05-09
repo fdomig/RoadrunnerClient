@@ -5,20 +5,33 @@ use Roadrunner\Model\Item;
 
 class ItemController extends BaseController {
 	
-	public function executeIndex() {
+	public function executeIndex()
+	{
 		return $this->executeList();
 	}
 	
-	public function executeList() {		
+	public function executeList()
+	{		
 		return $this->render('item.list.twig', array(
 			'item_list' => Item::getAll($this->getDocumentManager()),
 		));
 	}
 	
-	public function executeAdd() {
+	public function executeAdd()
+	{
 		return $this->render('item.add.twig', array(
 			'form_action' => url_for('/item/create'),
 		));
+	}
+	
+	public function executeView()
+	{
+		$id = $this->getRequest('id');
+		$item = Item::find($this->getDocumentManager(), $id);
+
+		return $this->render('item.view.twig', array(
+			'item' => $item,
+		));	
 	}
 	
 	public function executeCreate()
@@ -40,9 +53,7 @@ class ItemController extends BaseController {
 		$manager->persist($item);
 		$manager->flush();
 		
-		return $this->render('item.create.twig', array(
-			'item' => $item
-		));
+		return $this->redirect('/item/view/' . $item->getId());
 	}
 	
 }

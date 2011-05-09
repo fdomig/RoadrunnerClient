@@ -38,4 +38,9 @@ abstract class BaseController {
 	protected function render($template, array $values)  {
     	return $this->app['twig']->render($template, $values);
 	}
+	
+	protected function redirect($to)
+	{
+		return $this->app->redirect($to);
+	}
 }

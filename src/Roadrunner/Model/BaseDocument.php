@@ -14,10 +14,10 @@ class BaseDocument {
     }
 	
 	/** @Id */
-	private $id;
+	protected $id;
 	
 	/** @Field(type="string") */
-	private $type;
+	protected $type;
 	
 	public function getId() {
 		return $this->id;

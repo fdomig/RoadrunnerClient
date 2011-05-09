@@ -18,6 +18,11 @@ $app->get('/', array(new ItemController($app), 'executeIndex'));
 $app->get('/item/add', array(new ItemController($app), 'executeAdd'));
 
 /**
+ * View item controller
+ */
+$app->get('/item/view/{id}', array(new ItemController($app), 'executeView'));
+
+/**
  * List item controller
  */
 $app->get('/item/list', array(new ItemController($app), 'executeList'));

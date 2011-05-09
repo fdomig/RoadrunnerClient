@@ -48,11 +48,11 @@ class Item extends BaseDocument {
 	
 	public function getImage()
 	{
-		$file = md5($this->id) . '.png';
+		$file = md5($this->getId()) . '.png';
 		if (!file_exists($file)) {
 			require_once __DIR__ . '/../../../lib/phpqrcode/qrlib.php';
-
-			\QRcode::png($this->id, __DIR__ . '/../../../web/cache/'
+			
+			\QRcode::png($this->getId(), __DIR__ . '/../../../web/cache/'
 				. $file, 'L', 4, 2);
 		}
 		return url_for('cache/' . $file);
@@ -60,6 +60,11 @@ class Item extends BaseDocument {
 	
 	static public function getAll($manager)
 	{
-		return parent::createQuery($manager, 'items')->execute();
+		return self::createQuery($manager, 'items')->execute();
+	}
+	
+	static public function find($manager, $id)
+	{
+		return $manager->getRepository(__CLASS__)->find($id);
 	}
 }
