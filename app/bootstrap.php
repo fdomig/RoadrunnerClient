@@ -13,6 +13,8 @@ use Roadrunner\Model\OdmFactory;
 
 use Silex\Extension\TwigExtension;
 
+define('ENV', 'DEV'); // DEV | PROD
+
 $app = new Application();
 
 $app['config'] = array(

@@ -45,11 +45,17 @@ $app->error(function(Exception $e) use ($app) {
 		return new Response('What you are looking for does not exist', 404);
 	}
 	
-	$app['log']->addError(json_encode(array(
-		'class'   => get_class($e),
-		'message' => $e->getMessage(),
-		'code'    => $e->getCode(),
-	)));
+	if (ENV != 'DEV') {
+		$app['log']->addError(json_encode(array(
+			'class'   => get_class($e),
+			'message' => $e->getMessage(),
+			'code'    => $e->getCode(),
+			)));
+	} else {
+		echo '<pre>';
+		print $e->getMessage() . "\n";
+		debug_print_backtrace();
+	}
 	
 	return new Response('Something bad happend.', 500);
 });
