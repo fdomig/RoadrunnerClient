@@ -12,6 +12,12 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class Delivery extends BaseDocument {
 	
+	/** @Field(type="datetime") */	 
+	private $created_at;
+	
+	/** @Field(type="datetime") */	
+	private $modified_at;
+	
     /** @EmbedOne */
     private $from_address;
     
@@ -26,8 +32,9 @@ class Delivery extends BaseDocument {
 	public final function __construct() {
         parent::__construct('delivery');
         $this->items = new ArrayCollection();
+        $this->created_at = time();
     }
-	
+    
 	/**
 	 * @return Address
 	 */
@@ -74,6 +81,23 @@ class Delivery extends BaseDocument {
     	return $this->items;
     }
 	
+    /**
+     * @return number
+     */
+    public function getCreatedAt() {
+    	return $this->created_at;
+    }
+    
+    /**
+     * @return number
+     */
+    public function getModifiedAt() {
+    	return $this->modified_at;
+    }
+    
+    public function setModifiedAt() {
+    	$this->modified_at = time();
+    }
 	
 	static public function getAll($manager)
 	{
