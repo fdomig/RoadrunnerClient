@@ -2,3 +2,4 @@ vendor
 cache
 .DS_store
 log
+jquery-*.js
