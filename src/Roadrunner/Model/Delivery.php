@@ -12,10 +12,10 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class Delivery extends BaseDocument {
 	
-	/** @Field(type="datetime") */	 
+	/** @Field(type="integer") */	 
 	private $created_at;
 	
-	/** @Field(type="datetime") */	
+	/** @Field(type="integer") */	
 	private $modified_at;
 	
     /** @EmbedOne */
@@ -33,6 +33,7 @@ class Delivery extends BaseDocument {
         parent::__construct('delivery');
         $this->items = new ArrayCollection();
         $this->created_at = time();
+		$this->modified_at = 0;
     }
     
 	/**

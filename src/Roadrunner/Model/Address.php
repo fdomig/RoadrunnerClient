@@ -28,6 +28,17 @@ class Address {
     
     /** @String */
     protected $street;
+
+	public function __construct($data = array())
+	{
+		if (!empty($data)) {
+			$this->setName($data['name']);
+			$this->setStreet($data['street']);
+			$this->setZip($data['zip']);
+			$this->setCity($data['city']);
+			$this->setCountry($data['country']);
+		}
+	}
     
     public function setName($name) {
     	$this->name = $name;
@@ -41,7 +52,7 @@ class Address {
         $this->country = $country;
     }
 
-    public function setZipCode($zip) {
+    public function setZip($zip) {
         $this->zip = $zip;
     }
 
@@ -61,7 +72,7 @@ class Address {
         return $this->country;
     }
 
-    public function getZipCode() {
+    public function getZip() {
         return $this->zip;
     }
 
@@ -69,7 +80,7 @@ class Address {
         return $this->city;
     }
     
-    public function setStreet() {
+    public function getStreet() {
     	return $this->street;
     }
 }
