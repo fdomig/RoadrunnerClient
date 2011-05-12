@@ -5,6 +5,7 @@ use Symfony\Component\BrowserKit\Response;
 
 use Roadrunner\Controller\ItemController;
 use Roadrunner\Controller\LogController;
+use Roadrunner\Controller\UserController;
 
 /**
  * Root controller
@@ -31,6 +32,13 @@ $app->get('/delivery/list', array(new DeliveryController($app), 'executeList'));
 $app->get('/delivery/view/{id}', array(new DeliveryController($app), 'executeView'));
 $app->get('/delivery/add', array(new DeliveryController($app), 'executeAdd'));
 $app->post('/delivery/create', array(new DeliveryController($app), 'executeCreate'));
+
+/*
+ * User controller
+ */
+$app->get('/user/list', array(new UserController($app), 'executeList'));
+$app->get('/user/add', array(new UserController($app), 'executeAdd'));
+$app->get('/user/create', array(new UserController($app), 'executeCreate'));
 
 /**
  * Error controller

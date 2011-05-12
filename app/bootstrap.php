@@ -34,7 +34,8 @@ $app['autoloader']->registerNamespaces(array(
 ));
 
 // couch db
-$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', 'roadrunner.server');
+$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', 'roadrunner.server', $app['config']['db.port'],'roadrunner', 'roadrunner');
+$app['users_manager'] = $dm = OdmFactory::createOdm('_users', 'roadrunner.server', $app['config']['db.port'], 'roadrunner', 'roadrunner');
 
 // twig
 $app->register(new TwigExtension(), array(
