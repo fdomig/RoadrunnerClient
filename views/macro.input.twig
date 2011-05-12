@@ -1,0 +1,26 @@
+{% macro address(name) %}
+
+<div>
+	Name<br />
+	<input type="text" value="" name="{{name}}[name]" />
+</div>
+
+<div>
+	Street<br />
+	<input type="text" value="" name="{{name}}[street]" />
+</div>
+
+<div>
+	Zip<br />
+	<input type="text" value="" name="{{name}}[zip]" />
+</div>
+<div>
+	City<br />
+	<input type="text" value="" name="{{name}}[city]" />
+</div>
+<div>
+	Country<br />
+	<input type="text" value="" name="{{name}}[country]" />
+</div>
+
+{% endmacro %}

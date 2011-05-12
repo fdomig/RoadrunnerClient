@@ -20,11 +20,10 @@
 		</thead>
 		{% for delivery in delivery_list %}
 			<tr>
-				<td><code>{{ delivery.value.id }}</code></td>
-				<td>{{ _self.address(delivery.value.from) }}</td>
-				<td>{{ _self.address(delivery.value.to) }}</td>
-				<td><a href="/item/view/{{item.value.barcode}}">View</a></td>
-				<td><a href="/log/list/{{item.value.barcode}}">Logs</a></td>
+				<td><code>{{ delivery.key }}</code></td>
+				<td>{{ _self.address(delivery.value.from_address) }}</td>
+				<td>{{ _self.address(delivery.value.to_address) }}</td>
+				<td><a href="/delivery/view/{{delivery.key}}">View</a></td>
 			</tr>
 		{% endfor %}
 	</table>

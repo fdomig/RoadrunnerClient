@@ -1,0 +1,55 @@
+{% extends "layout.twig" %}
+
+{% import "macro.input.twig" as input %}
+
+{% block content %}
+
+	<h2>Create new delivery</h2>
+
+	<form action="{{ form_action }}" method="post">
+		<fieldset>
+			
+			<div class="span-20 last">
+				<div class="span-4">
+					<h3>Sender</h3>
+		
+						{{ input.address("from") }}
+				</div>
+		
+				<div class="span-4 last">
+					<h3>Recipient</h3>
+		
+					{{ input.address("to") }}
+				</div>
+				
+				<div class="prepend-2 span-10 last">
+					<h3>Items</h3>
+					
+					<table id="item-list">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+					
+					<div>
+						<a href="" class="add-item-to-delivery">Add new item to delivery</a>
+					</div>
+					
+				</div>
+				
+			</div>
+		
+			<div class="first">
+				<input type="submit" value="Create delivery" />
+			</div>
+		
+		</fieldset>
+	</form>
+
+{% endblock %}
