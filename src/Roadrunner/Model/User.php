@@ -44,7 +44,7 @@ class User extends BaseDocument {
 	
 	public function setPassword($password)  {
 		$salt = time();
-		$password_sha = sha1($password+$salt);
+		$password_sha = sha1($password . $salt);
 		
 		$this->salt = $salt;
 		$this->password_sha = $password_sha;
