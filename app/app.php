@@ -1,5 +1,6 @@
 <?php
 
+use Roadrunner\Controller\DeliveryController;
 use Symfony\Component\BrowserKit\Response;
 
 use Roadrunner\Model\Item;
@@ -36,6 +37,11 @@ $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
  * List log controller
  */
 $app->get('/log/list/{itemId}', array(new LogController($app), 'executeList'));
+
+/**
+ * List Delivery controller 
+ */
+$app->get('/delivery/list', array(new DeliveryController($app), 'executeList'));
 
 /**
  * Error controller
