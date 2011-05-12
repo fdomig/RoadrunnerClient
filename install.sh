@@ -41,6 +41,12 @@ install_git()
 rm -rf silex.phar
 wget http://silex-project.org/get/silex.phar
 
+# jQuery
+mkdir -p ../web/js && cd ../web/js
+rm jquery-1.6.min.js
+wget http://code.jquery.com/jquery-1.6.min.js
+cd ../../vendor
+
 # DroidCouch
 # install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
 # use fdomigs fork as long as there is no IntegerType in the official repository
