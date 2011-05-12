@@ -6,6 +6,7 @@ use Roadrunner\Model\Item;
 use Roadrunner\Model\Container;
 use Roadrunner\Controller\ItemController;
 use Roadrunner\Controller\LogController;
+use Roadrunner\Controller\UserController;
 
 /**
  * Root controller
@@ -36,6 +37,21 @@ $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
  * List log controller
  */
 $app->get('/log/list/{itemId}', array(new LogController($app), 'executeList'));
+
+/**
+ * User log controller
+ */
+$app->get('/user/list', array(new UserController($app), 'executeList'));
+
+/**
+ * Add log controller
+ */
+$app->get('/user/add', array(new UserController($app), 'executeAdd'));
+
+/**
+ * Create log controller
+ */
+$app->get('/user/create', array(new UserController($app), 'executeCreate'));
 
 /**
  * Error controller

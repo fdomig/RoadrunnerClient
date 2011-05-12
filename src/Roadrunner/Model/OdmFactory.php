@@ -12,7 +12,8 @@ use Doctrine\ODM\CouchDB\Configuration;
 class OdmFactory {
 
 	static public function createOdm(
-		$database, $host = 'localhost', $port = '5984',
+		$database, $host = 'localhost', $port = '5984', 
+		$username = null, $password = null,
 		array $path = array(),
 		$namespace = 'Doctrine\ODM\CouchDB\Mapping\\')
 	{
@@ -22,7 +23,7 @@ class OdmFactory {
 		$config->setDatabase($database);
 		$config->setMetadataDriverImpl($driver);
 
-		$httpClient = new SocketClient($host, $port);
+		$httpClient = new SocketClient($host, $port, $username, $password);
 		$config->setHttpClient($httpClient);
 		
 		return DocumentManager::create($config);

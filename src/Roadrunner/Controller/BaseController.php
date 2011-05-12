@@ -31,6 +31,15 @@ abstract class BaseController {
 	}
 	
 	/**
+	 * Manager for users
+	 * 
+	 *  @return Doctrine\ODM\CouchDB\DocumentManager $manager;
+	 */
+	protected function getUsersManager() {
+		return $this->app['users_manager'];
+	}
+	
+	/**
 	 * @return string - The HTML
 	 * @param string $template
 	 * @param array $values
