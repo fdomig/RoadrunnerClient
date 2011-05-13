@@ -53,8 +53,6 @@ class ItemController extends BaseController {
 		$manager->persist($item);
 		$manager->flush();
 		
-		<input name="items[]" value="id" type="hidden" />
-		
 		return $this->redirect('/item/view/' . $item->getId());
 	}
 	
