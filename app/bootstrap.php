@@ -34,7 +34,7 @@ $app['autoloader']->registerNamespaces(array(
 		__DIR__ . '/../vendor/couchdb-odm/lib',
 		__DIR__ . '/../vendor/couchdb-odm/lib/vendor/doctrine-common/lib',
 	),
-	'Monolog'      => __DIR__ . '/../vendor/Monolog/src'
+	'Monolog'     => __DIR__ . '/../vendor/Monolog/src'
 ));
 
 // couch db

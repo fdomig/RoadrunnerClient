@@ -42,10 +42,13 @@ rm -rf silex.phar
 wget http://silex-project.org/get/silex.phar
 
 # jQuery
-mkdir -p ../web/js && cd ../web/js
-rm jquery-1.6.min.js
-wget http://code.jquery.com/jquery-1.6.min.js
-cd ../../vendor
+mkdir -p ../web/js/jquery && cd ../web/js/jquery
+wget http://jqueryui.com/download/jquery-ui-1.8.12.custom.zip
+unzip jquery-ui-1.8.12.custom.zip
+rm jquery-ui-1.8.12.custom.zip
+rm -rf development-bundle
+rm -rf index.html
+cd ../../../vendor
 
 # DroidCouch
 # install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
