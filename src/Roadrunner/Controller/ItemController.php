@@ -26,7 +26,7 @@ class ItemController extends BaseController {
 	
 	public function executeView()
 	{
-		$id = $this->getRequest('id');
+		$id = $this->getRequest()->get('id');
 		$item = Item::find($this->getDocumentManager(), $id);
 
 		return $this->render('item.view.twig', array(
@@ -36,9 +36,9 @@ class ItemController extends BaseController {
 	
 	public function executeCreate()
 	{			
-		$name = $this->getRequest('name');
-		$tempMin = $this->getRequest('tempMin');
-		$tempMax = $this->getRequest('tempMax');
+		$name = $this->getRequest()->get('name');
+		$tempMin = $this->getRequest()->get('tempMin');
+		$tempMax = $this->getRequest()->get('tempMax');
 		
 		if (empty($name)) {
 			throw new \Exception("Name of item is not set.");
@@ -52,6 +52,8 @@ class ItemController extends BaseController {
 		
 		$manager->persist($item);
 		$manager->flush();
+		
+		<input name="items[]" value="id" type="hidden" />
 		
 		return $this->redirect('/item/view/' . $item->getId());
 	}

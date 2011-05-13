@@ -10,7 +10,7 @@ use Roadrunner\Controller\UserController;
 /**
  * Root controller
  */
-$app->get('/', array(new ItemController($app), 'executeIndex'));
+$app->get('/', array(new DeliveryController($app), 'executeIndex'));
 
 /**
  * Item controller

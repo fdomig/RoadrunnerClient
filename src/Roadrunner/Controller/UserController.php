@@ -17,8 +17,8 @@ class UserController extends BaseController {
 		));
 	}
 	public function executeCreate()  {			
-		$name = $this->getRequest('name');
-		$password = $this->getRequest('password');
+		$name = $this->getRequest()->get('name');
+		$password = $this->getRequest()->get('password');
 		
 		//TODO: change
 		$roles = array('default'); 
