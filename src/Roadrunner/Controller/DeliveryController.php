@@ -31,7 +31,7 @@ class DeliveryController extends BaseController {
 	public function executeAdd()
 	{
 		return $this->render('delivery.add.twig', array(
-			'form_action' => url_for('/delivery/create'),
+			'form_action' => '/delivery/create',
 		));
 	}
 	

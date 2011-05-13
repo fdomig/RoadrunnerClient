@@ -20,7 +20,7 @@ class ItemController extends BaseController {
 	public function executeAdd()
 	{
 		return $this->render('item.add.twig', array(
-			'form_action' => url_for('/item/create'),
+			'form_action' => '/item/create',
 		));
 	}
 	

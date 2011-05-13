@@ -13,7 +13,7 @@ class UserController extends BaseController {
 	
 	public function executeAdd()  {
 		return $this->render('user.add.twig', array(
-			'form_action' => url_for('/user/create'),
+			'form_action' => '/user/create',
 		));
 	}
 	public function executeCreate()  {			

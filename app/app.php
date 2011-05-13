@@ -7,6 +7,8 @@ use Roadrunner\Controller\ItemController;
 use Roadrunner\Controller\LogController;
 use Roadrunner\Controller\UserController;
 
+$app = require __DIR__ . '/../app/bootstrap.php';
+
 /**
  * Root controller
  */
@@ -69,4 +71,4 @@ $app->error(function(Exception $e) use ($app) {
 $app->after(function() {	
 });
 
-$app->run();
+return $app;
