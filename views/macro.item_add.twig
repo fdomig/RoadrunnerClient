@@ -1,0 +1,29 @@
+{% macro addItemForm() %}
+
+<h2>Add item</h2>
+
+	<form action="{{ form_action }}" method="post">
+		<fieldset>
+			<div>
+				Name<br />
+				<input class="input-name" type="text" value="" name="name" />
+			</div>
+			
+			<div>
+				Minimum Temperature<br />
+				<input class="input-min-temp" type="text" value="" name="tempMin" />
+			</div>
+		
+			<div>
+				Maximum Temperature<br />
+				<input class="input-max-temp" type="text" value="" name="tempMax" />
+			</div>
+		
+			<div>
+				<input class="create-item-button" type="submit" value="Create Item" />
+			</div>
+		
+		</fieldset>
+	</form>
+	
+{% endmacro %}

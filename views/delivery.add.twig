@@ -1,6 +1,7 @@
 {% extends "layout.twig" %}
 
 {% import "macro.input.twig" as input %}
+{% import "macro.item_add.twig" as add_item_form %}
 
 {% block content %}
 
@@ -51,5 +52,6 @@
 		
 		</fieldset>
 	</form>
-
+	
+	<div class="add-item-form" style="display: none">{{ add_item_form.addItemForm() }}</div>
 {% endblock %}

@@ -1,31 +1,8 @@
 {% extends "layout.twig" %}
+{% import "macro.item_add.twig" as add_item_form %}
 
 {% block content %}
 
-	<h2>Add item</h2>
-
-	<form action="{{ form_action }}" method="post">
-		<fieldset>
-			<div>
-				Name<br />
-				<input type="text" value="" name="name" />
-			</div>
-			
-			<div>
-				TempMin<br />
-				<input type="text" value="" name="tempMin" />
-			</div>
-		
-			<div>
-				TempMax<br />
-				<input type="text" value="" name="tempMax" />
-			</div>
-		
-			<div>
-				<input type="submit" value="Create Item" />
-			</div>
-		
-		</fieldset>
-	</form>
+	{{ add_item_form.addItemForm() }}
 
 {% endblock %}
