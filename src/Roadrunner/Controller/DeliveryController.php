@@ -1,6 +1,8 @@
 <?php
 namespace Roadrunner\Controller;
 
+use Roadrunner\Model\Item;
+
 use Roadrunner\Model\Delivery;
 use Roadrunner\Model\Address;
 
@@ -40,6 +42,23 @@ class DeliveryController extends BaseController {
 		$delivery = new Delivery();
 		$delivery->setFromAddress(new Address($this->getRequest()->get('from')));
 		$delivery->setToAddress(new Address($this->getRequest()->get('to')));
+		
+		$nrOfItems = (int) $this->getRequest()->get('nr-of-items');
+		
+		for ($i=0; $i < $nrOfItems; $i++) {
+			
+			$name = $this->getRequest()->get('input-name-hidden-1');
+			$minTemp = $this->getRequest()->get('input-min-temp-hidden-1');
+			$maxTemp = $this->getRequest()->get('input-max-temp-hidden-1');
+			
+			//FIXME: VALIDATE INPUT DATA
+			
+			$newItem = new Item();
+			$newItem->setName($name);
+			$newItem->setTempMin((int)$minTemp);
+			$newItem->setTempMax((int)$maxTemp);
+			$delivery->addItem($newItem);
+		}
 		
 		$manager = $this->getDocumentManager();
 		$manager->persist($delivery);
