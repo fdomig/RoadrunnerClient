@@ -6,7 +6,7 @@ use Silex\Application;
 abstract class BaseController {
 
 	/** @var Silex\Application $application */
-	private $app;
+	protected $app;
 
 	/**
 	 * @param Silex\Application $app
