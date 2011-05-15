@@ -40,6 +40,9 @@ class DeliveryController extends BaseController {
 	
 	public function executeCreate()
 	{
+		
+		$manager = $this->getDocumentManager();
+		
 		$delivery = new Delivery();
 		$delivery->setFrom_Address(new Address($this->getRequest()->get('from')));
 		$delivery->setTo_Address(new Address($this->getRequest()->get('to')));
@@ -48,9 +51,9 @@ class DeliveryController extends BaseController {
 		
 		for ($i=0; $i < $nrOfItems; $i++) {
 			
-			$name = $this->getRequest()->get('input-name-hidden-1');
-			$minTemp = $this->getRequest()->get('input-min-temp-hidden-1');
-			$maxTemp = $this->getRequest()->get('input-max-temp-hidden-1');
+			$name = $this->getRequest()->get('input-name-hidden-' . $i);
+			$minTemp = $this->getRequest()->get('input-min-temp-hidden-' . $i);
+			$maxTemp = $this->getRequest()->get('input-max-temp-hidden-' . $i);
 			
 			//FIXME: VALIDATE INPUT DATA
 			
@@ -58,10 +61,11 @@ class DeliveryController extends BaseController {
 			$newItem->setName($name);
 			$newItem->setTempMin((int)$minTemp);
 			$newItem->setTempMax((int)$maxTemp);
+			
 			$delivery->addItem($newItem);
 		}
 		
-		$manager = $this->getDocumentManager();
+		
 		$manager->persist($delivery);
 		$manager->flush();
 		
