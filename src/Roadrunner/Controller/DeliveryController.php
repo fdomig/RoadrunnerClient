@@ -22,11 +22,12 @@ class DeliveryController extends BaseController {
 	
 	public function executeView()
 	{
+		
+		$delivery = Delivery::find(
+			$this->getDocumentManager(), $this->getRequest()->get('id'));
+			
 		return $this->render('delivery.view.twig', array(
-			'delivery' => Delivery::find(
-				$this->getDocumentManager(),
-				$this->getRequest()->get('id')
-			),
+			'delivery' => $delivery,
 		));
 	}
 	
@@ -40,8 +41,8 @@ class DeliveryController extends BaseController {
 	public function executeCreate()
 	{
 		$delivery = new Delivery();
-		$delivery->setFromAddress(new Address($this->getRequest()->get('from')));
-		$delivery->setToAddress(new Address($this->getRequest()->get('to')));
+		$delivery->setFrom_Address(new Address($this->getRequest()->get('from')));
+		$delivery->setTo_Address(new Address($this->getRequest()->get('to')));
 		
 		$nrOfItems = (int) $this->getRequest()->get('nr-of-items');
 		
