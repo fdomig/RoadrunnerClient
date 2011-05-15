@@ -60,9 +60,9 @@ class DeliveryController extends BaseController {
 		
 		for ($i=0; $i < $nrOfItems; $i++) {
 			
-			$name = $this->getRequest()->get('input-name-hidden-' . $i);
-			$minTemp = $this->getRequest()->get('input-min-temp-hidden-' . $i);
-			$maxTemp = $this->getRequest()->get('input-max-temp-hidden-' . $i);
+			$name = $this->app->escape($this->getRequest()->get('input-name-hidden-' . $i));
+			$minTemp = $this->app->escape($this->getRequest()->get('input-min-temp-hidden-' . $i));
+			$maxTemp = $this->app->escape($this->getRequest()->get('input-max-temp-hidden-' . $i));
 			
 			//FIXME: VALIDATE INPUT DATA
 			
@@ -92,9 +92,9 @@ class DeliveryController extends BaseController {
 		
 		for ($i=0; $i < $nrOfItems; $i++) {
 			
-			$name = $this->getRequest()->get('input-name-hidden-' . $i);
-			$minTemp = $this->getRequest()->get('input-min-temp-hidden-' . $i);
-			$maxTemp = $this->getRequest()->get('input-max-temp-hidden-' . $i);
+			$name = $this->app->escape($this->getRequest()->get('input-name-hidden-' . $i));
+			$minTemp = $this->app->escape($this->getRequest()->get('input-min-temp-hidden-' . $i));
+			$maxTemp = $this->app->escape($this->getRequest()->get('input-max-temp-hidden-' . $i));
 			
 			//FIXME: VALIDATE INPUT DATA
 			
