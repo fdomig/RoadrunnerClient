@@ -26,7 +26,7 @@ $app['config'] = array(
 $app['autoloader']->registerNamespaces(array(
 	'Roadrunner'  => array(
 		__DIR__ . '/../src',
-		__DIR__ . '/../test',
+		__DIR__ . '/../tests',
 	),
 	'Doctrine'    => array(
 		__DIR__ . '/../vendor/couchdb-odm/lib',

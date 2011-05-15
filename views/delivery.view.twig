@@ -17,26 +17,26 @@
 		</thead>
 		<tr>
 			<td><code>{{ delivery.id }}</code></td>
-			<td>{{ delivery.created_at|date("m/d/Y H:i:s") }}</td>
-			<td>{{ delivery.modified_at|date("m/d/Y H:i:s") }}</td>
+			<td>{{ delivery.createdAt|date("Y-m-d H:i:s") }}</td>
+			<td>{{ delivery.modifiedAt|date("Y-m-d H:i:s") }}</td>
 			<td><a href="/delivery/edit/{{ delivery.id }}">Edit</a></td>
 		</tr>
 	</table>
 </div>
 
 <div class="span-22">
-	<h3>From: {{ delivery.from_address.city }}</h3>
-	{{ address.address(delivery.from_address.name,
-		delivery.from_address.street, delivery.from_address.zip, delivery.from_address.city, 
-		delivery.from_address.country) }}
+	<h3>From: {{ delivery.fromAddress.city }}</h3>
+	{{ address.address(delivery.fromAddress.name,
+		delivery.fromAddress.street, delivery.fromAddress.zip, delivery.fromAddress.city, 
+		delivery.fromAddress.country) }}
 </div>
 
 
 <div class="span-22">
-	<h3>To: {{delivery.to_address.city}}</h3>
-	{{ address.address(delivery.to_address.name,
-		delivery.to_address.street, delivery.to_address.zip, delivery.to_address.city, 
-		delivery.to_address.country) }}
+	<h3>To: {{delivery.toAddress.city}}</h3>
+	{{ address.address(delivery.toAddress.name,
+		delivery.toAddress.street, delivery.toAddress.zip, delivery.toAddress.city, 
+		delivery.toAddress.country) }}
 </div>
 
 <div class="prepend-1 append-1 span-10 border-block item-block">

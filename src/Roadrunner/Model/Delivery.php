@@ -40,14 +40,14 @@ class Delivery extends BaseDocument {
 	/**
 	 * @return Address
 	 */
-	public function getFrom_Address() {
+	public function getFromAddress() {
 		return $this->from_address;
 	}
 	
 	/**
 	 * @param Address $address
 	 */
-	public function setFrom_Address(Address $address) {
+	public function setFromAddress(Address $address) {
 		if ($this->from_address !== $address) {
 			$this->from_address = $address;
 		}
@@ -56,14 +56,14 @@ class Delivery extends BaseDocument {
 	/**
 	 * @return Address
 	 */
-	public function getTo_Address() {
+	public function getToAddress() {
 		return $this->to_address;
 	}
 	
 	/**
 	 * @param Address $address
 	 */
-	public function setTo_Address(Address $address) {
+	public function setToAddress(Address $address) {
 		if ($this->to_address !== $address) {
 			$this->to_address = $address;
 		}
@@ -93,11 +93,11 @@ class Delivery extends BaseDocument {
     /**
      * @return number
      */
-    public function getModified_At() {
+    public function getModifiedAt() {
     	return $this->modified_at;
     }
     
-    public function setModified_At() {
+    public function setModifiedAt() {
     	$this->modified_at = time();
     }
 	
