@@ -25,7 +25,7 @@ class Delivery extends BaseDocument {
     private $to_address;
     	
 	/**
-     * @ReferenceMany(targetDocument="Item", cascade="{persist}")
+     * @ReferenceMany(targetDocument="Item", cascade={"persist"})
      */
 	private $items;
 	
