@@ -39,3 +39,13 @@ body {
 
 a.adder {
 }
+
+.border-block {
+	border: 1px solid #CCCCCC;
+	padding-top: 5px;
+	padding-bottom: 5px;	
+}
+
+.item-block ul {
+	list-style: none;
+}	
