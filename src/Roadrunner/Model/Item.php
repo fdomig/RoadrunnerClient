@@ -58,6 +58,12 @@ class Item extends BaseDocument {
 		return url_for('cache/' . $file);
 	}
 	
+	static public function getStatusFor($manager, $itemId)  {
+		return self::createQuery($manager, 'itemstatus')
+		->setKey($itemId)
+		->execute();
+	}
+	
 	static public function getAll($manager)
 	{
 		return self::createQuery($manager, 'items')->execute();

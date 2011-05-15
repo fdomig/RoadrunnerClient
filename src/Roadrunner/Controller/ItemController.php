@@ -10,11 +10,18 @@ class ItemController extends BaseController {
 		return $this->executeList();
 	}
 	
-	public function executeList()
-	{		
+	public function executeList()  {
+		$manager = $this->getDocumentManager();
+		$items = Item::getAll($manager);
+		$status = array();
+		
+		for($i = 0; $i < sizeof($items); ++$i)  {
+			$id = $items[$i]['id'];
+			$status[$i] = Item::getStatusFor($manager, $id);
+		}
 		return $this->render('item.list.twig', array(
-			'item_list' => Item::getAll($this->getDocumentManager()),
-		));
+			'item_list' => $items,
+			'status_list' => $status));	
 	}
 	
 	public function executeAdd()

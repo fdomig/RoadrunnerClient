@@ -7,18 +7,22 @@
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
+				<th>Status</th>
 				<th>View</th>
 				<th>Logs</th>
 			</tr>
 		</thead>
+		
 		{% for item in item_list %}
 			<tr>
 				<td><code>{{ item.value.barcode }}</code></td>
 				<td>{{ item.value.name }}</td>
+				<td>{{ status_list[loop.index0][0].value.status }}</td>
 				<td><a href="/item/view/{{item.value.barcode}}">View</a></td>
 				<td><a href="/log/list/{{item.value.barcode}}">Logs</a></td>
 			</tr>
 		{% endfor %}
+		
 	</table>
 
 {% endblock %}
