@@ -1,0 +1,23 @@
+{% macro address(name, street, zip, city, country) %}
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Street</th>
+			<th>Zip</th>
+			<th>City</th>
+			<th>Country</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{ name }}</td>
+			<td>{{ street }}</td>
+			<td>{{ zip }}</td>
+			<td>{{ city }}</td>
+			<td>{{ country }}</td>
+		</tr>
+	</tbody>
+</table>
+
+{% endmacro %}
