@@ -1,0 +1,35 @@
+{% extends "layout.twig" %}
+
+{% macro address(value) %}
+	{{ value.name }}<br />
+	<small>({{ value.street }}, {{ value.zip }} {{ value.city }} - {{ value.country }})</small>
+{% endmacro %}
+
+{% block content %}
+
+	<h2>List of Deliveries</h2>
+
+	<a href="/delivery/add" class="adder">Add new Delivery</a>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>From</th>
+				<th>To</th>
+				<th>View</th>
+			</tr>
+		</thead>
+		{% for delivery in delivery_list %}
+			<tr>
+				<td><code>{{ delivery.key }}</code></td>
+				<td>{{ _self.address(delivery.value.from_address) }}</td>
+				<td>{{ _self.address(delivery.value.to_address) }}</td>
+				<td><a href="/delivery/view/{{delivery.key}}">View</a></td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+	<a href="/delivery/add" class="adder">Add new Delivery</a>
+
+{% endblock %}

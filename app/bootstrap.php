@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/silex.phar';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once __DIR__ . '/conf.php';
 
 use Silex\Application;
 
@@ -13,29 +12,42 @@ use Roadrunner\Model\OdmFactory;
 
 use Silex\Extension\TwigExtension;
 
-define('ENV', 'DEV'); // DEV | PROD
 
 $app = new Application();
 
 $app['config'] = array(
-	'db.server' => 'roadrunner.server',
-	'db.port' => '5984',
-	'db.database' => 'roadrunner',
+	'db.server'        => 'roadrunner.server',
+	'db.port'          => '5984',
+	'db.database'      => 'roadrunner',
+	'db.user_database' => '_users',
 );
 
 // class loader
 $app['autoloader']->registerNamespaces(array(
-	'Roadrunner'      => __DIR__ . '/../src',
+	'Roadrunner'  => array(
+		__DIR__ . '/../src',
+		__DIR__ . '/../test',
+	),
 	'Doctrine'    => array(
 		__DIR__ . '/../vendor/couchdb-odm/lib',
-		__DIR__ . '/../vendor/couchdb-odm/lib/vendor/doctrine-common/lib'
+		__DIR__ . '/../vendor/couchdb-odm/lib/vendor/doctrine-common/lib',
 	),
-	'Monolog'      => __DIR__ . '/../vendor/Monolog/src'
+	'Monolog'     => __DIR__ . '/../vendor/Monolog/src'
 ));
 
 // couch db
-$app['document_manager'] = $dm = OdmFactory::createOdm('roadrunner', 'roadrunner.server', $app['config']['db.port'],'roadrunner', 'roadrunner');
-$app['users_manager'] = $dm = OdmFactory::createOdm('_users', 'roadrunner.server', $app['config']['db.port'], 'roadrunner', 'roadrunner');
+$app['document_manager'] = $dm = OdmFactory::createOdm(
+	$app['config']['db.database'],
+	$app['config']['db.server'],
+	$app['config']['db.port'],
+	'roadrunner', 'roadrunner'
+);
+$app['users_manager'] = $dm = OdmFactory::createOdm(
+	$app['config']['db.user_database'],
+	$app['config']['db.server'],
+	$app['config']['db.port'],
+	'roadrunner', 'roadrunner'
+);
 
 // twig
 $app->register(new TwigExtension(), array(
@@ -50,15 +62,4 @@ $app['log']->pushHandler(new StreamHandler(
 	Logger::ERROR
 ));
 
-// helper functions
-function link_to($url, $name) {
-	return sprintf('<a href="%s">%s</a>', url_for($url), $name);
-}
-
-function url_for($url) {
-	return 'http://' . $_SERVER['HTTP_HOST'] . '/' . trim($url, '/');
-}
-
-function url_for_db($id) {
-	return 'http://roadrunner.server:5984/roadrunner/' . $id;
-}
+return $app;

@@ -13,12 +13,12 @@ class UserController extends BaseController {
 	
 	public function executeAdd()  {
 		return $this->render('user.add.twig', array(
-			'form_action' => url_for('/user/create'),
+			'form_action' => '/user/create',
 		));
 	}
 	public function executeCreate()  {			
-		$name = $this->getRequest('name');
-		$password = $this->getRequest('password');
+		$name = $this->getRequest()->get('name');
+		$password = $this->getRequest()->get('password');
 		
 		//TODO: change
 		$roles = array('default'); 

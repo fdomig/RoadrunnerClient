@@ -27,13 +27,13 @@ class ItemController extends BaseController {
 	public function executeAdd()
 	{
 		return $this->render('item.add.twig', array(
-			'form_action' => url_for('/item/create'),
+			'form_action' => '/item/create',
 		));
 	}
 	
 	public function executeView()
 	{
-		$id = $this->getRequest('id');
+		$id = $this->getRequest()->get('id');
 		$item = Item::find($this->getDocumentManager(), $id);
 
 		return $this->render('item.view.twig', array(
@@ -43,9 +43,9 @@ class ItemController extends BaseController {
 	
 	public function executeCreate()
 	{			
-		$name = $this->getRequest('name');
-		$tempMin = $this->getRequest('tempMin');
-		$tempMax = $this->getRequest('tempMax');
+		$name = $this->getRequest()->get('name');
+		$tempMin = $this->getRequest()->get('tempMin');
+		$tempMax = $this->getRequest()->get('tempMax');
 		
 		if (empty($name)) {
 			throw new \Exception("Name of item is not set.");

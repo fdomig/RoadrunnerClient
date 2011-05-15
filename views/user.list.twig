@@ -2,6 +2,11 @@
 
 {% block content %}
 
+	<h2>List of Users</h2>
+
+
+	<a href="/user/add" class="adder">Add new User</a>
+
 	<table>
 		<thead>
 			<tr>
@@ -24,5 +29,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
+
+	<a href="/user/add" class="adder">Add new User</a>
 	
 {% endblock %}
