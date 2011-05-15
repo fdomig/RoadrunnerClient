@@ -78,7 +78,7 @@ class DeliveryController extends BaseController {
 		$manager->persist($delivery);
 		$manager->flush();
 		
-		$this->redirect('/delivery/view/' . $delivery->getId());
+		return $this->redirect('/delivery/view/' . $delivery->getId());
 	}
 	
 	public function executeCreate()
@@ -110,7 +110,7 @@ class DeliveryController extends BaseController {
 		$manager->persist($delivery);
 		$manager->flush();
 		
-		$this->redirect('/delivery/view/' . $delivery->getId());
+		return $this->redirect('/delivery/view/' . $delivery->getId());
 	}
 	
 }
