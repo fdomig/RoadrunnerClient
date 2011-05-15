@@ -20,23 +20,26 @@
 	</tr>
 </table>
 
-
+<div class="span-11">
 <h3>From: {{ delivery.from_address.city }}</h3>
+
 {{ address.address(delivery.from_address.name,
 	delivery.from_address.street, delivery.from_address.zip, delivery.from_address.city, 
 	delivery.from_address.country) }}
+</div>
 
+<div class="span-11 last">
 <h3>To: {{delivery.to_address.city}}</h3>
 {{ address.address(delivery.to_address.name,
 	delivery.to_address.street, delivery.to_address.zip, delivery.to_address.city, 
 	delivery.to_address.country) }}
-
-
-{% if delivery.items %}
-	<h3>Items</h3>
-	{% for item in delivery.items %}
-	{{ item.id}}
-	
-	{% endfor %}
-{% endif %}
+</div>
+<div class="span-22 last">
+<h3>Items</h3>
+<ul>
+{% for item in delivery.items %}
+	<li><a class="adder" href="/item/view/{{ item.id }}">{{ item.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
 {% endblock %}
