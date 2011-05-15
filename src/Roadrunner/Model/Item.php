@@ -55,7 +55,7 @@ class Item extends BaseDocument {
 			\QRcode::png($this->getId(), __DIR__ . '/../../../web/cache/'
 				. $file, 'L', 4, 2);
 		}
-		return url_for('cache/' . $file);
+		return '/cache/' . $file;
 	}
 	
 	static public function getAll($manager)
