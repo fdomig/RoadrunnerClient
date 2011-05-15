@@ -9,7 +9,7 @@ jQuery(function() {
 		var inputMaxTemp = $(this).parent().parent().find('.input-max-temp'); 
 		var inputMinTemp = $(this).parent().parent().find('.input-min-temp');
 		
-		var newItem = $('<tr><td>New Item</td><td>'+ inputName.val()+ '</td></tr>');
+		var newItem = $('<tr><td>New Item</td><td>'+ inputName.val()+ '</td><td>&nbsp;</td></tr>');
 		$('#item-list tbody').append(newItem);
 		$('.form-create-delivery fieldset').append(
 			'<div>\

@@ -5,7 +5,7 @@
 
 {% block content %}
 
-	<h2>Create Delivery</h2>
+	<h2>Edit Delivery</h2>
 
 	<form action="{{ form_action }}" method="post" class="form-create-delivery">
 		<fieldset>
@@ -14,13 +14,13 @@
 				<div class="span-4">
 					<h3>Sender</h3>
 		
-						{{ input.address("from") }}
+						{{ input.address("from", delivery.from_address) }}
 				</div>
 		
 				<div class="span-4 last">
 					<h3>Recipient</h3>
 		
-					{{ input.address("to") }}
+					{{ input.address("to", delivery.to_address) }}
 				</div>
 				
 				<div class="prepend-2 span-10 last">
@@ -31,15 +31,22 @@
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
+								<th>View</th>
 							</tr>
 						</thead>
 						<tbody>
-							
+							{% for item in delivery.items %}
+							<tr>
+								<td>{{ item.id }}</td>
+								<td>{{ item.name }}</td>
+								<td><a href="/item/view/{{ item.id }}">View</a></td>
+							</tr>
+							{% endfor %}
 						</tbody>
 					</table>
 					
 					<div>
-						<a href="" class="add-item-to-delivery">Add new Item</a>
+						<a href="" class="add-item-to-delivery">Add new item to delivery</a>
 					</div>
 					
 				</div>
@@ -47,7 +54,7 @@
 			</div>
 		
 			<div class="first">
-				<input class="create-delivery-button" type="submit" value="Create delivery" />
+				<input class="create-delivery-button" type="submit" value="Save changes" />
 			</div>
 		
 		</fieldset>

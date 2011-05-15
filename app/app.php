@@ -34,6 +34,8 @@ $app->get('/delivery/list', array(new DeliveryController($app), 'executeList'));
 $app->get('/delivery/view/{id}', array(new DeliveryController($app), 'executeView'));
 $app->get('/delivery/add', array(new DeliveryController($app), 'executeAdd'));
 $app->post('/delivery/create', array(new DeliveryController($app), 'executeCreate'));
+$app->get('/delivery/edit/{id}', array(new DeliveryController($app), 'executeEdit'));
+$app->post('/delivery/update/{id}', array(new DeliveryController($app), 'executeUpdate'));
 
 /*
  * User controller
