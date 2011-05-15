@@ -21,6 +21,8 @@ $app->get('/item/add', array(new ItemController($app), 'executeAdd'));
 $app->get('/item/view/{id}', array(new ItemController($app), 'executeView'));
 $app->get('/item/list', array(new ItemController($app), 'executeList'));
 $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
+$app->get('/item/edit/{id}',array(new ItemController($app), 'executeEdit'));
+$app->post('/item/update/{id}', array(new ItemController($app), 'executeUpdate'));
 
 /**
  * Log controller

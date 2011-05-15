@@ -1,0 +1,8 @@
+{% extends "layout.twig" %}
+{% import "macro.item.twig" as edit_item_form %}
+
+{% block content %}
+
+	{{ edit_item_form.editItemForm(form_action, item) }}
+
+{% endblock %}

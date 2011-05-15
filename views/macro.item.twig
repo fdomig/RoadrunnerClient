@@ -1,0 +1,58 @@
+{% macro addItemForm(form_action) %}
+
+<h2>Add Item</h2>
+
+	<form action="{{ form_action }}" method="post">
+		<fieldset>
+			<div>
+				Name<br />
+				<input class="input-name" type="text" value="" name="name" />
+			</div>
+			
+			<div>
+				Minimum Temperature<br />
+				<input class="input-min-temp" type="text" value="" name="tempMin" />
+			</div>
+		
+			<div>
+				Maximum Temperature<br />
+				<input class="input-max-temp" type="text" value="" name="tempMax" />
+			</div>
+		
+			<div>
+				<input class="create-item-button" type="submit" value="Create Item" />
+			</div>
+		
+		</fieldset>
+	</form>
+	
+{% endmacro %}
+
+{% macro editItemForm(form_action, item) %}
+
+	<h2>Edit Item</h2>
+	<form action="{{ form_action }}" method="post">
+		<fieldset>
+			<div>
+				Name<br />
+				<input class="input-name" type="text" value="{{ item.name }}" name="name" />
+			</div>
+			
+			<div>
+				Minimum Temperature<br />
+				<input class="input-min-temp" type="text" value="{{ item.tempMin }}" name="tempMin" />
+			</div>
+		
+			<div>
+				Maximum Temperature<br />
+				<input class="input-max-temp" type="text" value="{{ item.tempMax }}" name="tempMax" />
+			</div>
+		
+			<div>
+				<input class="edit-item-button" type="submit" value="Save changes" />
+			</div>
+		
+		</fieldset>
+	</form>
+	
+{% endmacro %}

@@ -1,3 +1,7 @@
+{% macro input(name, type, value) %}
+	<input type="{{ type }}" value="{{ value }}" name="{{ name }}" />
+{% endmacro %}
+
 {% macro address(name, value) %}
 
 <div>
