@@ -35,7 +35,7 @@ class Log extends BaseDocument {
 	}
 		
 	static public function getForItemId($itemId)  {
-		return parent::createQuery(self::getManager(),'logs')
+		return parent::createQuery('logs')
 			->setStartKey(array($itemId))
 			->setEndKey(array($itemId, ""))
 			->execute();

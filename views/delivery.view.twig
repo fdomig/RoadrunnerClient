@@ -46,13 +46,15 @@
 			<tr>
 				<th>Name</th>
 				<th>Temp</th>
+				<th>Status</th>
 				<th>View</th>
 			</tr>
 		</thead>
 	{% for item in delivery.items %}
 		<tr>
 			<td>{{ item.name }}</td>
-			<td>{{ item.tempMin }} to {{ item.tempMax }}
+			<td>{{ item.tempMin }} to {{ item.tempMax }}</td>
+			<td class="item-status" id="{{ item.id }}"></td>
 			<td><a href="/item/view/{{ item.id }}">View</a></td>
 		</tr>
 	{% endfor %}

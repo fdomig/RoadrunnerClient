@@ -57,10 +57,18 @@ class Item extends BaseDocument {
 		}
 		return '/cache/' . $file;
 	}
+
+	public function getStatus()  {
+		$result = self::createQuery('itemstatus')
+			->setKey($this->getId())
+			->execute()->toArray();
+			
+		return $result[0]['value']['status'];
+	}
 	
 	static public function getAll()
 	{
-		return self::createQuery(self::getManager(), 'items')->execute();
+		return self::createQuery('items')->execute();
 	}
 	
 	static public function find($id)

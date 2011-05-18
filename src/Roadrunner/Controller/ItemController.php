@@ -10,8 +10,7 @@ class ItemController extends BaseController {
 		return $this->executeList();
 	}
 	
-	public function executeList()
-	{		
+	public function executeList()  {
 		return $this->render('item.list.twig', array(
 			'item_list' => Item::getAll(),
 		));
@@ -71,7 +70,7 @@ class ItemController extends BaseController {
 		$tempMax = $this->app->escape($this->getRequest()->get('tempMax'));
 		
 		if (empty($name)) {
-			throw new \Exception("Name of item is not set.");
+			throw new ControllerException("Name of item is not set.");
 		}
 		
 		$item = new Item();
@@ -82,6 +81,25 @@ class ItemController extends BaseController {
 		$item->save();
 		
 		return $this->redirect('/item/view/' . $item->getId());
+	}
+	
+	public function executeStatus()
+	{
+		if (!$this->getRequest()->isXmlHttpRequest()) {
+			throw new ControllerException("Status cannot be retrieved directly.");
+		}
+
+		$id = $this->getRequest()->get('id');
+		$item = Item::find($id);
+		
+		if (is_null($item)) {
+			throw new ControllerException("Item does not exist.");
+		}
+		
+		return json_encode(array(
+			'id'     => $item->getId(),
+			'status' => $item->getStatus())
+		);
 	}
 	
 }

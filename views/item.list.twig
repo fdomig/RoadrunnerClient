@@ -10,18 +10,22 @@
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
+				<th class="span-4">Status</th>
 				<th>View</th>
 				<th>Logs</th>
 			</tr>
 		</thead>
+		
 		{% for item in item_list %}
 			<tr>
 				<td><code>{{ item.value.barcode }}</code></td>
 				<td>{{ item.value.name }}</td>
+				<td class="item-status" id="{{ item.value.barcode }}"></td>
 				<td><a href="/item/view/{{item.value.barcode}}">View</a></td>
 				<td><a href="/log/list/{{item.value.barcode}}">Logs</a></td>
 			</tr>
 		{% endfor %}
+		
 	</table>
 	
 	<a href="/item/add" class="adder">Add new Item</a>

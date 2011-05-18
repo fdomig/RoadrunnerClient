@@ -103,7 +103,7 @@ class Delivery extends BaseDocument {
 	
 	static public function getAll()
 	{
-		return self::createQuery(self::getManager(), 'deliveries')->execute();
+		return self::createQuery('deliveries')->execute();
 	}
 	
 	static public function find($id)

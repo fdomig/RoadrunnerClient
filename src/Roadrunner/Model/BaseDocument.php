@@ -25,12 +25,12 @@ class BaseDocument {
 		return $this->id;
 	}
 	
-	static public function createQuery($manager, $viewName) {
+	static public function createQuery($view) {
 		return new Query(
-			$manager->getConfiguration()->getHTTPClient(),
-			$manager->getConfiguration()->getDatabase(),
+			self::getManager()->getConfiguration()->getHTTPClient(),
+			self::getManager()->getConfiguration()->getDatabase(),
 			'roadrunner',
-			$viewName,
+			$view,
 			new DoctrineAssociations()
 		);
 	}
