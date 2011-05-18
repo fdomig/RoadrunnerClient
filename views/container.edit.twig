@@ -1,0 +1,12 @@
+{% extends "layout.twig" %}
+{% import "macro.container.twig" as layout_container %}
+
+{% block content %}
+
+	<h2>Create Transport Unit</h2>
+	<p>
+		<small>{{ container.id }}</small>
+	</p>
+	{{ layout_container.editContainerForm(form_action, container.name) }}
+	
+{% endblock %}

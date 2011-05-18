@@ -1,0 +1,59 @@
+{% macro addContainerForm(form_action) %}
+	<form action="{{ form_action }}">
+		<fieldset>
+			{{ _self.unitInputs() }}
+			{{ _self.sensorBlock() }}
+			{{ _self.submitButton("Create Transport Unit") }}
+		</fieldset>
+	</form>
+{% endmacro %}
+
+{% macro editContainerForm(form_action, name, sensors) %}
+	<form action="{{ form_action }}">
+		<fieldset>
+			{{ _self.unitInputs(name) }}
+			{{ _self.sensorBlock(sensors) }}
+			{{ _self.submitButton("Save Transport Unit") }}
+		</fieldset>
+	</form>
+{% endmacro %}
+
+{% macro submitButton(text) %}
+	<div class="span-16">
+		<input class="create-container-button" type="submit" value="{{ text }}" />
+	</div>
+{% endmacro %}
+
+{% macro unitInputs(name) %}
+	<div class="span-6">
+		<h3>Unit</h3>
+		<div>
+			Name</ br>
+			<input class="input-name" type="text" value="{{ name }}" name="name" />
+		</div>
+	</div>
+{% endmacro %}
+
+{% macro sensorBlock(sensors) %}
+	<div class="prepend-2 span-10 last">
+		<h3>Sensors</h3>
+		
+		<table id="sensor-list">
+			<thead>
+				<tr>
+					<th>URI</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for sensor in sensors %}
+					<tr>
+						<td>{{ sensor }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div>
+			<a href="" class="add-sensor-to-container">Add Sensor</a>
+		</div>
+	</div>
+{% endmacro %}

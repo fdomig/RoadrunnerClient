@@ -33,6 +33,9 @@ $app->get('container/list', array(new ContainerController($app), 'executeList'))
 $app->get('container/add', array(new ContainerController($app), 'executeAdd'));
 $app->get('/container/view/{id}', array(new ContainerController($app), 'executeView'));
 $app->post('/container/create', array(new ContainerController($app), 'executeCreate'));
+$app->get('/container/edit/{id}', array(new ContainerController($app), 'executeEdit'));
+$app->post('/container/update/{id}', array(new ContainerController($app), 'executeUpdate'));
+
 /**
  * Log controller
  */
