@@ -7,7 +7,7 @@ class Container extends BaseDocument {
 	/** @Field(type="string") */
 	private $name;
 	
-	/** @Field(type="increment") */
+	/** @Field(type="array") */
 	private $sensors;
 	
 	/**
