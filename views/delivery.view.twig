@@ -4,58 +4,55 @@
 
 {% block content %}
 
-<h2>View Delivery</h2>
-<div class="span-22"> 
-	<table>
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Created at</th>
-				<th>Modified at</th>
-				<th>Edit</th>
-			</tr>
-		</thead>
-		<tr>
-			<td><code>{{ delivery.id }}</code></td>
-			<td>{{ delivery.createdAt|date("Y-m-d H:i:s") }}</td>
-			<td>{{ delivery.modifiedAt|date("Y-m-d H:i:s") }}</td>
-			<td><a href="/delivery/edit/{{ delivery.id }}">Edit</a></td>
-		</tr>
-	</table>
-</div>
-
 <div class="span-22">
-	<h3>From: {{ delivery.fromAddress.city }}</h3>
-	{{ address.address(delivery.fromAddress.name,
-		delivery.fromAddress.street, delivery.fromAddress.zip, delivery.fromAddress.city, 
-		delivery.fromAddress.country) }}
+	<div class="span-6">
+		
+		<h2>View Delivery</h2>
+		
+		<p>
+			Created: {{ delivery.createdAt|date("Y-m-d H:i:s") }}<br />
+			Modified: {{ delivery.modifiedAt|date("Y-m-d H:i:s") }}
+		</p>
+		
+		<h3>Sender</h3>
+		{{ address.address(delivery.fromAddress.name,
+			delivery.fromAddress.street, delivery.fromAddress.zip, delivery.fromAddress.city, 
+			delivery.fromAddress.country) }}
+
+		<h3>Recipient</h3>
+		{{ address.address(delivery.toAddress.name,
+			delivery.toAddress.street, delivery.toAddress.zip, delivery.toAddress.city, 
+			delivery.toAddress.country) }}
+			
+		<div class="span-6">
+			<a href="/delivery/edit/{{ delivery.id }}">Edit Delivery</a>
+		</div>
+		
+	</div>
+
+	<div class="span-14 map last">
+		<div id="map_canvas" style="height: 500px; width: 630px;"></div>
+	</div>
+	
 </div>
 
-
-<div class="span-22">
-	<h3>To: {{delivery.toAddress.city}}</h3>
-	{{ address.address(delivery.toAddress.name,
-		delivery.toAddress.street, delivery.toAddress.zip, delivery.toAddress.city, 
-		delivery.toAddress.country) }}
-</div>
-
-<div class="prepend-1 append-1 span-20 border-block item-block last">
+<div class="span-22 item-block last">
 	<h3>Items</h3>
 	<table>
 		<thead>
 			<tr>
+				<th class="span-1">Route</th>
 				<th>Name</th>
-				<th>Temp</th>
-				<th>Status</th>
-				<th>View</th>
+				<th class="span-4">Temperature</th>
+				<th class="span-4">Status</th>
 			</tr>
 		</thead>
 	{% for item in delivery.items %}
 		<tr>
-			<td>{{ item.name }}</td>
+			<td>XXX</td>
+			<td><a href="/item/view/{{ item.id }}">{{ item.name }}</a></td>
 			<td>{{ item.tempMin }} to {{ item.tempMax }}</td>
 			<td class="item-status" id="{{ item.id }}"></td>
-			<td><a href="/item/view/{{ item.id }}">View</a></td>
 		</tr>
 	{% endfor %}
 	</table>

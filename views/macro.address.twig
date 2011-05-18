@@ -1,23 +1,9 @@
 {% macro address(name, street, zip, city, country) %}
-<table>
-	<thead>
-		<tr>
-			<th class="span-2">Name</th>
-			<th class="span-2">Street</th>
-			<th class="span-2">Zip</th>
-			<th class="span-2">City</th>
-			<th class="span-2">Country</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>{{ name }}</td>
-			<td>{{ street }}</td>
-			<td>{{ zip }}</td>
-			<td>{{ city }}</td>
-			<td>{{ country }}</td>
-		</tr>
-	</tbody>
-</table>
+
+<div class="span-4 address-block">
+	<p>{{ name }}<br />
+	{{ street }}<br />
+	{{ country }} - {{ zip }} {{ city }}</p>
+</div>
 
 {% endmacro %}
