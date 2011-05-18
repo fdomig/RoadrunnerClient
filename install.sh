@@ -43,9 +43,9 @@ wget http://silex-project.org/get/silex.phar
 
 # jQuery
 mkdir -p ../web/js/jquery && cd ../web/js/jquery
-wget http://jqueryui.com/download/jquery-ui-1.8.12.custom.zip
-unzip jquery-ui-1.8.12.custom.zip
-rm jquery-ui-1.8.12.custom.zip
+wget http://jqueryui.com/download/jquery-ui-1.8.13.custom.zip
+unzip jquery-ui-1.8.13.custom.zip
+rm jquery-ui-1.8.13.custom.zip
 rm -rf development-bundle
 rm -rf index.html
 cd ../../../vendor
