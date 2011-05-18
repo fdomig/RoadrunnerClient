@@ -63,6 +63,9 @@ class ItemController extends BaseController {
 		return $this->redirect('/item/view/' . $item->getId());
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public function executeCreate()
 	{			
 		$name = $this->app->escape($this->getRequest()->get('name'));
