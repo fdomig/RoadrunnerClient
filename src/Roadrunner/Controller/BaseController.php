@@ -23,13 +23,6 @@ abstract class BaseController {
 	}
 	
 	/**
-	 *  @return Doctrine\ODM\CouchDB\DocumentManager $manager;
-	 */
-	protected function getDocumentManager() {
-		return $this->app['document_manager'];
-	}
-	
-	/**
 	 * Manager for users
 	 * 
 	 *  @return Doctrine\ODM\CouchDB\DocumentManager $manager;

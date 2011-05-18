@@ -7,7 +7,7 @@ class UserController extends BaseController {
 	
 	public function executeList() {	
 		return $this->render('user.list.twig', array(
-			'user_list' => User::getAll($this->getDocumentManager()),
+			'user_list' => User::getAll(),
 		));
 	}
 	
@@ -30,15 +30,13 @@ class UserController extends BaseController {
 			throw new \Exception("Password of the user is not set.");
 		}
 		
-		$manager = $this->getUsersManager();;
 		$user = new User();
 		$user->setName($name);
 		
 		$user->setPassword($password);
 		$user->setRoles($roles);
-
-		$manager->getUnitOfWork()->registerManaged($user, $user->getId(), null);
-		$manager->flush();
+		
+		$user->save();
 		
 		return $this->redirect('/user/list');
 	}

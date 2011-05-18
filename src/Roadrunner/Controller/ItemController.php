@@ -13,7 +13,7 @@ class ItemController extends BaseController {
 	public function executeList()
 	{		
 		return $this->render('item.list.twig', array(
-			'item_list' => Item::getAll($this->getDocumentManager()),
+			'item_list' => Item::getAll(),
 		));
 	}
 	
@@ -26,8 +26,7 @@ class ItemController extends BaseController {
 	
 	public function executeView()
 	{
-		$id = $this->getRequest()->get('id');
-		$item = Item::find($this->getDocumentManager(), $id);
+		$item = Item::find($this->getRequest()->get('id'));
 
 		return $this->render('item.view.twig', array(
 			'item' => $item,
@@ -37,7 +36,7 @@ class ItemController extends BaseController {
 	public function executeEdit()
 	{
 		$id = $this->getRequest()->get('id');
-		$item = Item::find($this->getDocumentManager(), $id);
+		$item = Item::find($id);
 		
 		return $this->render('item.edit.twig', array(
 			'item' => $item,
@@ -49,7 +48,7 @@ class ItemController extends BaseController {
 	public function executeUpdate()
 	{
 		
-		$item = Item::find($this->getDocumentManager(), $this->getRequest()->get('id'));
+		$item = Item::find($this->getRequest()->get('id'));
 		
 		$name = $this->app->escape($this->getRequest()->get('name'));
 		$tempMin = $this->app->escape($this->getRequest()->get('tempMin'));
@@ -60,10 +59,7 @@ class ItemController extends BaseController {
 		$item->setTempMax($tempMax);
 		
 		// FIXME: VALIDATE
-		
-		$manager = $this->getDocumentManager();
-		$manager->persist($item);
-		$manager->flush();
+		$item->save();
 		
 		return $this->redirect('/item/view/' . $item->getId());
 	}
@@ -78,14 +74,12 @@ class ItemController extends BaseController {
 			throw new \Exception("Name of item is not set.");
 		}
 		
-		$manager = $this->getDocumentManager();
 		$item = new Item();
 		$item->setName($name);
 		$item->setTempMin($tempMin);
 		$item->setTempMax($tempMax);
 		
-		$manager->persist($item);
-		$manager->flush();
+		$item->save();
 		
 		return $this->redirect('/item/view/' . $item->getId());
 	}

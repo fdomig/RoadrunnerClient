@@ -1,6 +1,8 @@
 <?php
 namespace Roadrunner\Model;
 
+use Roadrunner\Provider\Service;
+
 use Doctrine\ODM\CouchDB\View\Query;
 use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
 
@@ -50,18 +52,28 @@ class User extends BaseDocument {
 		$this->password_sha = $password_sha;
 	}
 	
-	static public function getAll($manager)  {
-		return self::createQuery($manager,'users')
-			->execute();
+	static public function getAll()  {
+		return self::createQuery('users')->execute();
 	}
 	
-	static public function createQuery($manager, $viewName) {
+	static public function createQuery($viewName) {
 		return new Query(
-			$manager->getConfiguration()->getHTTPClient(),
+			self::getManager()->getConfiguration()->getHTTPClient(),
 			'_users',
 			'roadrunnerusers',
 			$viewName,
 			new DoctrineAssociations()
 		);
+	}
+	
+	static protected function getManager()
+	{
+		return Service::getService('user_manager');
+	}
+	
+	public function save() 
+	{
+		self::getManager()->getUnitOfWork()->registerManaged(
+			$this, $this->getId(), null);
 	}
 }

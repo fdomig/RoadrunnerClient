@@ -101,13 +101,13 @@ class Delivery extends BaseDocument {
     	$this->modified_at = time();
     }
 	
-	static public function getAll($manager)
+	static public function getAll()
 	{
-		return self::createQuery($manager, 'deliveries')->execute();
+		return self::createQuery(self::getManager(), 'deliveries')->execute();
 	}
 	
-	static public function find($manager, $id)
+	static public function find($id)
 	{
-		return $manager->getRepository(__CLASS__)->find($id);
+		return self::getManager()->getRepository(__CLASS__)->find($id);
 	}
 }

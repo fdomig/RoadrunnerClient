@@ -16,15 +16,14 @@ class DeliveryController extends BaseController {
 	public function executeList()
 	{		
 		return $this->render('delivery.list.twig', array(
-			'delivery_list' => Delivery::getAll($this->getDocumentManager()),
+			'delivery_list' => Delivery::getAll(),
 		));
 	}
 	
 	public function executeView()
 	{
 		
-		$delivery = Delivery::find(
-			$this->getDocumentManager(), $this->getRequest()->get('id'));
+		$delivery = Delivery::find($this->getRequest()->get('id'));
 			
 		return $this->render('delivery.view.twig', array(
 			'delivery' => $delivery,
@@ -41,17 +40,15 @@ class DeliveryController extends BaseController {
 	public function executeEdit()
 	{
 		return $this->render('delivery.edit.twig', array(
-			'delivery' => Delivery::find(
-					$this->getDocumentManager(), 
-					$this->getRequest()->get('id')),
+			'delivery' => Delivery::find($this->getRequest()->get('id')),
 			'form_action' => '/delivery/update/' . $this->getRequest()->get('id'),
 		));
 	}
 	
 	public function executeUpdate()
 	{
-		$delivery = Delivery::find( $this->getDocumentManager(), 
-					$this->getRequest()->get('id'));
+		$delivery = Delivery::find($this->getRequest()->get('id'));
+		
 		$delivery->setFromAddress(new Address($this->getRequest()->get('from')));
 		$delivery->setToAddress(new Address($this->getRequest()->get('to')));			
 		$delivery->setModifiedAt(time());
@@ -74,9 +71,7 @@ class DeliveryController extends BaseController {
 			$delivery->addItem($newItem);
 		}
 		
-		$manager = $this->getDocumentManager();
-		$manager->persist($delivery);
-		$manager->flush();
+		$delivery->save();
 		
 		return $this->redirect('/delivery/view/' . $delivery->getId());
 	}
@@ -106,9 +101,7 @@ class DeliveryController extends BaseController {
 			$delivery->addItem($newItem);
 		}
 		
-		$manager = $this->getDocumentManager();
-		$manager->persist($delivery);
-		$manager->flush();
+		$delivery->save();
 		
 		return $this->redirect('/delivery/view/' . $delivery->getId());
 	}

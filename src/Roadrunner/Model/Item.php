@@ -58,13 +58,13 @@ class Item extends BaseDocument {
 		return '/cache/' . $file;
 	}
 	
-	static public function getAll($manager)
+	static public function getAll()
 	{
-		return self::createQuery($manager, 'items')->execute();
+		return self::createQuery(self::getManager(), 'items')->execute();
 	}
 	
-	static public function find($manager, $id)
+	static public function find($id)
 	{
-		return $manager->getRepository(__CLASS__)->find($id);
+		return self::getManager()->getRepository(__CLASS__)->find($id);
 	}
 }

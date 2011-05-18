@@ -9,6 +9,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 use Roadrunner\Model\OdmFactory;
+use Roadrunner\Provider\Service;
 
 use Silex\Extension\TwigExtension;
 
@@ -36,13 +37,13 @@ $app['autoloader']->registerNamespaces(array(
 ));
 
 // couch db
-$app['document_manager'] = $dm = OdmFactory::createOdm(
+$app['document_manager'] = OdmFactory::createOdm(
 	$app['config']['db.database'],
 	$app['config']['db.server'],
 	$app['config']['db.port'],
 	'roadrunner', 'roadrunner'
 );
-$app['users_manager'] = $dm = OdmFactory::createOdm(
+$app['user_manager'] = OdmFactory::createOdm(
 	$app['config']['db.user_database'],
 	$app['config']['db.server'],
 	$app['config']['db.port'],
@@ -61,5 +62,8 @@ $app['log']->pushHandler(new StreamHandler(
 	'file://' . __DIR__ . '/../log/error.log',
 	Logger::ERROR
 ));
+
+// register service provider
+Service::registerProvider($app);
 
 return $app;

@@ -8,7 +8,7 @@ class LogController extends BaseController {
 	public function executeList() {	
 		$id = $this->getRequest()->get('itemId');	
 		return $this->render('log.list.twig', array(
-			'log_list' => Log::getForItemId($id, $this->getDocumentManager()),
+			'log_list' => Log::getForItemId($id),
 		));
 	}
 }

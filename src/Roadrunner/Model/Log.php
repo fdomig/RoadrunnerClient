@@ -34,8 +34,8 @@ class Log extends BaseDocument {
 		return $this->timestamp;
 	}
 		
-	static public function getForItemId($itemId, $manager)  {
-		return parent::createQuery($manager,'logs')
+	static public function getForItemId($itemId)  {
+		return parent::createQuery(self::getManager(),'logs')
 			->setStartKey(array($itemId))
 			->setEndKey(array($itemId, ""))
 			->execute();
