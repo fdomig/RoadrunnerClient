@@ -1,5 +1,6 @@
 <?php
 
+use Roadrunner\Controller\ContainerController;
 use Roadrunner\Controller\DeliveryController;
 use Symfony\Component\BrowserKit\Response;
 
@@ -25,6 +26,13 @@ $app->get('/item/edit/{id}',array(new ItemController($app), 'executeEdit'));
 $app->get('/item/status/{id}', array(new ItemController($app), 'executeStatus'));
 $app->post('/item/update/{id}', array(new ItemController($app), 'executeUpdate'));
 
+/**
+ * Container controller
+ */
+$app->get('container/list', array(new ContainerController($app), 'executeList'));
+$app->get('container/add', array(new ContainerController($app), 'executeAdd'));
+$app->get('/container/view/{id}', array(new ContainerController($app), 'executeView'));
+$app->post('/container/create', array(new ContainerController($app), 'executeCreate'));
 /**
  * Log controller
  */

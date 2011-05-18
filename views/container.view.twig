@@ -1,0 +1,29 @@
+{% extends "layout.twig" %}
+{% block content %}
+
+	<h2>Transportation Unit</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+		</thead>	
+		<tr>
+			<td><code>{{ container.id }}</code></td>
+			<td>{{ container.name }}</td>
+		</tr>	
+	</table>
+	
+	<table>
+		<thead>
+			<tr><td>Url</td></tr>
+		</thead>
+		{% for sensor in container.sensors %}
+		<tr>
+			<td>{{ sensor }}</td>
+		</tr>
+		{% endfor %}
+	</table
+{% endblock %}

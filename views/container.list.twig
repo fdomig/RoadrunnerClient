@@ -1,0 +1,29 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+	<h2>Transportation Units</h2>
+
+	<a href="/container/add" class="adder">Add Transportation Unit</a>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>View</th>
+			</tr>
+		</thead>
+		{% for container in container_list %}
+			<tr>
+				<td><code>{{ container.key }}</code></td>
+				<td>{{ container.value.name }}</td>
+				<td><a href="/container/view/{{container.key}}">View</a></td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+	<a href="/container/add" class="adder">Add Transportation Unit</a>
+
+{% endblock %}
