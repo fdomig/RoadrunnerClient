@@ -2,6 +2,11 @@
 
 namespace Roadrunner\Model;
 
+use Doctrine\ODM\CouchDB\Mapping\ArrayField;
+
+/**
+ * @Document
+ */
 class Container extends BaseDocument {
 	
 	/** @Field(type="string") */
@@ -18,7 +23,6 @@ class Container extends BaseDocument {
 		parent::__construct('container');
 		$this->sensors = array();
 	}
-	
 
 	/**
 	 * Getter for $name

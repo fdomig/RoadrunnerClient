@@ -3,10 +3,13 @@
 
 {% block content %}
 
-	<h2>Create Transport Unit</h2>
+	<h2>Edit Transport Unit</h2>
 	<p>
-		<small>{{ container.id }}</small>
+		ID: <code>{{ container.id }}</code>
 	</p>
 	{{ layout_container.editContainerForm(form_action, container.name, container.sensors) }}
 	
+	<div class="add-sensor-form" style="display: none">
+		{{ layout_container.addSensorForm() }}
+	</div>
 {% endblock %}

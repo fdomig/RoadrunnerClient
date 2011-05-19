@@ -1,5 +1,5 @@
 {% extends "layout.twig" %}
-
+{% import "macro.container.twig" as layout_container %}
 
 {% block content %}
 
@@ -17,9 +17,9 @@
 		</thead>
 		{% for container in container_list %}
 			<tr>
-				<td><code>{{ container.key }}</code></td>
+				<td><code>{{ container.id }}</code></td>
 				<td>{{ container.value.name }}</td>
-				<td><a href="/container/view/{{container.key}}">View</a></td>
+				<td><a href="/container/view/{{ container.id }}">View</a></td>
 			</tr>
 		{% endfor %}
 	</table>
