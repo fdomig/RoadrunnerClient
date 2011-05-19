@@ -41,7 +41,16 @@ class ContainerController extends BaseController
 		
 		// add new sensors
 		$nrOfSensors = (int) $this->getRequest()->get('nr-of-sensors');
+		$nrToRemove = (int) $this->getRequest()->get('nr-of-sensors-to-remove');
 		
+		// remove sensors
+		for ($i=0; $i < $nrToRemove; $i++) {
+			
+			$uri = $this->app->escape($this->getRequest()->get('input-remove-sensor-' . $i));
+			$container->removeSensor($uri);
+		}
+		
+		// add sensors
 		for ($i=0; $i < $nrOfSensors; $i++) {
 			
 			$uri = $this->app->escape($this->getRequest()->get('input-uri-hidden-' . $i));

@@ -52,6 +52,7 @@ jQuery(function() {
 	
 	var sensorDialog = $('.add-sensor-form');
 	var sensorCount = 0;
+	var removePersistentSensorCount = 0;
 	sensorDialog.find('.create-sensor-button').click(function(e) {
 		e.preventDefault();
 		var inputUrl = $(this).parent().parent().find('.input-uri');
@@ -92,17 +93,21 @@ jQuery(function() {
 	$('.create-container-button').click(function() {
 		needToConfirm = false;
 		$('.form-create-container').append(
-				'<input type="hidden" name="nr-of-sensors" value="'+ sensorCount +'"/>"');
+			'<input type="hidden" name="nr-of-sensors-to-remove" value="' + removePersistentSensorCount + '"/>' +
+			'<input type="hidden" name="nr-of-sensors" value="'+ sensorCount +'"/>"'
+		);
 	});
 	
 	$('.remove-sensor-from-container').click(function(e) {
 		e.preventDefault();
 		var sensor = $(this).parent().parent();
 		if (sensor.hasClass('persistent')) {
-//			$('.form-create-container fieldset').append(
-//				'<input style="display: hidden" name="input-remove-"'value="' + sensor.attr('id') + '" />;'
-//			);
-//			sensor.remove();
+			needToConfirm = true;
+			$('.form-create-container fieldset').append(
+				'<input type="hidden" name="input-remove-sensor-' + removePersistentSensorCount + '" value="' + sensor.find('.sensor-uri').text() + '" />;'
+			);
+			sensor.remove();
+			removePersistentSensorCount++;
 		}
 		return false;
 	});

@@ -60,6 +60,16 @@ class Container extends BaseDocument {
 		return $this->sensors;
 	}
 	
+	public function removeSensor($sensor)
+	{
+		if ($key = array_search($sensor, $this->sensors)) {
+			
+    		if($key !== FALSE) {
+    			unset($this->sensors[$key]);
+    		}
+		}
+	}
+	
 	static public function getAll()
 	{
 		return self::createQuery('container')->execute();
