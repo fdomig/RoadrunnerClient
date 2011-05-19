@@ -2,8 +2,6 @@
 
 namespace Roadrunner\Model;
 
-use Doctrine\ODM\CouchDB\Mapping\ArrayField;
-
 /**
  * @Document
  */

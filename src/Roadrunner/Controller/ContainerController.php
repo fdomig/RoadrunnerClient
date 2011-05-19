@@ -47,7 +47,6 @@ class ContainerController extends BaseController
 			$container->addSensor($uri);
 		}
 		
-		
 		$container->save();
 		
 		return $this->redirect('/container/view/' . $container->getId());
