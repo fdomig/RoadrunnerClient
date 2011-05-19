@@ -1,10 +1,10 @@
 {% macro leave() %}
 	<script language="javascript" type="text/javascript">	
-		 needToConfirm = false;
+		 RR_AKS_CONFIRM = false;
 	     window.onbeforeunload = askConfirm;
 	     
 	     function askConfirm(){
-			if (needToConfirm){
+			if (RR_AKS_CONFIRM){
 				return "You have unsaved changes.";
 			}       
 	     }

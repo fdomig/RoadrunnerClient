@@ -30,7 +30,7 @@ jQuery(function() {
 	
 	$('.add-item-to-delivery').click(function(e) {
 		e.preventDefault();
-		needToConfirm = true;
+		RR_AKS_CONFIRM = true;
 		cdialog.dialog({
 			title: "Add a new Item to this Delivery.",
 			height: 370,
@@ -42,7 +42,7 @@ jQuery(function() {
 	});
 	
 	$('.create-delivery-button').click(function() {
-		needToConfirm = false;
+		RR_AKS_CONFIRM = false;
 		$('.form-create-delivery').append(
 				'<input type="hidden" name="nr-of-items" value="'+ itemCount +'"/>"');
 	});
@@ -72,7 +72,7 @@ jQuery(function() {
 			</div>');
 		
 		sensorCount++;
-		needToConfirm = true;
+		RR_AKS_CONFIRM = true;
 		sensorDialog.dialog("destroy");
 		inputUrl.val("");
 		return false;
@@ -91,7 +91,7 @@ jQuery(function() {
 	});
 	
 	$('.create-container-button').click(function() {
-		needToConfirm = false;
+		RR_AKS_CONFIRM = false;
 		$('.form-create-container').append(
 			'<input type="hidden" name="nr-of-sensors-to-remove" value="' + removePersistentSensorCount + '"/>' +
 			'<input type="hidden" name="nr-of-sensors" value="'+ sensorCount +'"/>"'
@@ -102,7 +102,7 @@ jQuery(function() {
 		e.preventDefault();
 		var sensor = $(this).parent().parent();
 		if (sensor.hasClass('persistent')) {
-			needToConfirm = true;
+			RR_AKS_CONFIRM = true;
 			$('.form-create-container fieldset').append(
 				'<input type="hidden" name="input-remove-sensor-' + removePersistentSensorCount + '" value="' + sensor.find('.sensor-uri').text() + '" />;'
 			);
