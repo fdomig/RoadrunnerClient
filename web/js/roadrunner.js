@@ -1,5 +1,6 @@
-jQuery(function() {
 
+jQuery(function() {
+	
 	// ############### adds item to delivery item-list ##################
 	
 	var cdialog = $('.add-item-form');
@@ -10,7 +11,7 @@ jQuery(function() {
 		var inputMaxTemp = $(this).parent().parent().find('.input-max-temp'); 
 		var inputMinTemp = $(this).parent().parent().find('.input-min-temp');
 		
-		var newItem = $('<tr><td>New Item</td><td>'+ inputName.val()+ '</td><td>&nbsp;</td></tr>');
+		var newItem = $('<tr class="create"><td>New Item</td><td>'+ inputName.val()+ '</td><td>&nbsp;</td></tr>');
 		$('#item-list tbody').append(newItem);
 		$('.form-create-delivery fieldset').append(
 			'<div>\
@@ -29,6 +30,7 @@ jQuery(function() {
 	
 	$('.add-item-to-delivery').click(function(e) {
 		e.preventDefault();
+		needToConfirm = true;
 		cdialog.dialog({
 			title: "Add a new Item to this Delivery.",
 			height: 370,
@@ -39,7 +41,8 @@ jQuery(function() {
 		return false;
 	});
 	
-	$('.create-delivery-button').click(function(){
+	$('.create-delivery-button').click(function() {
+		needToConfirm = false;
 		$('.form-create-delivery').append(
 				'<input type="hidden" name="nr-of-items" value="'+ itemCount +'"/>"');
 	});
@@ -53,14 +56,22 @@ jQuery(function() {
 		e.preventDefault();
 		var inputUrl = $(this).parent().parent().find('.input-uri');
 		
-		var newSensor = $('<tr><td>'+ inputUrl.val()+ '</td></tr>');
+		var newSensor = $('<tr class="create"><td>'+ inputUrl.val()+ '</td><td><a href="">Remove</a></td></tr>');
 		$('#sensor-list tbody').append(newSensor);
+		
+		newSensor.find('a').click(function(e){
+			e.preventDefault();
+			$(this).parent().parent().remove();
+			return false;
+		});
+		
 		$('.form-create-container fieldset').append(
 			'<div>\
 				<input type="hidden" name="input-uri-hidden-' + sensorCount + '" value="' + inputUrl.val() +'" />\
 			</div>');
 		
 		sensorCount++;
+		needToConfirm = true;
 		sensorDialog.dialog("destroy");
 		inputUrl.val("");
 		return false;
@@ -79,7 +90,21 @@ jQuery(function() {
 	});
 	
 	$('.create-container-button').click(function() {
+		needToConfirm = false;
 		$('.form-create-container').append(
 				'<input type="hidden" name="nr-of-sensors" value="'+ sensorCount +'"/>"');
 	});
+	
+	$('.remove-sensor-from-container').click(function(e) {
+		e.preventDefault();
+		var sensor = $(this).parent().parent();
+		if (sensor.hasClass('persistent')) {
+//			$('.form-create-container fieldset').append(
+//				'<input style="display: hidden" name="input-remove-"'value="' + sensor.attr('id') + '" />;'
+//			);
+//			sensor.remove();
+		}
+		return false;
+	});
+	
 });

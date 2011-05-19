@@ -42,12 +42,14 @@
 			<thead>
 				<tr>
 					<th>URI</th>
+					<th>Remove</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for sensor in sensors %}
-					<tr>
+					<tr id="sensor-{{ loop.index }}" class="persistent">
 						<td>{{ sensor }}</td>
+						<td><a href="" class="remove-sensor-from-container">Remove</a></td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -64,4 +66,17 @@
 		<input class="input-uri" type="text" value="" name="uri" />
 		<input class="create-sensor-button" type="submit" value="Create Sensor" />
 	</form>
+{% endmacro %}
+
+{% macro leave() %}
+	<script language="javascript" type="text/javascript">	
+		 needToConfirm = false;
+	     window.onbeforeunload = askConfirm;
+	     
+	     function askConfirm(){
+			if (needToConfirm){
+				return "You have unsaved changes.";
+			}       
+	     }
+	</script>
 {% endmacro %}

@@ -39,8 +39,9 @@ class ContainerController extends BaseController
 		$container = Container::find($this->getRequest()->get('id'));
 		$container->setName($this->app->escape($this->getRequest()->get('name')));
 		
+		// add new sensors
 		$nrOfSensors = (int) $this->getRequest()->get('nr-of-sensors');
-	
+		
 		for ($i=0; $i < $nrOfSensors; $i++) {
 			
 			$uri = $this->app->escape($this->getRequest()->get('input-uri-hidden-' . $i));
