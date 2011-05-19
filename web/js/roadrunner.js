@@ -57,7 +57,7 @@ jQuery(function() {
 		$('#sensor-list tbody').append(newSensor);
 		$('.form-create-container fieldset').append(
 			'<div>\
-				<input type="hidden" name="input-uri-hidden-' + itemCount + '" value="' + inputUrl.val() +'" />\
+				<input type="hidden" name="input-uri-hidden-' + sensorCount + '" value="' + inputUrl.val() +'" />\
 			</div>');
 		
 		sensorCount++;
