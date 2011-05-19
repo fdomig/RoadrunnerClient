@@ -53,7 +53,7 @@ cd ../../../vendor
 # DroidCouch
 # install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
 # use fdomigs fork as long as there is no IntegerType in the official repository
-install_git couchdb-odm https://github.com/fdomig/couchdb-odm.git origin/IntegerType
+install_git couchdb-odm https://github.com/fdomig/couchdb-odm.git origin/master
 cd couchdb-odm && git submodule init && git submodule update && cd ..
 
 # Monolog
