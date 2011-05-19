@@ -1,5 +1,5 @@
 {% macro addContainerForm(form_action) %}
-	<form action="{{ form_action }}" method="POST">
+	<form action="{{ form_action }}" method="post">
 		<fieldset>
 			{{ _self.unitInputs() }}
 			{{ _self.sensorBlock() }}
@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% macro editContainerForm(form_action, name, sensors) %}
-	<form action="{{ form_action }}" method="POST">
+	<form action="{{ form_action }}" method="post">
 		<fieldset>
 			{{ _self.unitInputs(name) }}
 			{{ _self.sensorBlock(sensors) }}
