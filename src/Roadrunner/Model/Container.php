@@ -62,12 +62,10 @@ class Container extends BaseDocument {
 	
 	public function removeSensor($sensor)
 	{
-		if ($key = array_search($sensor, $this->sensors)) {
-			
-    		if($key !== FALSE) {
-    			unset($this->sensors[$key]);
-    		}
-		}
+		$key = array_search($sensor, $this->sensors);
+    	if($key !== false) {
+    		unset($this->sensors[$key]);
+    	}
 	}
 	
 	static public function getAll()
