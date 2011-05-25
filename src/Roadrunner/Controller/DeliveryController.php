@@ -85,20 +85,15 @@ class DeliveryController extends BaseController {
 		$delivery->setFromAddress(new Address($this->getRequest()->get('from')));
 		$delivery->setToAddress(new Address($this->getRequest()->get('to')));
 		
-		$nrOfItems = (int) $this->getRequest()->get('nr-of-items');
-		
-		for ($i=0; $i < $nrOfItems; $i++) {
-			
-			$name = $this->app->escape($this->getRequest()->get('input-name-hidden-' . $i));
-			$minTemp = $this->app->escape($this->getRequest()->get('input-min-temp-hidden-' . $i));
-			$maxTemp = $this->app->escape($this->getRequest()->get('input-max-temp-hidden-' . $i));
+		$createItemList = explode(',',$this->app->escape($this->getRequest()->get('create-item-list')));
+		for ($i=0; $i < count($createItemList); $i++) {
 			
 			//FIXME: VALIDATE INPUT DATA
-			
+			$properties = explode('|',$createItemList[$i]);
 			$newItem = new Item();
-			$newItem->setName($name);
-			$newItem->setTempMin((int)$minTemp);
-			$newItem->setTempMax((int)$maxTemp);
+			$newItem->setName($properties[0]);
+			$newItem->setTempMin((int)$properties[1]);
+			$newItem->setTempMax((int)$properties[2]);
 			
 			$delivery->addItem($newItem);
 		}

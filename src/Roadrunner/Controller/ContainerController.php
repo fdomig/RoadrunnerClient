@@ -64,12 +64,11 @@ class ContainerController extends BaseController
 		$container = new Container();
 		$container->setName($this->app->escape($this->getRequest()->get('name')));
 		
-		$nrOfSensors = (int) $this->getRequest()->get('nr-of-sensors');
-	
-		for ($i=0; $i < $nrOfSensors; $i++) {
-			
-			$uri = $this->app->escape($this->getRequest()->get('input-uri-hidden-' . $i));
-			$container->addSensor($uri);
+		$sensorCreateList = explode(',', $this->app->escape($this->getRequest()->get('create-sensor-list')));
+		
+		// add sensors
+		for ($i=0; $i < count($sensorCreateList); $i++) {
+			(!empty($sensorCreateList[$i])) ? $container->addSensor($sensorCreateList[$i]) : null;
 		}
 		
 		$container->save();
