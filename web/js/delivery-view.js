@@ -2,6 +2,8 @@ jQuery(function() {
 	
 	var map;
 	var markersArray = [];
+	var directionDisplay;
+	var directionsService = new google.maps.DirectionsService();
 
 	function initialize() {
 		var home = new google.maps.LatLng(47.413417, 9.744417);
@@ -13,13 +15,11 @@ jQuery(function() {
 		map = new google.maps.Map(document.getElementById("map_canvas"),
 			mapOptions
 		);
+		directionsDisplay = new google.maps.DirectionsRenderer();
+		directionsDisplay.setMap(map);
 
 		$('.delivery-entry').each(function() {
-			getDirections($(this).attr('id'));
-		});
-
-		$('.item-entry').each(function() {
-			getRoute($(this).attr('id'));
+			drawDirections($(this).attr('id'));
 		});
 		
 	}
@@ -60,15 +60,18 @@ jQuery(function() {
 		}
 	}
 
-	function getRoute(id) {
-		$.getJSON('/item/route/' + id, function(data) {
-			// TODO
-		});
-	}
-
-	function getDirections(id) {
-		$.getJSON('/delivery/directions/' + id, function(data) {
-			// TODO
+	function drawDirections(id) {
+		$.getJSON('/delivery/directions/' + id, function(route) {
+			options = {
+				origin: route.origin,
+				destination: route.destination,
+				travelMode: google.maps.DirectionsTravelMode.DRIVING,
+			}
+			directionsService.route(options, function(result, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(result);
+				}
+			});
 		});
 	}
 

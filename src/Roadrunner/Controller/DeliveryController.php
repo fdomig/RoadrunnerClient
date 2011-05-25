@@ -127,9 +127,7 @@ class DeliveryController extends BaseController {
 			throw new ControllerException("Delivery does not exist.");
 		}
 		
-		return json_encode(array(
-			'directions' => $delivery->getDirections(),
-		));
+		return json_encode($delivery->getDirections());
 		
 	}
 	

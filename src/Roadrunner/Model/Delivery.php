@@ -115,23 +115,11 @@ class Delivery extends BaseDocument {
     }
 
 	public function getDirections()
-	{
-		$from = $this->getFromAddress();
-		$to   = $this->getToAddress();
-		
-		$url = 'http://maps.google.com/maps/api/directions/json?sensor=false';
-
-		$url.= '&origin=' . $from->getStreet() . ',' . $from->getZip() . ','
-			. $from->getCity();
-			
-		$url.= '&destination=' . $to->getStreet() . ',' . $to->getZip() . ','
-			. $to->getCity();
-		
-		$ch = curl_init($url);
-		$res = curl_exec($ch);
-		curl_close($ch);
-		
-		return $res;
+	{	
+		return array(
+			"origin" => urlencode($this->getToAddress()->__toString()),
+			"destination" => urlencode($this->getFromAddress()->__toString()),
+		);
 	}
 	
 	static public function getAll()
