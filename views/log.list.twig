@@ -15,7 +15,7 @@
 		<tbody>
 			{% for log in log_list %}
 				<tr>
-					<td>{{log.value.timestamp}}</td>
+					<td>{{log.value.timestamp|date("Y-m-d H:i:s") }}</td>
 					<td>{{log.value.logType}}</td>
 					<td>{{log.value.value}}</td>
 				</tr>

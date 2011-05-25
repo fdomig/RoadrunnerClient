@@ -66,6 +66,19 @@ class Item extends BaseDocument {
 		return $result[0]['value']['status'];
 	}
 	
+	public function getRoute()
+	{
+		$result = self::createQuery('itemroute')
+			->setStartKey(array($this->getId()))
+			->setEndKey(array($this->getId(), '', ''))
+			->setGroupLevel(3);
+			
+		return $result->execute();
+		
+		return $result->execute()->toArray();
+		
+	}
+	
 	static public function getAll()
 	{
 		return self::createQuery('items')->execute();

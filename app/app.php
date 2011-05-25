@@ -22,9 +22,11 @@ $app->get('/item/add', array(new ItemController($app), 'executeAdd'));
 $app->get('/item/view/{id}', array(new ItemController($app), 'executeView'));
 $app->get('/item/list', array(new ItemController($app), 'executeList'));
 $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
-$app->get('/item/edit/{id}',array(new ItemController($app), 'executeEdit'));
-$app->get('/item/status/{id}', array(new ItemController($app), 'executeStatus'));
 $app->post('/item/update/{id}', array(new ItemController($app), 'executeUpdate'));
+$app->get('/item/edit/{id}',array(new ItemController($app), 'executeEdit'));
+// ajax
+$app->get('/item/status/{id}', array(new ItemController($app), 'executeStatus'));
+$app->get('/item/route/{id}', array(new ItemController($app), 'executeRoute'));
 
 /**
  * Container controller
@@ -50,6 +52,7 @@ $app->get('/delivery/add', array(new DeliveryController($app), 'executeAdd'));
 $app->post('/delivery/create', array(new DeliveryController($app), 'executeCreate'));
 $app->get('/delivery/edit/{id}', array(new DeliveryController($app), 'executeEdit'));
 $app->post('/delivery/update/{id}', array(new DeliveryController($app), 'executeUpdate'));
+$app->get('/delivery/directions/{id}', array(new DeliveryController($app), 'executeDirections'));
 
 /*
  * User controller

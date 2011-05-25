@@ -6,7 +6,7 @@ use Roadrunner\Provider\ServiceException;
 
 class Service {
 	
-	static private $provider = array();
+	static private $provider = null;
 	
 	private function __construct() {}
 	
@@ -17,6 +17,9 @@ class Service {
 	
 	static public function getService($name)
 	{
+		if (is_null(self::$provider)) {
+			throw new ServiceException("No service provider available.");
+		}
 		return self::$provider[$name];
 	}
 }

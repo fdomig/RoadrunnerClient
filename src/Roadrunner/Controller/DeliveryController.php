@@ -106,4 +106,23 @@ class DeliveryController extends BaseController {
 		return $this->redirect('/delivery/view/' . $delivery->getId());
 	}
 	
+	public function executeDirections()
+	{
+		if (!$this->getRequest()->isXmlHttpRequest()) {
+			throw new ControllerException("Method not allowed.");
+		}
+
+		$id = $this->getRequest()->get('id');
+		$delivery = Delivery::find($id);
+		
+		if (is_null($delivery)) {
+			throw new ControllerException("Delivery does not exist.");
+		}
+		
+		return json_encode(array(
+			'directions' => $delivery->getDirections(),
+		));
+		
+	}
+	
 }

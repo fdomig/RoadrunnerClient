@@ -88,8 +88,28 @@ class ItemController extends BaseController {
 	
 	public function executeStatus()
 	{
+		$item = $this->findAjaxItem();
+		
+		return json_encode(array(
+			'id'     => $item->getId(),
+			'status' => $item->getStatus()
+		));
+	}
+	
+	public function executeRoute()
+	{
+		$item = $this->findAjaxItem();
+		
+		return json_encode(array(
+			'id' => $item->getId(),
+			'route' => $item->getRoute()
+		));
+	}
+	
+	private function findAjaxItem()
+	{
 		if (!$this->getRequest()->isXmlHttpRequest()) {
-			throw new ControllerException("Status cannot be retrieved directly.");
+			throw new ControllerException("Method not allowed.");
 		}
 
 		$id = $this->getRequest()->get('id');
@@ -99,10 +119,7 @@ class ItemController extends BaseController {
 			throw new ControllerException("Item does not exist.");
 		}
 		
-		return json_encode(array(
-			'id'     => $item->getId(),
-			'status' => $item->getStatus())
-		);
+		return $item;
 	}
 	
 }
