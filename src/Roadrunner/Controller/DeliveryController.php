@@ -59,13 +59,15 @@ class DeliveryController extends BaseController {
 		for ($i=0; $i < count($createItemList); $i++) {
 			
 			//FIXME: VALIDATE INPUT DATA
-			$properties = explode('|',$createItemList[$i]);
-			$newItem = new Item();
-			$newItem->setName($properties[0]);
-			$newItem->setTempMin((int)$properties[1]);
-			$newItem->setTempMax((int)$properties[2]);
-			
-			$delivery->addItem($newItem);
+			if (!empty($createItemList[$i])) {
+				$properties = explode('|',$createItemList[$i]);
+				$newItem = new Item();
+				$newItem->setName($properties[0]);
+				$newItem->setTempMin((int)$properties[1]);
+				$newItem->setTempMax((int)$properties[2]);
+				
+				$delivery->addItem($newItem);
+			}
 		}
 		// remove sensors
 		for ($i=0; $i < $nrToRemove; $i++) {
@@ -86,16 +88,18 @@ class DeliveryController extends BaseController {
 		$delivery->setToAddress(new Address($this->getRequest()->get('to')));
 		
 		$createItemList = explode(',',$this->app->escape($this->getRequest()->get('create-item-list')));
+		
 		for ($i=0; $i < count($createItemList); $i++) {
-			
-			//FIXME: VALIDATE INPUT DATA
-			$properties = explode('|',$createItemList[$i]);
-			$newItem = new Item();
-			$newItem->setName($properties[0]);
-			$newItem->setTempMin((int)$properties[1]);
-			$newItem->setTempMax((int)$properties[2]);
-			
-			$delivery->addItem($newItem);
+			if (!empty($createItemList[$i])) {
+				//FIXME: VALIDATE INPUT DATA
+				$properties = explode('|',$createItemList[$i]);
+				$newItem = new Item();
+				$newItem->setName($properties[0]);
+				$newItem->setTempMin((int)$properties[1]);
+				$newItem->setTempMax((int)$properties[2]);
+				
+				$delivery->addItem($newItem);
+			}
 		}
 		
 		$delivery->save();
