@@ -1,5 +1,5 @@
 {% macro addContainerForm(form_action) %}
-	<form action="{{ form_action }}" method="post">
+	<form class="form-create-container" action="{{ form_action }}" method="post">
 		<fieldset>
 			{{ _self.unitInputs() }}
 			{{ _self.sensorBlock() }}
@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% macro editContainerForm(form_action, name, sensors) %}
-	<form action="{{ form_action }}" method="post">
+	<form class="form-create-container" action="{{ form_action }}" method="post">
 		<fieldset>
 			{{ _self.unitInputs(name) }}
 			{{ _self.sensorBlock(sensors) }}
@@ -42,12 +42,14 @@
 			<thead>
 				<tr>
 					<th>URI</th>
+					<th>Remove</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for sensor in sensors %}
-					<tr>
-						<td>{{ sensor }}</td>
+					<tr id="sensor-{{ loop.index }}" class="persistent">
+						<td class="sensor-uri">{{ sensor }}</td>
+						<td><a href="" class="remove-sensor-from-container">Remove</a></td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -56,4 +58,12 @@
 			<a href="" class="add-sensor-to-container">Add Sensor</a>
 		</div>
 	</div>
+{% endmacro %}
+
+{% macro addSensorForm() %}
+	<form name="add-sensor-form">
+		URI</ br>
+		<input class="input-uri" type="text" value="" name="uri" />
+		<input class="create-sensor-button" type="submit" value="Create Sensor" />
+	</form>
 {% endmacro %}

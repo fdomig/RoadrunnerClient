@@ -39,7 +39,23 @@ class ContainerController extends BaseController
 		$container = Container::find($this->getRequest()->get('id'));
 		$container->setName($this->app->escape($this->getRequest()->get('name')));
 		
-		// TODO: insert Sensors
+		// add new sensors
+		$nrOfSensors = (int) $this->getRequest()->get('nr-of-sensors');
+		$nrToRemove = (int) $this->getRequest()->get('nr-of-sensors-to-remove');
+		
+		// remove sensors
+		for ($i=0; $i < $nrToRemove; $i++) {
+			
+			$uri = $this->app->escape($this->getRequest()->get('input-remove-sensor-' . $i));
+			$container->removeSensor($uri);	
+		}
+		
+		// add sensors
+		for ($i=0; $i < $nrOfSensors; $i++) {
+			
+			$uri = $this->app->escape($this->getRequest()->get('input-uri-hidden-' . $i));
+			$container->addSensor($uri);
+		}
 		
 		$container->save();
 		
@@ -51,7 +67,13 @@ class ContainerController extends BaseController
 		$container = new Container();
 		$container->setName($this->app->escape($this->getRequest()->get('name')));
 		
-		// TODO: insert Sensors
+		$nrOfSensors = (int) $this->getRequest()->get('nr-of-sensors');
+	
+		for ($i=0; $i < $nrOfSensors; $i++) {
+			
+			$uri = $this->app->escape($this->getRequest()->get('input-uri-hidden-' . $i));
+			$container->addSensor($uri);
+		}
 		
 		$container->save();
 		

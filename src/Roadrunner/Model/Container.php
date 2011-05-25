@@ -2,6 +2,9 @@
 
 namespace Roadrunner\Model;
 
+/**
+ * @Document
+ */
 class Container extends BaseDocument {
 	
 	/** @Field(type="string") */
@@ -18,7 +21,6 @@ class Container extends BaseDocument {
 		parent::__construct('container');
 		$this->sensors = array();
 	}
-	
 
 	/**
 	 * Getter for $name
@@ -56,6 +58,14 @@ class Container extends BaseDocument {
 	public function getSensors()
 	{
 		return $this->sensors;
+	}
+	
+	public function removeSensor($sensor)
+	{
+		$key = array_search($sensor, $this->sensors);
+    	if($key !== false) {
+    		unset($this->sensors[$key]);
+    	}
 	}
 	
 	static public function getAll()

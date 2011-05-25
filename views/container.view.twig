@@ -2,28 +2,34 @@
 {% block content %}
 
 	<h2>Transportation Unit</h2>
-
-	<table>
-		<thead>
+	<div class="span-12">
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Edit</th>
+				</tr>
+			</thead>	
 			<tr>
-				<th>ID</th>
-				<th>Name</th>
+				<td><code>{{ container.id }}</code></td>
+				<td>{{ container.name }}</td>
+				<td><a href="/container/edit/{{ container.id }}" >Edit</a>
+			</tr>	
+		</table>
+	</div>
+	<div style="clear: both"></div>
+	<div class="span-8 last">
+		<h3>Sensors</h3>
+		<table>
+			<thead>
+				<th>Sensor Url</th>
+			</thead>
+			{% for sensor in container.sensors %}
+			<tr>
+				<td><code>{{ sensor }}</code></td>
 			</tr>
-		</thead>	
-		<tr>
-			<td><code>{{ container.id }}</code></td>
-			<td>{{ container.name }}</td>
-		</tr>	
-	</table>
-	
-	<table>
-		<thead>
-			<tr><td>Sensor Url</td></tr>
-		</thead>
-		{% for sensor in container.sensors %}
-		<tr>
-			<td>{{ sensor }}</td>
-		</tr>
-		{% endfor %}
-	</table
+			{% endfor %}
+		</table>
+	</div>
 {% endblock %}
