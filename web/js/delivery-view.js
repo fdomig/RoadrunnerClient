@@ -62,13 +62,13 @@ jQuery(function() {
 
 	function getRoute(id) {
 		$.getJSON('/item/route/' + id, function(data) {
-			console.log(data);
+			// TODO
 		});
 	}
 
 	function getDirections(id) {
 		$.getJSON('/delivery/directions/' + id, function(data) {
-			console.log(data);
+			// TODO
 		});
 	}
 
