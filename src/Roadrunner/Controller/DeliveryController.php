@@ -122,7 +122,6 @@ class DeliveryController extends BaseController {
 		}
 		
 		return json_encode($delivery->getDirections());
-		
 	}
 	
 }

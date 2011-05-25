@@ -48,7 +48,17 @@ unzip jquery-ui-1.8.13.custom.zip
 rm jquery-ui-1.8.13.custom.zip
 rm -rf development-bundle
 rm -rf index.html
-cd ../../../vendor
+cd ..
+
+# highcharts
+mkdir highcharts && cd highcharts
+wget http://www.highcharts.com/downloads/zips/Highcharts-2.1.4.zip
+unzip Highcharts-2.1.4.zip && rm -rf Highcharts-2.1.4.zip
+rm -rf examples exporting-server index.html
+cd ..
+
+
+cd ../../vendor
 
 # DroidCouch
 # install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
