@@ -54,6 +54,7 @@ class DeliveryController extends BaseController {
 		$delivery->setModifiedAt(time());
 		
 		$nrOfItems = (int) $this->getRequest()->get('nr-of-items');
+		$nrToRemove = (int) $this->getRequest()->get('nr-of-items-to-remove');
 		
 		for ($i=0; $i < $nrOfItems; $i++) {
 			
@@ -70,6 +71,13 @@ class DeliveryController extends BaseController {
 			
 			$delivery->addItem($newItem);
 		}
+		
+		// remove sensors
+		for ($i=0; $i < $nrToRemove; $i++) {
+			$id = $this->app->escape($this->getRequest()->get('input-remove-item-' . $i));
+			$delivery->removeItem($id);	
+		}
+		
 		
 		$delivery->save();
 		

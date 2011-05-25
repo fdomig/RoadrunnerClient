@@ -5,13 +5,21 @@ jQuery(function() {
 	
 	var cdialog = $('.add-item-form');
 	var itemCount = 0;
+	var removePersistentItemCount = 0;
 	cdialog.find('.create-item-button').click(function(e) {
 		e.preventDefault();
 		var inputName = $(this).parent().parent().find('.input-name');
 		var inputMaxTemp = $(this).parent().parent().find('.input-max-temp'); 
 		var inputMinTemp = $(this).parent().parent().find('.input-min-temp');
 		
-		var newItem = $('<tr class="create"><td>New Item</td><td>'+ inputName.val()+ '</td><td>&nbsp;</td></tr>');
+		var newItem = $('<tr class="create"><td>New Item</td><td>'+ inputName.val()+ '</td><td>&nbsp;</td><td><a href="" class="remove">Remove</a></td></tr>');
+		
+		newItem.find('a.remove').click(function(e){
+			e.preventDefault();
+			$(this).parent().parent().remove();
+			return false;
+		});
+		
 		$('#item-list tbody').append(newItem);
 		$('.form-create-delivery fieldset').append(
 			'<div>\
@@ -41,10 +49,25 @@ jQuery(function() {
 		return false;
 	});
 	
+	$('.remove-item-from-delivery').click(function(e) {
+		e.preventDefault();
+		var item = $(this).parent().parent();
+		if (item.hasClass('persistent')) {
+			RR_AKS_CONFIRM = true;
+			$('.form-create-delivery fieldset').append(
+				'<input type="hidden" name="input-remove-item-' + removePersistentSensorCount + '" value="' + item.find('.item-id').text() + '" />;'
+			);
+			item.remove();
+			removePersistentItemCount++;
+		}
+		return false;
+	});
+	
 	$('.create-delivery-button').click(function() {
 		RR_AKS_CONFIRM = false;
 		$('.form-create-delivery').append(
-				'<input type="hidden" name="nr-of-items" value="'+ itemCount +'"/>"');
+			'<input type="hidden" name="nr-of-items-to-remove" value="' + removePersistentItemCount + '"/>' +	
+			'<input type="hidden" name="nr-of-items" value="'+ itemCount +'"/>');
 	});
 	
 	
@@ -57,10 +80,10 @@ jQuery(function() {
 		e.preventDefault();
 		var inputUrl = $(this).parent().parent().find('.input-uri');
 		
-		var newSensor = $('<tr class="create"><td>'+ inputUrl.val()+ '</td><td><a href="">Remove</a></td></tr>');
+		var newSensor = $('<tr class="create"><td>'+ inputUrl.val()+ '</td><td><a href="" class="remove">Remove</a></td></tr>');
 		$('#sensor-list tbody').append(newSensor);
 		
-		newSensor.find('a').click(function(e){
+		newSensor.find('a.remove').click(function(e){
 			e.preventDefault();
 			$(this).parent().parent().remove();
 			return false;
