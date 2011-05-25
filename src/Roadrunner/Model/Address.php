@@ -83,4 +83,10 @@ class Address {
     public function getStreet() {
     	return $this->street;
     }
+
+	public function __toString()
+	{
+		return $this->getStreet() . ', ' . $this->getZip()
+			. ' ' . $this->getCity();
+	}
 }
