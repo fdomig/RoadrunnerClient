@@ -74,9 +74,27 @@ class Item extends BaseDocument {
 			->setGroupLevel(3);
 			
 		return $result->execute();
+	}
+	
+	public function getTempLogs()
+	{
+		$logs = Log::getForItemId($this->getId());
+		$data = array();
+		$last = null;
+		$max = $i = count($logs) / 20;
+		foreach ($logs as $log) {
+			if ("TEMPSENSOR" == $log['value']['logType']) {
+				if ($i-- < 0) {
+					$data[] = array(
+						'timestamp' => (int) $log['value']['timestamp'],
+						'value' => (float) $log['value']['value'],
+					);
+					$i = $max;
+				}
+			}
+		}
 		
-		return $result->execute()->toArray();
-		
+		return $data;
 	}
 	
 	static public function getAll()

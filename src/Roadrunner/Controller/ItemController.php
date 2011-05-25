@@ -106,6 +106,17 @@ class ItemController extends BaseController {
 		));
 	}
 	
+	public function executeTempLogs()
+	{
+		$item = $this->findAjaxItem();
+		
+		return json_encode(array(
+			'id' => $item->getId(),
+			'name' => $item->getName(),
+			'logs' => $item->getTempLogs()
+		));
+	}
+	
 	private function findAjaxItem()
 	{
 		if (!$this->getRequest()->isXmlHttpRequest()) {

@@ -27,6 +27,7 @@ $app->get('/item/edit/{id}',array(new ItemController($app), 'executeEdit'));
 // ajax
 $app->get('/item/status/{id}', array(new ItemController($app), 'executeStatus'));
 $app->get('/item/route/{id}', array(new ItemController($app), 'executeRoute'));
+$app->get('/item/templogs/{id}', array(new ItemController($app), 'executeTempLogs'));
 
 /**
  * Container controller
