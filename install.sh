@@ -17,21 +17,15 @@ wget http://silex-project.org/get/silex.phar
 
 # jQuery
 cd ../web/js
-mkdir -p jquery && cd jquery
 wget http://jqueryui.com/download/jquery-ui-1.8.13.custom.zip
-unzip jquery-ui-1.8.13.custom.zip
-rm jquery-ui-1.8.13.custom.zip
-rm -rf development-bundle
-rm -rf index.html
-cd ..
+unzip -u jquery-ui-1.8.13.custom.zip -d jquery
+rm -rf jquery-ui-1.8.13.custom.zip jquery/development-bundle jquery/index.html
 
 # highcharts
-mkdir highcharts && cd highcharts
 wget http://www.highcharts.com/downloads/zips/Highcharts-2.1.4.zip
-unzip Highcharts-2.1.4.zip
+unzip -u Highcharts-2.1.4.zip -d highcharts
 rm -rf Highcharts-2.1.4.zip
-rm -rf examples exporting-server index.htm
-cd ..
+rm -rf highcharts/examples highcharts/exporting-server highcharts/index.htm
 
 cd ../../vendor
 
