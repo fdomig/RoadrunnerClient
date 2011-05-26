@@ -14,7 +14,7 @@
 		<h2>View Delivery</h2>
 		
 		<p>
-			Created: {{ delivery.createdAt }}<br />
+			Created: {{ delivery.createdAt|date("Y-m-d H:i:s") }}<br />
 			Modified: {{ delivery.modifiedAt|date("Y-m-d H:i:s") }}
 		</p>
 		
