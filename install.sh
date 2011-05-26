@@ -11,6 +11,29 @@ mkdir -p web/cache && chmod -R 777 web/cache
 mkdir -p log && chmod -R 777 log
 mkdir -p vendor && cd vendor
 
+# Silex
+rm -rf silex.phar
+wget http://silex-project.org/get/silex.phar
+
+# jQuery
+cd ../web/js
+mkdir -p jquery && cd jquery
+wget http://jqueryui.com/download/jquery-ui-1.8.13.custom.zip
+unzip jquery-ui-1.8.13.custom.zip
+rm jquery-ui-1.8.13.custom.zip
+rm -rf development-bundle
+rm -rf index.html
+cd ..
+
+# highcharts
+mkdir highcharts && cd highcharts
+wget http://www.highcharts.com/downloads/zips/Highcharts-2.1.4.zip
+unzip Highcharts-2.1.4.zip
+rm -rf Highcharts-2.1.4.zip
+rm -rf examples exporting-server index.htm
+cd ..
+
+cd ../../vendor
 
 ##
 # @param destination directory (e.g. "doctrine")
@@ -36,29 +59,6 @@ install_git()
     git reset --hard $REV
     cd ..
 }
-
-# Silex
-rm -rf silex.phar
-wget http://silex-project.org/get/silex.phar
-
-# jQuery
-mkdir -p ../web/js/jquery && cd ../web/js/jquery
-wget http://jqueryui.com/download/jquery-ui-1.8.13.custom.zip
-unzip jquery-ui-1.8.13.custom.zip
-rm jquery-ui-1.8.13.custom.zip
-rm -rf development-bundle
-rm -rf index.html
-cd ..
-
-# highcharts
-mkdir highcharts && cd highcharts
-wget http://www.highcharts.com/downloads/zips/Highcharts-2.1.4.zip
-unzip Highcharts-2.1.4.zip && rm -rf Highcharts-2.1.4.zip
-rm -rf examples exporting-server index.html
-cd ..
-
-
-cd ../../vendor
 
 # DroidCouch
 # install_git couchdb-odm https://github.com/doctrine/couchdb-odm.git origin/master
