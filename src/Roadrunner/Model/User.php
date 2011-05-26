@@ -75,5 +75,6 @@ class User extends BaseDocument {
 	{
 		self::getManager()->getUnitOfWork()->registerManaged(
 			$this, $this->getId(), null);
+		self::getManager()->flush();
 	}
 }

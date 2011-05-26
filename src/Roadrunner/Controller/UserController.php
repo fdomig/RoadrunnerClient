@@ -19,9 +19,7 @@ class UserController extends BaseController {
 	public function executeCreate()  {			
 		$name = $this->getRequest()->get('name');
 		$password = $this->getRequest()->get('password');
-		
-		//TODO: change
-		$roles = array('default'); 
+		$roles = $this->getRequest()->get('roles');
 		
 		if (empty($name)) {
 			throw new \Exception("Name of the user is not set.");
@@ -29,13 +27,13 @@ class UserController extends BaseController {
 		if (empty($password)) {
 			throw new \Exception("Password of the user is not set.");
 		}
-		
+				
 		$user = new User();
 		$user->setName($name);
 		
 		$user->setPassword($password);
 		$user->setRoles($roles);
-		
+				
 		$user->save();
 		
 		return $this->redirect('/user/list');
