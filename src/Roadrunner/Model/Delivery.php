@@ -82,6 +82,19 @@ class Delivery extends BaseDocument {
     public function getItems() {
     	return $this->items;
     }
+    
+    /**
+     * Removes an Item from this delivery
+     * @param int $id
+     */
+    public function removeItem($id) {
+    	foreach ($this->items as $i => $v) {
+    		if ($v->getId() == $id) {
+    			unset($this->items[$i]);
+    			return;
+    		}
+    	}
+    }
 	
     /**
      * @return number
