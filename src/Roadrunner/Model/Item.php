@@ -9,6 +9,8 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class Item extends BaseDocument {
 	
+	static private $maxTempLogs = 20;
+	
 	public final function __construct() {
         parent::__construct('item');
     }
@@ -80,11 +82,15 @@ class Item extends BaseDocument {
 	{
 		$logs = Log::getForItemId($this->getId());
 		$data = array();
-		$last = null;
-		$max = $i = count($logs) / 20;
+		$max = $i = count($logs) / self::$maxTempLogs;
+		$minTemp = $this->getTempMin();
+		$maxTemp = $this->getTempMax();
+		
 		foreach ($logs as $log) {
 			if ("TEMPSENSOR" == $log['value']['logType']) {
-				if ($i-- < 0) {
+				if ($i-- < 0
+					|| $log['value']['value'] < $minTemp
+					|| $log['value']['value'] > $maxTemp) {
 					$data[] = array(
 						'timestamp' => (int) $log['value']['timestamp'],
 						'value' => (float) $log['value']['value'],
