@@ -80,27 +80,44 @@ class Item extends BaseDocument {
 	
 	public function getTempLogs()
 	{
-		$logs = Log::getForItemId($this->getId());
-		$data = array();
-		$max = $i = count($logs) / self::$maxTempLogs;
+		$logs = $this->getTempLogData();
 		$minTemp = $this->getTempMin();
 		$maxTemp = $this->getTempMax();
+		$data = array();
+		
+		// max entries are calculated by settings
+		// however, if there are less logs than we allow as maximum,
+		// we use all of them
+		$max = $i = (count($logs) >= self::$maxTempLogs)
+			? count($logs) / self::$maxTempLogs - 1
+			: 0;
 		
 		foreach ($logs as $log) {
-			if ("TEMPSENSOR" == $log['value']['logType']) {
-				if ($i-- < 0
-					|| $log['value']['value'] < $minTemp
-					|| $log['value']['value'] > $maxTemp) {
-					$data[] = array(
-						'timestamp' => (int) $log['value']['timestamp'],
-						'value' => (float) $log['value']['value'],
-					);
-					$i = $max;
-				}
+			$v = $log['value']['value'];
+			
+			// do we have to add this log entry by count()-rule or
+			// do we have to add it because of a critical temp
+			if ($i-- < 1 || $v < $minTemp || $v > $maxTemp) {		
+				$data[] = array(
+					'timestamp' => (int) $log['value']['timestamp'],
+					'value' => round($v, 2),
+				);
+				$i = $max;
 			}
 		}
 		
 		return $data;
+	}
+	
+	private function getTempLogData()
+	{
+		$logs = array();
+		foreach (Log::getForItemId($this->getId()) as $log) {
+			if ('TEMPSENSOR' == $log['value']['logType']) {
+				$logs[] = $log;
+			}
+		}
+		return $logs;
 	}
 	
 	static public function getAll()
