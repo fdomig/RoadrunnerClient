@@ -27,14 +27,14 @@ jQuery(function() {
 				defaultSeriesType: 'line'
 			},
 			title: {
-				text: 'Temprature Data'
+				text: 'Temperature Data'
 			},
 			xAxis: {
 				categories: getCategories()
 			},
 			yAxis: {
 				title: {
-					text: 'Temprature in Celsius'
+					text: 'Temperature in Celsius'
 				}
 			},
 			series: getSeries()
