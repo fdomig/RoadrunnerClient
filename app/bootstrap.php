@@ -17,7 +17,7 @@ use Silex\Extension\TwigExtension;
 $app = new Application();
 
 $app['config'] = array(
-	'db.server'        => 'roadrunner.server',
+	'db.server'        => '172.16.102.224',
 	'db.port'          => '5984',
 	'db.database'      => 'roadrunner',
 	'db.user_database' => '_users',
