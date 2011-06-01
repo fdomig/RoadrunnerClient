@@ -4,3 +4,9 @@ cache
 log
 /web/js/jquery
 /web/js/highcharts
+/build/api
+/build/code-browser
+/build/coverage
+/build/logs
+/build/pdepend
+
