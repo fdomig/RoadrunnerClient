@@ -10,6 +10,7 @@
 				<th>Timestamp</th>
 				<th>Type</th>
 				<th>Value</th>
+				<th>Signature</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,9 +19,15 @@
 					<td>{{log.value.timestamp|date("Y-m-d H:i:s") }}</td>
 					<td>{{log.value.logType}}</td>
 					<td>{{log.value.value}}</td>
+					<td>
+						{% for sig in signature %}
+							{% if log.id == sig.id %}
+								<a class="view-signature" href="{{ sig.signature }}">View</a>
+							{% endif %}			
+						{% endfor %}
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-
 {% endblock %}

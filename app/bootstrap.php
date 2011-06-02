@@ -1,4 +1,5 @@
 <?php
+use Roadrunner\Model\Cache;
 require_once __DIR__ . '/../vendor/silex.phar';
 
 require_once __DIR__ . '/conf.php';
@@ -21,6 +22,7 @@ $app['config'] = array(
 	'db.port'          => '5984',
 	'db.database'      => 'roadrunner',
 	'db.user_database' => '_users',
+	'img.state.delivered' => 'signature.png',
 );
 
 // class loader
@@ -49,6 +51,7 @@ $app['user_manager'] = OdmFactory::createOdm(
 	$app['config']['db.port'],
 	'roadrunner', 'roadrunner'
 );
+$app['cache'] = new Cache();
 
 // twig
 $app->register(new TwigExtension(), array(
