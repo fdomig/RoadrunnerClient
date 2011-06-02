@@ -24,7 +24,7 @@ class LogController extends BaseController {
 					 * it does not already exist in our Cache 
 					 * $log['key']['0'] == item id for this log
 					 */
-					$filename = 'signature_'.$log['key']['0'] . '.png';
+					$filename = 'signature_'.$log['id'] . '.png';
 					if (!$this->app['cache']->exists($filename)) 
 					{
 						$this->app['cache']->writeRaw($filename, 
