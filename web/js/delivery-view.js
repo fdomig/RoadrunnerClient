@@ -4,6 +4,7 @@ jQuery(function() {
 	var image;
 	var markersArray = [];
 	var directionDisplay;
+	var infowindow = null;
 	var directionsService = new google.maps.DirectionsService();
 
 	function initialize() {
@@ -42,7 +43,10 @@ jQuery(function() {
 			title: title
 		});
 		google.maps.event.addListener(marker, 'click', function() {
-			var infowindow = new google.maps.InfoWindow({content: title});
+			if (infowindow) {
+				infowindow.close();
+			}
+			infowindow = new google.maps.InfoWindow({content: title});
 			infowindow.open(map,marker);
 		});
 		markersArray.push(marker);
