@@ -15,6 +15,7 @@
   <mkdir dir="${basedir}/build/coverage"/>
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
+  <exec executable="${basedir}/install.sh" failonerror="true" />
  </target>
 
  <target name="phpunit"
