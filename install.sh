@@ -28,6 +28,11 @@ unzip -u Highcharts-2.1.4.zip -d highcharts
 rm -rf Highcharts-2.1.4.zip
 rm -rf highcharts/examples highcharts/exporting-server highcharts/index.htm
 
+# nyromodal
+wget http://nyromodal.googlecode.com/files/nyroModal-1.6.2.zip
+unzip -u nyroModal-1.6.2.zip
+rm -rf nyroModal-1.6.2.zip
+
 cd ../../vendor
 
 ##

@@ -4,6 +4,7 @@ cache
 log
 /web/js/jquery
 /web/js/highcharts
+/web/js/nyroModal-1.6.2
 /build/api
 /build/code-browser
 /build/coverage

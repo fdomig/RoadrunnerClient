@@ -145,4 +145,18 @@ jQuery(function() {
 		return false;
 	});
 	
+	/*
+	 * ############   LOGS VIEW ############
+	 * 
+	 */
+	
+	$('.view-signature').click(function(e) {
+		e.preventDefault();
+		$.nyroModalManual({
+			url: $(this).attr('href'),
+			title: 'Signature',
+			bgColor: '#ffffff'
+		});
+		return false;
+	});
 });

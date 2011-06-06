@@ -25,14 +25,22 @@ class BaseDocument {
 		return $this->id;
 	}
 	
-	static public function createQuery($view) {
-		return new Query(
+	/**
+	 * Creates a CouchDB Query
+	 * @param string $view
+	 * @param bool $includeDocs
+	 * @return \Doctrine\ODM\CouchDB\View\Query
+	 */
+	static public function createQuery($view, $includeDocs = false) {
+		$query = new Query(
 			self::getManager()->getConfiguration()->getHTTPClient(),
 			self::getManager()->getConfiguration()->getDatabase(),
 			'roadrunner',
 			$view,
 			new DoctrineAssociations()
 		);
+		$query->setIncludeDocs($includeDocs);
+		return $query;
 	}
 	
 	static protected function getManager()

@@ -26,7 +26,6 @@ class ItemController extends BaseController {
 	public function executeView()
 	{
 		$item = Item::find($this->getRequest()->get('id'));
-
 		return $this->render('item.view.twig', array(
 			'item' => $item,
 		));	
@@ -40,7 +39,6 @@ class ItemController extends BaseController {
 		return $this->render('item.edit.twig', array(
 			'item' => $item,
 			'form_action' => "/item/update/{$id}",
-			'hello',
 		));
 	}
 	
