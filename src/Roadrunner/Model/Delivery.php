@@ -127,15 +127,22 @@ class Delivery extends BaseDocument {
 	public function getPosition()
 	{
 		// FIXME: implement better
-		// get last position trough map reduce
+		// get last position trough map reduce and for all delivery routes
 		$items = $this->getItems();
-		$p = $items[0]->getPositionLogs();
-		$curpos = explode(',', $p[0]['value']['value']);
-		$pos = array(
+		$pos = $items[0]->getPositionLogs();
+		//var_dump($pos);
+		$last = null;
+		foreach($pos as $p) {
+			if ($last == null || $p['value']['timestamp'] > $last['value']['timestamp']) {
+				$last = $p;
+			}	
+		}
+		$curpos = explode(',', $last['value']['value']);
+		
+		return array(
 			'lat' => trim($curpos[1]),
 			'lng' => trim($curpos[0]), 
 		);
-		return $pos;
 	}
 	
 	static public function getAll()
