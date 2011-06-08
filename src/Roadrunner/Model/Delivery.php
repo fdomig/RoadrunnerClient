@@ -116,9 +116,32 @@ class Delivery extends BaseDocument {
 
 	public function getDirections()
 	{	
+		//$waypts = $this->getWayPoints();
 		return array(
 			"origin" => urlencode($this->getToAddress()->__toString()),
 			"destination" => urlencode($this->getFromAddress()->__toString()),
+			//"waypoints" => $waypts,
+		);
+	}
+	
+	public function getPosition()
+	{
+		// FIXME: implement better
+		// get last position trough map reduce and for all delivery routes
+		$items = $this->getItems();
+		$pos = $items[0]->getPositionLogs();
+		//var_dump($pos);
+		$last = null;
+		foreach($pos as $p) {
+			if ($last == null || $p['value']['timestamp'] > $last['value']['timestamp']) {
+				$last = $p;
+			}	
+		}
+		$curpos = explode(',', $last['value']['value']);
+		
+		return array(
+			'lat' => trim($curpos[1]),
+			'lng' => trim($curpos[0]), 
 		);
 	}
 	

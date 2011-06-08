@@ -123,4 +123,17 @@ class DeliveryController extends BaseController {
 		return json_encode($delivery->getDirections());
 	}
 	
+	
+	public function executeWayPoints()
+	{
+		if (!$this->getRequest()->isXmlHttpRequest()) {
+			throw new ControllerException("Method not allowed.");
+		}
+		$delivery = Delivery::find($this->getRequest()->get('id'));
+		// TODO:	return valid positions 
+		// 			interpolate all results and limit the output to max 20 or
+		// 			check speed to calculate maximum result limit
+		
+		return json_encode($delivery->getPosition());
+	}
 }

@@ -54,6 +54,7 @@ $app->post('/delivery/create', array(new DeliveryController($app), 'executeCreat
 $app->get('/delivery/edit/{id}', array(new DeliveryController($app), 'executeEdit'));
 $app->post('/delivery/update/{id}', array(new DeliveryController($app), 'executeUpdate'));
 $app->get('/delivery/directions/{id}', array(new DeliveryController($app), 'executeDirections'));
+$app->get('/delivery/positions/{id}', array(new DeliveryController($app), 'executeWayPoints'));
 
 /*
  * User controller

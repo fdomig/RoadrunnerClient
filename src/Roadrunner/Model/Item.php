@@ -78,6 +78,28 @@ class Item extends BaseDocument {
 		return $result->execute();
 	}
 	
+	/**
+	 * Gets all Position Log Entries for this Item
+	 * If $unvalid is false the result set will only contain valid position
+	 * Log entries. If $unvalid is true it will not only contain valid entries
+	 * but also POSERROR entries.
+	 *   
+	 * @param bool $valid 
+	 */
+	public function getPositionLogs($unvalid = false)
+	{
+		$logs = array();
+		foreach (Log::getForItemId($this->getId()) as $log) {
+			if ('POSSENSOR' == $log['value']['logType']) {
+				$logs[] = $log;
+			}
+			if ('POSERROR' == $log['value']['logType'] && $unvalid) {
+				$logs[] = $log;
+			}
+		}
+		return $logs;
+	}
+	
 	public function getTempLogs()
 	{
 		$logs = $this->getTempLogData();
