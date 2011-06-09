@@ -96,11 +96,37 @@ jQuery(function() {
 	}
 	
 	function drawPositions(id) {
-		$.getJSON('/delivery/positions/' + id, function(position) {
-			pos = new google.maps.LatLng(position.lat, position.lng);
-			addMarker(pos, "Current Position");
+		$.getJSON('/delivery/routes/' + id, function(routes) {
+			for (var i = 0; i < routes.length; i++) {
+				var route = routes[i];
+				for (var j = 0; j < route.length; j++) {
+					addMarker(new google.maps.LatLng(route[j].lat, route[j].lng), 
+							"Position reached at: " + new Date(route[j].time*1000));
+					if (j+1 < route.length) {
+						drawLine(route[j], route[j+1]);
+					}
+				}
+				
+			}
 		});
 	}
+	
+	function drawLine(a, b) {
+		line = [a,b];
+		var geojson = {
+				"type": "LineString",
+				"coordinates": line
+			};
+
+			var options = {
+				strokeColor: "#FFFF00",
+				strokeWeight: 7,
+				strokeOpacity: 0.75
+			};
+
+			googleVector = new GeoJSON(geojson, options);
+			googleVector.setMap(map);
+	} 
 
 	initialize();
 
