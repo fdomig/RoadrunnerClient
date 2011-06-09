@@ -102,31 +102,34 @@ jQuery(function() {
 				for (var j = 0; j < route.length; j++) {
 					addMarker(new google.maps.LatLng(route[j].lat, route[j].lng), 
 							"Position reached at: " + new Date(route[j].time*1000));
-					if (j+1 < route.length) {
-						drawLine(route[j], route[j+1]);
-					}
+//					if (j+1 < route.length) {
+//						drawLine(route[j], route[j+1]);
+//					}
 				}
 				
 			}
 		});
 	}
 	
-	function drawLine(a, b) {
-		line = [a,b];
-		var geojson = {
-				"type": "LineString",
-				"coordinates": line
-			};
-
-			var options = {
-				strokeColor: "#FFFF00",
-				strokeWeight: 7,
-				strokeOpacity: 0.75
-			};
-
-			googleVector = new GeoJSON(geojson, options);
-			googleVector.setMap(map);
-	} 
+//	function drawLine(a, b) {
+//		line = [[parseFloat(a.lng), parseFloat(a.lat)],[parseFloat(b.lng), parseFloat(b.lat)]];
+//		var geojson = {
+//				"type": "LineString",
+//				"coordinates": line
+//			};
+//		
+//		console.log(geojson);
+//
+//			var options = {
+//				strokeColor: "#FFFF00",
+//				strokeWeight: 7,
+//				strokeOpacity: 1.0,
+//				map: map
+//			};
+//
+//			var vector = new GeoJSON(geojson, options);
+//			vector.setMap(map);
+//	} 
 
 	initialize();
 
