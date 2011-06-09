@@ -116,32 +116,86 @@ class Delivery extends BaseDocument {
 
 	public function getDirections()
 	{	
-		//$waypts = $this->getWayPoints();
 		return array(
 			"origin" => urlencode($this->getToAddress()->__toString()),
 			"destination" => urlencode($this->getFromAddress()->__toString()),
-			//"waypoints" => $waypts,
 		);
 	}
 	
-	public function getPosition()
+	public function getRoutes()
 	{
-		// FIXME: implement better
-		// get last position trough map reduce and for all delivery routes
 		$items = $this->getItems();
-		$pos = $items[0]->getPositionLogs();
-		//var_dump($pos);
-		$last = null;
-		foreach($pos as $p) {
-			if ($last == null || $p['value']['timestamp'] > $last['value']['timestamp']) {
-				$last = $p;
-			}	
+		$results = array();
+		$routes = array();
+		//var_dump($items);
+		foreach($items as $item) {
+			$pos = $item->getPositionLogs();
+			$route = array();
+			$result = array();
+			$rid = $this->getRouteId();
+			
+			foreach($pos as $p) {
+				
+				// $p['value']['value'] => {lng, lat}
+				$count = count($route);
+				
+				// if new timestamp and same position take new log for that value 
+				if (!empty($route) && $p['value']['timestamp'] > $route[$count-1]['value']['timestamp'] 
+					&& ($p['value']['value'] == $route[$count-1]['value']['value'])) {
+					
+					$route[$count-1] = $p;
+					$result[$count-1] = $this->createPosition($p, $rid);
+				
+				// if no first timestamp has been set OR
+				// if new timestamp 
+				} elseif (empty($route) || $p['value']['timestamp'] > $route[$count-1]['value']['timestamp']
+					&& ($p['value']['value'] != $route[$count-1]['value']['value'])) {
+					$route[] = $p;
+					$result[] = $this->createPosition($p, $rid);
+				}	
+			}
+			// if first route add this route to all routes
+			if (empty($routes)) {
+				$routes[] = $route;
+				$results[] = $result;
+			} else {
+				foreach($routes as $r) {
+					if (count(array_diff($r, $route)) > 0) {
+						$routes[] = $route;
+						$results[] = $result;
+						break;
+					}
+				}
+			}
 		}
-		$curpos = explode(',', $last['value']['value']);
+		return $results;
+	}
+	
+	/**
+	 * Generates a Unique Route Id
+	 * @return string
+	 */
+	protected function getRouteId()
+	{
+		return uniqid();
+	}
+	
+	/**
+	 * Creates a Position of a Route
+	 * 
+	 * @param Log POSSENSOR $logPos
+	 * @param string $rid
+	 * @return array('lat', 'lng', 'time', 'rid') 
+	 */
+	protected function createPosition($logPos, $rid) 
+	{
 		
+		$cpos = explode(',', $logPos['value']['value']);
 		return array(
-			'lat' => trim($curpos[1]),
-			'lng' => trim($curpos[0]), 
+			'lat' => trim($cpos[1]),
+			'lng' => trim($cpos[0]),
+			'time'=> $logPos['value']['timestamp'],
+			'rid' => $rid,
 		);
 	}
 	

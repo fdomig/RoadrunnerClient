@@ -124,8 +124,9 @@ class DeliveryController extends BaseController {
 	}
 	
 	
-	public function executeWayPoints()
+	public function executeRoutes()
 	{
+		
 		if (!$this->getRequest()->isXmlHttpRequest()) {
 			throw new ControllerException("Method not allowed.");
 		}
@@ -134,6 +135,6 @@ class DeliveryController extends BaseController {
 		// 			interpolate all results and limit the output to max 20 or
 		// 			check speed to calculate maximum result limit
 		
-		return json_encode($delivery->getPosition());
+		return json_encode($delivery->getRoutes());
 	}
 }
