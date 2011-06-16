@@ -11,6 +11,10 @@ class Item extends BaseDocument {
 	
 	static private $maxTempLogs = 20;
 	
+	const STATE_HIGH = "HIGH";
+	const STATE_LOW = "LOW";
+	const STATE_NORMAL = "NORMAL";
+	
 	public final function __construct() {
         parent::__construct('item');
     }
@@ -103,8 +107,6 @@ class Item extends BaseDocument {
 	public function getTempLogs()
 	{
 		$logs = $this->getTempLogData();
-		$minTemp = $this->getTempMin();
-		$maxTemp = $this->getTempMax();
 		$data = array();
 		
 		// max entries are calculated by settings
@@ -119,10 +121,11 @@ class Item extends BaseDocument {
 			
 			// do we have to add this log entry by count()-rule or
 			// do we have to add it because of a critical temp
-			if ($i-- < 1 || $v < $minTemp || $v > $maxTemp) {		
+			if ($i-- < 1 || $this->getTempState($v) != self::STATE_NORMAL) {		
 				$data[] = array(
 					'timestamp' => (int) $log['value']['timestamp'],
 					'value' => round($v, 2),
+					'state' => $this->getTempState($v), 
 				);
 				$i = $max;
 			}
@@ -130,6 +133,21 @@ class Item extends BaseDocument {
 		
 		return $data;
 	}
+	
+	/**
+	 * Get Temperature State
+	 * @param float $temp
+	 * @return string
+	 */
+	private function getTempState($temp) 
+	{
+		if ($this->getTempMax() < $temp) {
+			return self::STATE_HIGH;
+		} else if ($this->getTempMin() > $temp) {
+			return self::STATE_LOW;
+		}
+		return self::STATE_NORMAL;
+ 	} 
 	
 	private function getTempLogData()
 	{

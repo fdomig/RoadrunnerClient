@@ -127,7 +127,7 @@ class Delivery extends BaseDocument {
 		$items = $this->getItems();
 		$results = array();
 		$routes = array();
-		$rid = 0;
+		$rid = 1;
 		foreach($items as $item) {
 			$pos = $item->getPositionLogs();
 			$route = array();
@@ -184,7 +184,7 @@ class Delivery extends BaseDocument {
 			$container = count($route)-1;
 			$route[$container]['img']['path'] = $this->getMarkerImage($route[$container]['rid'], true);
 			$route[$container]['img']['width'] = 48;
-			$route[$container]['img']['height'] = 48;
+			$route[$container]['img']['height'] = 32;
 		}
 		return $route;
 	}
@@ -226,13 +226,13 @@ class Delivery extends BaseDocument {
 	protected function mapRoute2Image($rid) {
 		
 		switch($rid) {
-			case 0:
-				return 'orange';
 			case 1:
-				return 'turkis';
+				return 'orange';
 			case 2:
-				return 'yellow';
+				return 'turkis';
 			case 3:
+				return 'yellow';
+			case 4:
 				return 'purple';
 			default:
 				return 'pink';		
