@@ -18,29 +18,40 @@ jQuery(function() {
 			mapOptions
 		);
 		
-		image = new google.maps.MarkerImage('/img/marker_pos.png',
-				// This marker is 20 pixels wide by 32 pixels tall.
-				new google.maps.Size(20, 32),
-				// The origin for this image is 0,0.
-				new google.maps.Point(0,0),
-		      	// The anchor for this image is the base of the flagpole at 0,32.
-		      	new google.maps.Point(0, 32));
-		
 		directionsDisplay = new google.maps.DirectionsRenderer();
 		directionsDisplay.setMap(map);
 		$('.delivery-entry').each(function() {
 			drawDirections($(this).attr('id'));
 			drawPositions($(this).attr('id'));
-		});
+		});	
+	}
+	
+	/**
+	 * createMarkerImage
+	 *  
+	 * Every marker_image.png has to prefix with 'marker_'
+	 * Add: must be stored as png file
+	 * 
+	 * @param path String
+	 * @return google.maps.MarkerImage
+	 */
+	function createMarkerImage(path, width, height) {
 		
+		return new google.maps.MarkerImage(path,
+			// This marker is 20 pixels wide by 32 pixels tall.
+			new google.maps.Size(width, height),
+			// The origin for this image is 0,0.
+			new google.maps.Point(0,0),
+	      	// The anchor for this image is the base of the flagpole at 0,32.
+	      	new google.maps.Point(0, 32));
 	}
 
-	function addMarker(location, title) {
+	function addMarker(location, title, icon) {
 		var marker = new google.maps.Marker({
 			position: location,
 			map: map,
-			icon: image,
-			title: title
+			title: title,
+			icon: icon
 		});
 		google.maps.event.addListener(marker, 'click', function() {
 			if (infowindow) {
@@ -100,13 +111,19 @@ jQuery(function() {
 			for (var i = 0; i < routes.length; i++) {
 				var route = routes[i];
 				for (var j = 0; j < route.length; j++) {
-					addMarker(new google.maps.LatLng(route[j].lat, route[j].lng), 
-							"Position reached at: " + new Date(route[j].time*1000));
+					var cr = route[j];
+					addMarker(
+						new google.maps.LatLng(cr.pos.lat, cr.pos.lng),
+						cr.info.msg + new Date(cr.info.time*1000),
+						//"Position reached at: " + new Date(cr.time*1000),
+						createMarkerImage(cr.img.path, cr.img.width, cr.img.height)
+						//(j < route.length-1) ? 
+						//		createMarkerImage(cr.img.path, cr.img.width, cr.img.height) : createMarkerImage('/img/marker_truck.png', 48, 48)
+					);
 //					if (j+1 < route.length) {
-//						drawLine(route[j], route[j+1]);
+//						drawLine(cr, route[j+1]);
 //					}
 				}
-				
 			}
 		});
 	}

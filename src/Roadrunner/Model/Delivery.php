@@ -117,8 +117,8 @@ class Delivery extends BaseDocument {
 	public function getDirections()
 	{	
 		return array(
-			"origin" => urlencode($this->getToAddress()->__toString()),
-			"destination" => urlencode($this->getFromAddress()->__toString()),
+			"origin" => urlencode($this->getFromAddress()->__toString()),
+			"destination" => urlencode($this->getToAddress()->__toString()),
 		);
 	}
 	
@@ -127,15 +127,13 @@ class Delivery extends BaseDocument {
 		$items = $this->getItems();
 		$results = array();
 		$routes = array();
-		//var_dump($items);
+		$rid = 0;
 		foreach($items as $item) {
 			$pos = $item->getPositionLogs();
 			$route = array();
 			$result = array();
-			$rid = $this->getRouteId();
 			
 			foreach($pos as $p) {
-				
 				// $p['value']['value'] => {lng, lat}
 				$count = count($route);
 				
@@ -144,40 +142,101 @@ class Delivery extends BaseDocument {
 					&& ($p['value']['value'] == $route[$count-1]['value']['value'])) {
 					
 					$route[$count-1] = $p;
-					$result[$count-1] = $this->createPosition($p, $rid);
+					$result[$count-1] = $this->createPosition($p, $rid, $this->getMarkerImage($rid));
 				
 				// if no first timestamp has been set OR
 				// if new timestamp 
 				} elseif (empty($route) || $p['value']['timestamp'] > $route[$count-1]['value']['timestamp']
 					&& ($p['value']['value'] != $route[$count-1]['value']['value'])) {
 					$route[] = $p;
-					$result[] = $this->createPosition($p, $rid);
+					$result[] = $this->createPosition($p, $rid, $this->getMarkerImage($rid));
 				}	
 			}
+			
 			// if first route add this route to all routes
 			if (empty($routes)) {
 				$routes[] = $route;
 				$results[] = $result;
 			} else {
 				foreach($routes as $r) {
-					if (count(array_diff($r, $route)) > 0) {
+					if ($r != $route) {
 						$routes[] = $route;
-						$results[] = $result;
+						$results[] = $this->refactorRoute($result, ++$rid);
 						break;
 					}
 				}
+			}
+			if (!empty($results)) {
+				$results[count($results)-1] = $this->markContainer($results[count($results)-1]);
 			}
 		}
 		return $results;
 	}
 	
 	/**
-	 * Generates a Unique Route Id
+	 * Marks the route with the Container Image Path
+	 * @param array $route
+	 * @return array
+	 */
+	protected function markContainer($route)
+	{
+		if (!empty($route)) {
+			$container = count($route)-1;
+			$route[$container]['img']['path'] = $this->getMarkerImage($route[$container]['rid'], true);
+			$route[$container]['img']['width'] = 48;
+			$route[$container]['img']['height'] = 48;
+		}
+		return $route;
+	}
+	
+	/**
+	 * Sets new Image Path and RID to the Route
+	 * @param array $route
+	 * @param integer $rid
+	 * @return array
+	 */
+	protected function refactorRoute($route, $rid)
+	{
+		foreach($route as $k => $r) {
+			$route[$k]['rid'] = $rid;
+			$route[$k]['img']['path'] = $this->getMarkerImage($rid);
+		}
+		return $route;
+	}
+	
+	/**
+	 * Returns the Path to the marker Image
+	 * @param integer $rid
 	 * @return string
 	 */
-	protected function getRouteId()
+	protected function getMarkerImage($rid, $current = false) 
 	{
-		return uniqid();
+		if ($current) {
+			return '/img/marker_truck.png';
+		}
+		return '/img/marker_' . $this->mapRoute2Image($rid) . '.png';	
+	}
+	
+	/**
+	 * mapRoute2Image - Utility Function for createMarkerImage() 
+	 * 
+	 * @param route Integer
+	 * @return String color
+	 */
+	protected function mapRoute2Image($rid) {
+		
+		switch($rid) {
+			case 0:
+				return 'orange';
+			case 1:
+				return 'turkis';
+			case 2:
+				return 'yellow';
+			case 3:
+				return 'purple';
+			default:
+				return 'pink';		
+		}
 	}
 	
 	/**
@@ -185,17 +244,30 @@ class Delivery extends BaseDocument {
 	 * 
 	 * @param Log POSSENSOR $logPos
 	 * @param string $rid
+	 * @param string $imgPath
+	 * @param int $width
+	 * @param int $height
 	 * @return array('lat', 'lng', 'time', 'rid') 
 	 */
-	protected function createPosition($logPos, $rid) 
+	protected function createPosition($logPos, $rid, 
+			$imgPath ="/img/marker_orange.png", $width = 20, $height = 32) 
 	{
-		
 		$cpos = explode(',', $logPos['value']['value']);
 		return array(
-			'lat' => trim($cpos[1]),
-			'lng' => trim($cpos[0]),
-			'time'=> $logPos['value']['timestamp'],
+			'pos' => array(
+				'lat' => trim($cpos[1]),
+				'lng' => trim($cpos[0]),
+			),
 			'rid' => $rid,
+			'img' => array(
+				'path' => $imgPath,
+				'width' => $width,
+				'height' => $height,
+			),
+			'info' => array(
+				'time'=> $logPos['value']['timestamp'],
+				'msg' => 'Position reached at: '
+			),
 		);
 	}
 	

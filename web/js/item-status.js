@@ -20,7 +20,6 @@ jQuery(function() {
 	});
 	
 	function drawChart() {
-		console.log(tempdata);
 		chart = new Highcharts.Chart({
 			chart: {
 				renderTo: 'delivery-temp-tracking',
