@@ -23,7 +23,7 @@ jQuery(function() {
 		chart = new Highcharts.Chart({
 			chart: {
 				renderTo: 'delivery-temp-tracking',
-				defaultSeriesType: 'line'
+				defaultSeriesType: 'spline'
 			},
 			title: {
 				text: 'Temperature Data'
@@ -64,7 +64,12 @@ jQuery(function() {
 	function getData(logs) {
 		data = [];
 		$.each(logs, function(index) {
-			data.push(logs[index].value)
+			console.log(logs[index]);
+			if (logs[index].state != 'NORMAL') {
+				data.push({y: logs[index].value, marker: {symbol: 'url(/img/tempstate.png)'}});
+			} else {
+				data.push(logs[index].value);
+			}
 		});
 		return data;
 	}

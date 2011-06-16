@@ -43,7 +43,7 @@ jQuery(function() {
 			// The origin for this image is 0,0.
 			new google.maps.Point(0,0),
 	      	// The anchor for this image is the base of the flagpole at 0,32.
-	      	new google.maps.Point(0, 32));
+	      	new google.maps.Point(width/2, height));
 	}
 
 	function addMarker(location, title, icon) {
@@ -57,7 +57,9 @@ jQuery(function() {
 			if (infowindow) {
 				infowindow.close();
 			}
-			infowindow = new google.maps.InfoWindow({content: title});
+			infowindow = new google.maps.InfoWindow({
+				content: title
+			});
 			infowindow.open(map,marker);
 		});
 		markersArray.push(marker);
@@ -114,14 +116,11 @@ jQuery(function() {
 					var cr = route[j];
 					addMarker(
 						new google.maps.LatLng(cr.pos.lat, cr.pos.lng),
-						cr.info.msg + new Date(cr.info.time*1000),
-						//"Position reached at: " + new Date(cr.time*1000),
+						cr.info.msg + '<br>' + new Date(cr.info.time*1000) + '<br>Route: ' + cr.rid,
 						createMarkerImage(cr.img.path, cr.img.width, cr.img.height)
-						//(j < route.length-1) ? 
-						//		createMarkerImage(cr.img.path, cr.img.width, cr.img.height) : createMarkerImage('/img/marker_truck.png', 48, 48)
 					);
 //					if (j+1 < route.length) {
-//						drawLine(cr, route[j+1]);
+//						drawLine(cr.pos, route[j+1].pos);
 //					}
 				}
 			}
@@ -139,7 +138,7 @@ jQuery(function() {
 //
 //			var options = {
 //				strokeColor: "#FFFF00",
-//				strokeWeight: 7,
+//				strokeWeight: 3,
 //				strokeOpacity: 1.0,
 //				map: map
 //			};
