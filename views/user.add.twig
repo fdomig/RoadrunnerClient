@@ -1,28 +1,39 @@
 {% extends "layout.twig" %}
-
 {% block content %}
 
 	<h2>Add user</h2>
 
 	<form action="{{ form_action }}" method="get">
 		<fieldset>
-			<div>
+			<div {% if errors['user-name'] is defined %} class="error" {% endif %}>
 				Name<br />
-				<input type="text" value="" name="name" />
-			</div>
-			
-			<div>
+				<input type="text" value="{{ user.name }}" name="name" />
+			</div>		
+			<div {% if errors['user-pwd'] is defined %} class="error" {% endif %}>
 				Password<br />
-				<input type="password" value="" name="password" />
+				<input type="password" value="{{ user.password }}" name="password" />
 			</div>
-			
-			<div>
+			<div {% if errors['user-roles'] is defined %} class="error" {% endif %}>
 				Roles<br />
-				<input type="checkbox" name="roles[]" value="admin">Admin<br/>
-				<input type="checkbox" name="roles[]" value="office">Office<br/>
-				<input type="checkbox" name="roles[]" value="driver">Driver<br/>
+				<input type="checkbox" name="roles[]" value="admin" 
+						{% if (user.roles.0 is defined and user.roles.0 == 'admin')
+						or (user.roles.1 is defined and user.roles.1 == 'admin') 
+						or (user.roles.2 is defined and user.roles.2 == 'admin') %}
+							checked="checked"
+						{% endif %}>Admin<br/>
+				<input type="checkbox" name="roles[]" value="office" 
+						{% if (user.roles.0 is defined and user.roles.0 == 'office')
+						or (user.roles.1 is defined and user.roles.1 == 'office') 
+						or (user.roles.2 is defined and user.roles.2 == 'office') %}
+							checked="checked"
+						{% endif %}>Office<br/>
+				<input type="checkbox" name="roles[]" value="driver" 
+						{% if (user.roles.0 is defined and user.roles.0 == 'driver')
+						or (user.roles.1 is defined and user.roles.1 == 'driver') 
+						or (user.roles.2 is defined and user.roles.2 == 'driver') %}
+							checked="checked"
+						{% endif %}>Driver<br/>
 			</div>
-				
 			<div>
 				<input type="submit" value="Create User" />
 			</div>
