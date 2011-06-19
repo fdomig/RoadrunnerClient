@@ -21,12 +21,13 @@ abstract class AbstractValidator implements Validator
 	 */
 	protected $typereg = array(
 		ValidatorType::INTEGER => array(
-			'pattern' => '^-{0,1}\d+$',
+			'pattern' => '/^-{0,1}\d+$/',
 		),
 		ValidatorType::FLOAT => array(
-			'pattern' => '^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$',
+			'pattern' => '/^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/',
 		),
 		ValidatorType::STRING => array(
+			'pattern' => '/^[\s\S]*$/',
 		),	
 	);
 	
@@ -47,30 +48,31 @@ abstract class AbstractValidator implements Validator
 	/**
 	 * Validates the $input
 	 * 
-	 * @param array $input
+	 * @param array $input (<input-name> => array( 'name' => <validator-name>, 'value' => <value> )
 	 * @return array 
 	 */
-	public function validate($input) 
+	public function validate(array $input) 
 	{
 		$errors = array();
 		if (array_key_exists('eval', $this->validation)) {
 			$validate = $this->validation['eval'];
 			
-			foreach ($input as $k => $v) {
-				if (array_key_exists($k, $validate)) {
-					
+			foreach ($input as $checkable => $v) {
+				
+				if (array_key_exists($v['name'], $validate)) {
+			
 					// validate datatype
-					if (!$this->do_reg($v, $this->typereg[$validate[$k]['type']]['pattern'])) {
-						$errors[$k] = $validate[$k][ValidatorConstraint::CONSTRAINT_ERROR_MSG];
+					if (!$this->do_reg($v['value'], $this->typereg[$validate[$v['name']]['type']]['pattern'])) {
+						$errors[$checkable] = $validate[$v['name']][ValidatorConstraint::CONSTRAINT_ERROR_MSG];
 						continue;
 					}
 					
 					// validate specific constraints
-					foreach($validate[$k]['constraints'] as $name => $value) {
+					foreach($validate[$v['name']]['constraints'] as $name => $value) {
 						switch($name) {
 							case ValidatorConstraint::MIN_STRING_LENGTH:
-								if (strlen($validate[$k][ValidatorConstraint::MIN_STRING_LENGTH]) < $value) {
-									$errors[$k] = $validate[$k][ValidatorConstraint::CONSTRAINT_ERROR_MSG]; 
+								if (strlen($v['value']) < $value) {
+									$errors[$checkable] = $validate[$v['name']][ValidatorConstraint::CONSTRAINT_ERROR_MSG]; 
 								}
 								break;
 							default:
@@ -101,5 +103,22 @@ abstract class AbstractValidator implements Validator
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Creates a validatable entry
+	 * @param string $name
+	 * @param array $const
+	 * @param string $value
+	 * @return multitype:multitype:unknown  
+	 */
+	protected function createCheckable($validationName, $value, $prefix = '', $suffix = '') {
+		
+		return array(
+			$prefix . $validationName . $suffix => array(
+				'name'  => $validationName,
+				'value' => $value,
+			),
+		);
 	}
 }

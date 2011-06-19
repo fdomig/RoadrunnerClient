@@ -1,48 +1,96 @@
 
 jQuery(function() {
 	
+	var regexString = /^[\s\S]*$/;
+	var regexFloat = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/;
+	var regexInt = /^-{0,1}\d+$/;
+	
+	
 	// ############### adds item to delivery item-list ##################
 	
 	var cdialog = $('.add-item-form');
 	var removePersistentItemCount = 0;
 	cdialog.find('.create-item-button').click(function(e) {
 		e.preventDefault();
+		
 		var inputName = $(this).parent().parent().find('.input-name');
 		var inputMaxTemp = $(this).parent().parent().find('.input-max-temp'); 
 		var inputMinTemp = $(this).parent().parent().find('.input-min-temp');
 		
-		var newItem = $('<tr class="create"><td><code>Not yet saved</code></td><td>'+ inputName.val()+ 
-				'</td><td>&nbsp;</td><td><a href="" class="remove">Remove</a></td></tr>');
-		newItem.data('item',{
-			name: inputName.val(),
-			mintemp: inputMinTemp.val(),
-			maxtemp: inputMaxTemp.val()
-		});
-		newItem.find('a.remove').click(function(e){
-			e.preventDefault();
-			$(this).parent().parent().remove();
-			return false;
-		});
+		var valid = validateItem(cdialog, inputName, inputMinTemp, inputMaxTemp);
+		if (valid) {
+			var newItem = $('<tr class="create">'+
+								'<td><code>Not yet saved</code></td>' + 
+								'<td>'+ inputName.val() + '</td>' + 
+								'<td>&nbsp;</td>' + 
+								'<td><a href="" class="remove">Remove</a></td>' + 
+							'</tr>');
+			newItem.data('item',{
+				name: inputName.val(),
+				mintemp: inputMinTemp.val(),
+				maxtemp: inputMaxTemp.val()
+			});
+			newItem.find('a.remove').click(function(e){
+				e.preventDefault();
+				$(this).parent().parent().remove();
+				return false;
+			});
 		
-		cdialog.dialog("destroy");
-		inputName.val("");
-		inputMaxTemp.val("");
-		inputMinTemp.val("");
-
-		$('#item-list tbody').append(newItem);
+			cdialog.dialog("destroy");
+			inputName.val("");
+			inputMaxTemp.val("");
+			inputMinTemp.val("");
+	
+			$('#item-list tbody').append(newItem);
+		}
 		return false;
 	});
+	
+	var validateItem = function(context, name, mintemp, maxtemp) {
+		var valid = true;
+		if (!name.val().match(regexString) || name.val().length <= 0) {
+			name.parent().addClass('error');
+			valid = false;
+		} else if (name.parent().hasClass('error')) {
+			name.parent().removeClass('error');
+		}
+		if (!mintemp.val().match(regexFloat) || mintemp.val().length <= 0) {
+			mintemp.parent().addClass('error');
+			valid = false;
+		} else if (mintemp.parent().hasClass('error')) {
+			mintemp.parent().removeClass('error');
+		}
+		if (!maxtemp.val().match(regexFloat) || maxtemp.val().length <= 0) {
+			maxtemp.parent().addClass('error');
+			valid = false;
+		} else if (maxtemp.parent().hasClass('error')) {
+			maxtemp.parent().removeClass('error');
+		}
+		var mint = parseFloat(mintemp.val());
+		var maxt = parseFloat(maxtemp.val());
+		if (valid && mint > maxt) {
+			context.append('<div class="error-minmax error">Minimum Temperature cannot be greater than maximum Temperature</div>');
+			valid = false;
+		} else if (context.find('.error-minmax').length > 0) {
+			context.find('.error-minmax').remove();
+		}
+		return valid
+	}
 	
 	$('.add-item-to-delivery').click(function(e) {
 		e.preventDefault();
 		RR_AKS_CONFIRM = true;
 		cdialog.dialog({
 			title: "Add a new Item to this Delivery.",
-			height: 370,
+			height: 460,
 			width: 300,
 			modal: true,
 			resizable: false
 		});
+		cdialog.find('.input-name').parent().removeClass('error');
+		cdialog.find('.input-min-temp').parent().removeClass('error');
+		cdialog.find('.input-max-temp').parent().removeClass('error');
+		cdialog.find('.error-minmax').remove();
 		return false;
 	});
 	

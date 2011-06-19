@@ -2,27 +2,27 @@
 	<input type="{{ type }}" value="{{ value }}" name="{{ name }}" />
 {% endmacro %}
 
-{% macro address(name, value) %}
+{% macro address(name, value, errors) %}
 
-<div>
+<div {% if errors[name ~ '-name'] is defined %} class="error" {% endif %}>
 	Name<br />
 	<input type="text" value="{{ value.name }}" name="{{name}}[name]" />
 </div>
 
-<div>
+<div {% if errors[name ~ '-street'] is defined %} class="error" {% endif %}>
 	Street<br />
 	<input type="text" value="{{ value.street }}" name="{{name}}[street]" />
 </div>
 
-<div>
+<div {% if errors[name ~ '-zip'] is defined %} class="error" {% endif %}>
 	Zip<br />
 	<input type="text" value="{{ value.zip }}" name="{{name}}[zip]" />
 </div>
-<div>
+<div {% if errors[name ~ '-city'] is defined %} class="error" {% endif %}>
 	City<br />
 	<input type="text" value="{{ value.city }}" name="{{name}}[city]" />
 </div>
-<div>
+<div {% if errors[name ~ '-country'] is defined %} class="error" {% endif %}>
 	Country<br />
 	<input type="text" value="{{ value.country }}" name="{{name}}[country]" />
 </div>

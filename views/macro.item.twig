@@ -1,25 +1,28 @@
-{% macro addItemForm(form_action) %}
+{% macro addItemForm(form_action, item, errors) %}
 
 <h2>Add Item</h2>
 
 	<form action="{{ form_action }}" method="post">
 		<fieldset>
-			<div>
-				Name<br />
-				<input class="input-name" type="text" value="" name="name" />
-			</div>
+			<div class="span-8">
+				<div {% if errors['item-name'] is defined %} class="error" {% endif %}>
+					Name<br />
+					<input class="input-name" type="text" value="{{ item.name }}" name="name" />
+				</div>
+				
+				<div {% if errors['item-mintemp'] is defined %} class="error" {% endif %}>
+					Minimum Temperature in °C<br />
+					<input class="input-min-temp" type="text" value="{{ item.tempMin }}" name="tempMin" />
+				</div>
 			
-			<div>
-				Minimum Temperature<br />
-				<input class="input-min-temp" type="text" value="" name="tempMin" />
+				<div {% if errors['item-maxtemp'] is defined %} class="error" {% endif %}>
+					Maximum Temperature in °C<br />
+					<input class="input-max-temp" type="text" value="{{ item.tempMax }}" name="tempMax" />
+				</div>
+				{% if errors['item-minmax'] is defined %}<div class="error">Minimum Temperature cannot be greater than maximum Temperature</div>{% endif %}
 			</div>
-		
-			<div>
-				Maximum Temperature<br />
-				<input class="input-max-temp" type="text" value="" name="tempMax" />
-			</div>
-		
-			<div>
+			<div class="prepend-1 span-6{% if errors %} error{% endif %} last">{% if errors %}Please correct the highlighted Entries{% endif %}</div>	
+			<div class="span-20">
 				<input class="create-item-button" type="submit" value="Create Item" />
 			</div>
 		
@@ -28,31 +31,34 @@
 	
 {% endmacro %}
 
-{% macro editItemForm(form_action, item) %}
+{% macro editItemForm(form_action, item, errors) %}
 
 	<h2>Edit Item</h2>
 	<form action="{{ form_action }}" method="post">
 		<fieldset>
-			<div>
-				Name<br />
-				<input class="input-name" type="text" value="{{ item.name }}" name="name" />
-			</div>
+			<div class="span-8">
+				<div {% if errors['item-name'] is defined %} class="error" {% endif %}>
+					Name<br />
+					<input class="input-name" type="text" value="{{ item.name }}" name="name" />
+				</div>
+				
+				<div {% if errors['item-mintemp'] is defined %} class="error" {% endif %}>
+					Minimum Temperature in °C<br />
+					<input class="input-min-temp" type="text" value="{{ item.tempMin }}" name="tempMin" />
+				</div>
 			
-			<div>
-				Minimum Temperature<br />
-				<input class="input-min-temp" type="text" value="{{ item.tempMin }}" name="tempMin" />
+				<div {% if errors['item-maxtemp'] is defined %} class="error" {% endif %}>
+					Maximum Temperature in °C<br />
+					<input class="input-max-temp" type="text" value="{{ item.tempMax }}" name="tempMax" />
+				</div>
+				{% if errors['item-minmax'] is defined %}<div class="error">Minimum Temperature cannot be greater than maximum Temperature</div>{% endif %}
 			</div>
-		
-			<div>
-				Maximum Temperature<br />
-				<input class="input-max-temp" type="text" value="{{ item.tempMax }}" name="tempMax" />
-			</div>
-		
-			<div>
+			<div class="prepend-1 span-6{% if errors %} error{% endif %} last">{% if errors %}Please correct the highlighted Entries{% endif %}</div>
+			<div class="span-20">
 				<input class="edit-item-button" type="submit" value="Save changes" />
 			</div>
-		
 		</fieldset>
 	</form>
+
 	
 {% endmacro %}

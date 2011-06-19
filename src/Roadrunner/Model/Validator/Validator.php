@@ -15,9 +15,8 @@ interface Validator
 	/**
 	 * Validates the $input
 	 * 
-	 * @param array $input
-	 * @param string $type
-	 * @return array
+	 * @param array $input (<input-name> => array( 'name' => <validator-name>, 'value' => <value> )
+	 * @return array 
 	 */
-	public function validate($input, $type);
+	public function validate(array $input);
 }
