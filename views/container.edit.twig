@@ -7,7 +7,7 @@
 	<p>
 		ID: <code>{{ container.id }}</code>
 	</p>
-	{{ layout_container.editContainerForm(form_action, container.name, container.sensors) }}
+	{{ layout_container.editContainerForm(form_action, container, errors) }}
 	
 	<div class="add-sensor-form" style="display: none">
 		{{ layout_container.addSensorForm() }}

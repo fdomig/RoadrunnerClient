@@ -1,6 +1,8 @@
 <?php
 namespace Roadrunner\Controller;
 
+use Roadrunner\Model\Validator\ContainerValidator;
+
 use Roadrunner\Model\Container;
 
 class ContainerController extends BaseController
@@ -36,8 +38,14 @@ class ContainerController extends BaseController
 	
 	public function executeUpdate()
 	{
+		$errors = array();
+		$validator = new ContainerValidator();
+		
 		$container = Container::find($this->getRequest()->get('id'));
-		$container->setName($this->app->escape($this->getRequest()->get('name')));
+		$name = $this->app->escape($this->getRequest()->get('name'));
+		$container->setName($name);
+		
+		$errors = $validator->validateContainer($name);
 		
 		// add new sensors
 		$nrToRemove = (int) $this->getRequest()->get('nr-of-sensors-to-remove');
@@ -54,15 +62,27 @@ class ContainerController extends BaseController
 			$container->removeSensor($uri);	
 		}
 		
-		$container->save();
-		
-		return $this->redirect('/container/view/' . $container->getId());
+		if (count($errors) == 0) {
+			$container->save();
+			return $this->redirect('/container/view/' . $container->getId());
+		}
+		return $this->render('container.edit.twig', array(
+			'container' => $container,
+			'errors' => $errors,
+			'form_action' => '/container/update/' . $container->getId(),
+		));
 	}
 	
 	public function executeCreate() 
 	{	
+		$errors = array();
+		$validator = new ContainerValidator();
+		
 		$container = new Container();
-		$container->setName($this->app->escape($this->getRequest()->get('name')));
+		$name = $this->app->escape($this->getRequest()->get('name'));
+		$container->setName($name);
+		
+		$errors = $validator->validateContainer($name);
 		
 		$sensorCreateList = explode(',', $this->app->escape($this->getRequest()->get('create-sensor-list')));
 		
@@ -71,9 +91,15 @@ class ContainerController extends BaseController
 			(!empty($sensorCreateList[$i])) ? $container->addSensor($sensorCreateList[$i]) : null;
 		}
 		
-		$container->save();
-		
-		return $this->redirect('/container/view/' . $container->getId());
+		if (count($errors) == 0) {
+			$container->save();
+			return $this->redirect('/container/view/' . $container->getId());		
+		}
+		return $this->render('container.add.twig', array(
+			'container' => $container,
+			'errors' => $errors,
+			'form_action' => '/container/create',
+		));
 	}
 	
 }
