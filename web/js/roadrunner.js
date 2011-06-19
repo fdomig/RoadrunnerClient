@@ -133,19 +133,22 @@ jQuery(function() {
 	sensorDialog.find('.create-sensor-button').click(function(e) {
 		e.preventDefault();
 		var inputUrl = $(this).parent().parent().find('.input-uri');
-		
-		var newSensor = $('<tr class="create"><td class="sensor-uri">'+ inputUrl.val()+ '</td><td><a href="" class="remove">Remove</a></td></tr>');
-		$('#sensor-list tbody').append(newSensor);
-		
-		newSensor.find('a.remove').click(function(e){
-			e.preventDefault();
-			$(this).parent().parent().remove();
-			return false;
-		});
-		
-		RR_AKS_CONFIRM = true;
-		sensorDialog.dialog("destroy");
-		inputUrl.val("");
+		if (inputUrl.val().length > 0) {
+			var newSensor = $('<tr class="create"><td class="sensor-uri">'+ inputUrl.val()+ '</td><td><a href="" class="remove">Remove</a></td></tr>');
+			$('#sensor-list tbody').append(newSensor);
+			
+			newSensor.find('a.remove').click(function(e){
+				e.preventDefault();
+				$(this).parent().parent().remove();
+				return false;
+			});
+			
+			RR_AKS_CONFIRM = true;
+			sensorDialog.dialog("destroy");
+			inputUrl.val("");
+		} else {
+			inputUrl.parent().addClass('error');
+		}
 		return false;
 	});
 	
@@ -153,11 +156,12 @@ jQuery(function() {
 		e.preventDefault();
 		sensorDialog.dialog({
 			title: "Add a new Sensor to this Unit.",
-			height: 120,
+			height: 150,
 			width: 300,
 			modal: true,
 			resizable: false
 		});
+		sensorDialog.find('.error').removeClass('error');
 		return false;
 	});
 	
