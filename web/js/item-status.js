@@ -64,7 +64,6 @@ jQuery(function() {
 	function getData(logs) {
 		data = [];
 		$.each(logs, function(index) {
-			console.log(logs[index]);
 			if (logs[index].state != 'NORMAL') {
 				data.push({y: logs[index].value, marker: {symbol: 'url(/img/tempstate.png)'}});
 			} else {
