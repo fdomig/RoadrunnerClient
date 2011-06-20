@@ -110,8 +110,9 @@ jQuery(function() {
 	
 	function drawPositions(id) {
 		$.getJSON('/delivery/routes/' + id, function(routes) {
-			for (var i = 0; i < routes.length; i++) {
-				var route = routes[i];
+			
+			for (var i = 0; i < routes.results.length; i++) {
+				var route = routes.results[i];
 				for (var j = 0; j < route.length; j++) {
 					var cr = route[j];
 					addMarker(
@@ -124,8 +125,16 @@ jQuery(function() {
 //					}
 				}
 			}
+			setItemMarkers(routes.items);
 		});
 	}
+	
+	var setItemMarkers = function(items) {
+		for (var k=0; k < items.length; k++) {
+			$('#'+items[k].id + ' > .item-route').html('<img src="' + items[k].img +'" style="height: 20px;"/>');
+		}
+	}
+	
 	
 //	function drawLine(a, b) {
 //		line = [[parseFloat(a.lng), parseFloat(a.lat)],[parseFloat(b.lng), parseFloat(b.lat)]];

@@ -128,6 +128,7 @@ class Delivery extends BaseDocument {
 		$results = array();
 		$routes = array();
 		$rid = 1;
+		$itemRoutes = array();
 		foreach($items as $item) {
 			$pos = $item->getPositionLogs();
 			$route = array();
@@ -157,11 +158,14 @@ class Delivery extends BaseDocument {
 			if (empty($routes)) {
 				$routes[] = $route;
 				$results[] = $result;
+				$itemRoutes[] = array('id' => $item->getId(), 'img' => $this->getMarkerImage($rid));
 			} else {
 				foreach($routes as $r) {
 					if ($r != $route) {
 						$routes[] = $route;
-						$results[] = $this->refactorRoute($result, ++$rid);
+						$temp = $this->refactorRoute($result, ++$rid, $item);
+						$results[] = $temp['route'];
+						$itemRoutes = array_merge($itemRoutes, $temp['items']);
 						break;
 					}
 				}
@@ -170,11 +174,13 @@ class Delivery extends BaseDocument {
 				$results[count($results)-1] = $this->markContainer($results[count($results)-1]);
 			}
 		}
-		return $results;
+		$temp = array('results' => $results, 'items' => $itemRoutes);
+		return $temp;
 	}
 	
 	/**
 	 * Marks the route with the Container Image Path
+	 * Image may be a truck
 	 * @param array $route
 	 * @return array
 	 */
@@ -195,13 +201,16 @@ class Delivery extends BaseDocument {
 	 * @param integer $rid
 	 * @return array
 	 */
-	protected function refactorRoute($route, $rid)
+	protected function refactorRoute($route, $rid, $item)
 	{
 		foreach($route as $k => $r) {
 			$route[$k]['rid'] = $rid;
 			$route[$k]['img']['path'] = $this->getMarkerImage($rid);
 		}
-		return $route;
+		$res = array();
+		$res['route'] = $route;
+		$res['items'][] = array('id' => $item->getId(), 'img' => $this->getMarkerImage($rid));
+		return $res;
 	}
 	
 	/**
