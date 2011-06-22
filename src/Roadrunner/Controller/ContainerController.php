@@ -40,7 +40,7 @@ class ContainerController extends BaseController
 		$container->setName($this->app->escape($this->getRequest()->get('name')));
 		
 		// add new sensors
-		$nrToRemove = (int) $this->getRequest()->get('nr-of-sensors-to-remove');
+		$nrToRemove = (int)$this->getRequest()->get('nr-of-sensors-to-remove');
 		$sensorCreateList = explode(',', $this->app->escape($this->getRequest()->get('create-sensor-list')));
 		
 		// add sensors

@@ -10,7 +10,8 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class Log extends BaseDocument {
 	
-	public final function __construct() {
+	public final function __construct()
+	{
         parent::__construct('log');
         $this->attachments = array();
     }
@@ -27,23 +28,28 @@ class Log extends BaseDocument {
 	/** @Attachments */
 	public $attachments;
 			
-	public function getLogType() {
+	public function getLogType()
+	{
 		return $this->logType;
 	}
 	
-	public function getValue() {
+	public function getValue()
+	{
 		return $this->value;
 	}
 		
-	public function getTimestamp() {
+	public function getTimestamp()
+	{
 		return $this->timestamp;
 	}
 		
-	public function getAttachments() {
+	public function getAttachments()
+	{
 		return $this->attachments;
 	}
 	
-	public function addAttachment($attachment) {
+	public function addAttachment($attachment)
+	{
 		$this->attachments[] = $attachment;
 	}
 	
@@ -54,7 +60,8 @@ class Log extends BaseDocument {
 		return self::getManager()->getRepository(__CLASS__)->find($id);
 	}
 	
-	static public function getForItemId($itemId)  {
+	static public function getForItemId($itemId)
+	{
 		return parent::createQuery('logs', true)
 			->setStartKey(array($itemId))
 			->setEndKey(array($itemId, ""))

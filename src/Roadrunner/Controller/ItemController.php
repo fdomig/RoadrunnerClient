@@ -10,7 +10,8 @@ class ItemController extends BaseController {
 		return $this->executeList();
 	}
 	
-	public function executeList()  {
+	public function executeList()
+	{
 		return $this->render('item.list.twig', array(
 			'item_list' => Item::getAll(),
 		));

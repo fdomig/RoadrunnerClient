@@ -11,7 +11,8 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class BaseDocument {
 	
- 	public function __construct($type) {
+ 	public function __construct($type)
+	{
         $this->type = $type;
     }
 	
