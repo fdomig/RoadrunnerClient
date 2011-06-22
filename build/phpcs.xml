@@ -23,7 +23,6 @@
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
  <rule ref="Generic.NamingConventions.ConstructorName"/>
- <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
  <rule ref="PEAR.NamingConventions.ValidClassName"/>
 
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
