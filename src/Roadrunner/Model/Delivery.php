@@ -78,17 +78,17 @@ class Delivery extends BaseDocument {
 	 * @param Item $item
 	 */
 	public function addItem(Item $item)
-    {
-        $this->items[] = $item;
-    }
+	{
+		$this->items[] = $item;
+	}
     
-    /**
-     * @return Ambigous <\Doctrine\Common\Collections\ArrayCollection, Item>
-     */
-    public function getItems()
-    {
-    	return $this->items;
-    }
+	/**
+	 * @return Ambigous <\Doctrine\Common\Collections\ArrayCollection, Item>
+	 */
+	public function getItems()
+    	{
+		return $this->items;
+	}
     
     /**
      * Removes an Item from this delivery
