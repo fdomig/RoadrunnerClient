@@ -34,22 +34,22 @@
 {% macro editItemForm(form_action, item, errors) %}
 
 	<h2>Edit Item</h2>
-	<form action="{{ form_action }}" method="post">
+	<form class="form-edit-item" action="{{ form_action }}" method="post">
 		<fieldset>
-			<div class="span-8">
+			<div class="span-10">
 				<div {% if errors['item-name'] is defined %} class="error" {% endif %}>
-					Name<br />
-					<input class="input-name" type="text" value="{{ item.name }}" name="name" />
+					<label for="name">Name</label><br />
+					<input class="input-name required" type="text" value="{{ item.name }}" name="name" />
 				</div>
 				
 				<div {% if errors['item-mintemp'] is defined %} class="error" {% endif %}>
-					Minimum Temperature in °C<br />
-					<input class="input-min-temp" type="text" value="{{ item.tempMin }}" name="tempMin" />
+					<label for="tempMin">Minimum Temperature in °C</label><br />
+					<input class="input-min-temp required" type="text" value="{{ item.tempMin }}" name="tempMin" />
 				</div>
 			
 				<div {% if errors['item-maxtemp'] is defined %} class="error" {% endif %}>
-					Maximum Temperature in °C<br />
-					<input class="input-max-temp" type="text" value="{{ item.tempMax }}" name="tempMax" />
+					<label for="tempMax">Maximum Temperature in °C</label><br />
+					<input class="input-max-temp required" type="text" value="{{ item.tempMax }}" name="tempMax" />
 				</div>
 				{% if errors['item-minmax'] is defined %}<div class="error">Minimum Temperature cannot be greater than maximum Temperature</div>{% endif %}
 			</div>

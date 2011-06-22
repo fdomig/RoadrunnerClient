@@ -10,16 +10,16 @@
 		<fieldset>
 			
 			<div class="span-20 last">
-				<div class="span-6">
+				<div class="span-10">
 					<h3>Sender</h3>
 						{{ input.address("from", delivery.fromAddress, errors) }}
 				</div>
 		
-				<div class="span-6 last">
+				<div class="span-10 last">
 					<h3>Recipient</h3>
 					{{ input.address("to", delivery.toAddress, errors) }}
 				</div>
-				<div class="prepend-1 span-6{% if errors %} error{% endif %} last">{% if errors %}Please correct the highlighted Entries{% endif %}</div>
+				<!-- div class="prepend-1 span-6{% if errors %} error{% endif %} last">{% if errors %}Please correct the highlighted Entries{% endif %}</div -->
 				<div class="span-20 last">
 					<h3>Items</h3>
 					

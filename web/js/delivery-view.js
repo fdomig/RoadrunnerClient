@@ -120,9 +120,6 @@ jQuery(function() {
 						cr.info.msg + '<br>' + new Date(cr.info.time*1000) + '<br>Route: ' + cr.rid,
 						createMarkerImage(cr.img.path, cr.img.width, cr.img.height)
 					);
-//					if (j+1 < route.length) {
-//						drawLine(cr.pos, route[j+1].pos);
-//					}
 				}
 			}
 			setItemMarkers(routes.items);
@@ -134,27 +131,6 @@ jQuery(function() {
 			$('#'+items[k].id + ' > .item-route').html('<img src="' + items[k].img +'" style="height: 20px;"/>');
 		}
 	}
-	
-	
-//	function drawLine(a, b) {
-//		line = [[parseFloat(a.lng), parseFloat(a.lat)],[parseFloat(b.lng), parseFloat(b.lat)]];
-//		var geojson = {
-//				"type": "LineString",
-//				"coordinates": line
-//			};
-//		
-//		console.log(geojson);
-//
-//			var options = {
-//				strokeColor: "#FFFF00",
-//				strokeWeight: 3,
-//				strokeOpacity: 1.0,
-//				map: map
-//			};
-//
-//			var vector = new GeoJSON(geojson, options);
-//			vector.setMap(map);
-//	} 
 
 	initialize();
 

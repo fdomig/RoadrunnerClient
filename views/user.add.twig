@@ -3,18 +3,18 @@
 
 	<h2>Add user</h2>
 
-	<form action="{{ form_action }}" method="get">
+	<form class="form-create-user" action="{{ form_action }}" method="get">
 		<fieldset>
 			<div {% if errors['user-name'] is defined %} class="error" {% endif %}>
-				Name<br />
-				<input type="text" value="{{ user.name }}" name="name" />
+				<label for="name">Name</label><br />
+				<input class="required" type="text" value="{{ user.name }}" name="name" />
 			</div>		
 			<div {% if errors['user-pwd'] is defined %} class="error" {% endif %}>
-				Password<br />
-				<input type="password" value="{{ user.password }}" name="password" />
+				<label for="password">Password<label><br />
+				<input class="required" type="password" value="{{ user.password }}" name="password" />
 			</div>
 			<div {% if errors['user-roles'] is defined %} class="error" {% endif %}>
-				Roles<br />
+				<label for="roles[]">Roles<label><br />
 				<input type="checkbox" name="roles[]" value="admin" 
 						{% if (user.roles.0 is defined and user.roles.0 == 'admin')
 						or (user.roles.1 is defined and user.roles.1 == 'admin') 

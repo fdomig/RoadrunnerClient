@@ -48,4 +48,14 @@ a.adder {
 
 .item-block ul {
 	list-style: none;
-}	
+}
+
+input.error {
+	height: 20px;
+	padding: 0;
+}
+
+label.error {
+	padding: 2px;
+	margin-left: 5px;
+}

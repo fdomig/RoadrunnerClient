@@ -5,6 +5,13 @@ jQuery(function() {
 	var regexFloat = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/;
 	var regexInt = /^-{0,1}\d+$/;
 	
+	$(document).ready(function(){
+	    $('.form-create-delivery').validate();
+	    $('.form-create-container').validate();
+	    $('.form-create-user').validate();
+	    $('.form-edit-item').validate();
+	});
+	
 	
 	// ############### adds item to delivery item-list ##################
 	
