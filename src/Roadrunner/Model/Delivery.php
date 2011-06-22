@@ -197,9 +197,11 @@ class Delivery extends BaseDocument {
 	 */
 	protected function refactorRoute($route, $rid)
 	{
-		foreach($route as $r) {
-			$route[$k]['rid'] = $rid;
-			$route[$k]['img']['path'] = $this->getMarkerImage($rid);
+		foreach($route as $k => $r) {
+			$r['rid'] = $rid;
+			$r['img']['path'] = $this->getMarkerImage($rid);
+			
+			$route[$k] = $r;
 		}
 		return $route;
 	}
