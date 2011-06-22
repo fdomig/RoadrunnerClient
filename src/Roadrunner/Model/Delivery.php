@@ -86,7 +86,7 @@ class Delivery extends BaseDocument {
 	 * @return Ambigous <\Doctrine\Common\Collections\ArrayCollection, Item>
 	 */
 	public function getItems()
-    	{
+	{
 		return $this->items;
 	}
     
