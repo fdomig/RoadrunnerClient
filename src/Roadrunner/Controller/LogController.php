@@ -11,7 +11,7 @@ class LogController extends BaseController {
 		$itemId = $this->getRequest()->get('itemId');	
 		$logs = Log::getForItemId($itemId);
 		$sigs = array();
-		foreach ($logs as $k => $log){
+		foreach ($logs as $log){
 		
 			$l = Log::find($log['id']);
 			if ($l->getLogType() == 'UNREGISTER') {		
@@ -25,8 +25,7 @@ class LogController extends BaseController {
 					 * $log['key']['0'] == item id for this log
 					 */
 					$filename = 'signature_'.$log['id'] . '.png';
-					if (!$this->app['cache']->exists($filename)) 
-					{
+					if (!$this->app['cache']->exists($filename)) {
 						$this->app['cache']->writeRaw($filename, 
 							$ass[$this->app['config']['img.state.delivered']]->getRawData());
 						
