@@ -77,8 +77,8 @@ class Delivery extends BaseDocument {
 	/**
 	 * @param Item $item
 	 */
- 	public function addItem(Item $item)
-	{
+	public function addItem(Item $item)
+    {
         $this->items[] = $item;
     }
     
@@ -86,7 +86,7 @@ class Delivery extends BaseDocument {
      * @return Ambigous <\Doctrine\Common\Collections\ArrayCollection, Item>
      */
     public function getItems()
-	{
+    {
     	return $this->items;
     }
     
@@ -95,7 +95,7 @@ class Delivery extends BaseDocument {
      * @param int $id
      */
     public function removeItem($id)
-	{
+    {
     	foreach ($this->items as $i => $v) {
     		if ($v->getId() == $id) {
     			unset($this->items[$i]);
@@ -108,7 +108,7 @@ class Delivery extends BaseDocument {
      * @return number
      */
     public function getCreated_At()
-	{
+    {
     	return $this->created_at;
     }
     
@@ -116,12 +116,12 @@ class Delivery extends BaseDocument {
      * @return number
      */
     public function getModifiedAt()
-	{
+    {
     	return $this->modified_at;
     }
     
     public function setModifiedAt()
-	{
+    {
     	$this->modified_at = time();
     }
 
