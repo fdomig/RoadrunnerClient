@@ -14,25 +14,25 @@
 				<input class="required" type="password" value="{{ user.password }}" name="password" />
 			</div>
 			<div {% if errors['user-roles'] is defined %} class="error" {% endif %}>
-				<label for="roles[]">Roles<label><br />
+				<label for="roles[]">Roles</label><br />
 				<input type="checkbox" name="roles[]" value="admin" 
 						{% if (user.roles.0 is defined and user.roles.0 == 'admin')
 						or (user.roles.1 is defined and user.roles.1 == 'admin') 
 						or (user.roles.2 is defined and user.roles.2 == 'admin') %}
 							checked="checked"
-						{% endif %}>Admin<br/>
+						{% endif %}><label>Admin</label><br/>
 				<input type="checkbox" name="roles[]" value="office" 
 						{% if (user.roles.0 is defined and user.roles.0 == 'office')
 						or (user.roles.1 is defined and user.roles.1 == 'office') 
 						or (user.roles.2 is defined and user.roles.2 == 'office') %}
 							checked="checked"
-						{% endif %}>Office<br/>
+						{% endif %}><label>Office</label><br/>
 				<input type="checkbox" name="roles[]" value="driver" 
 						{% if (user.roles.0 is defined and user.roles.0 == 'driver')
 						or (user.roles.1 is defined and user.roles.1 == 'driver') 
 						or (user.roles.2 is defined and user.roles.2 == 'driver') %}
 							checked="checked"
-						{% endif %}>Driver<br/>
+						{% endif %}><label>Driver</label><br/>
 			</div>
 			<div>
 				<input type="submit" value="Create User" />
