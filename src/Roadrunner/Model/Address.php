@@ -64,8 +64,8 @@ class Address {
     {
         $this->city = $city;
     }
-    
-	public function setStreet($street)
+
+    public function setStreet($street)
     {
     	$this->street = $street;
     }
