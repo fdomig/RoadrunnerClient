@@ -1,6 +1,8 @@
 <?php
 namespace Roadrunner\Model;
 
+use Roadrunner\Provider\Service;
+
 use Doctrine\ODM\CouchDB\View\Query;
 use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
 
@@ -73,6 +75,8 @@ class Item extends BaseDocument {
 		);
 	}
 
+	
+	
 	public function getDelivery()
 	{
 		$result = self::createQuery('deliveryforitem')
@@ -105,6 +109,47 @@ class Item extends BaseDocument {
 			->setEndKey(array($this->getId(), '', ''))
 			->setGroupLevel(3);
 		return $result->execute();
+	}
+	
+	protected function getStatusMarkerImage()
+	{
+		$type = $this->getStatusLogType();
+		switch($type) {
+			case ItemStatus::REGISTER:
+				return '/img/marker_registered.png';
+			case ItemStatus::UNREGISTER:
+				return '/img/marker_delivered.png';
+			default:
+				return '/img/marker_truck.png';
+		}
+	}
+	
+	public function getSignature()
+	{
+		foreach(Log::getForItemId($this->getId()) as $log) {
+			
+			if (ItemStatus::UNREGISTER == $log['value']['logType']) {
+				$ass = Log::find($log['id'])->getAttachments();
+				if (array_key_exists('signature.png', $ass)) {
+					
+					/* 
+					 * Store the file with prefix 'signature_' appending the
+					 * item ID for this specific Log with extension 'png' if 
+					 * it does not already exist in our Cache 
+					 * $log['key']['0'] == item id for this log
+					 */
+					$filename = 'signature_'.$log['id'] . '.png';
+					if (!Service::getService('cache')->exists($filename)) 
+					{
+						$config = Service::getService('config');
+						Service::getService('cache')->writeRaw($filename, 
+							$ass[$config['img.state.delivered']]->getRawData());
+					}
+					return Service::getService('cache')->getPath($filename);
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**

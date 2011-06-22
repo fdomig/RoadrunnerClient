@@ -58,6 +58,7 @@
 				<th>Name</th>
 				<th class="span-4">Temperature</th>
 				<th class="span-4">Status</th>
+				<th class="span-2">View</th>
 			</tr>
 		</thead>
 	{% for item in delivery.items %}
@@ -66,6 +67,7 @@
 			<td><a href="/item/view/{{ item.id }}">{{ item.name }}</a></td>
 			<td>{{ item.tempMin }} to {{ item.tempMax }}</td>
 			<td class="item-status"></td>
+			<td>{% if item.signature %}<a class="view-signature" href="{{ item.signature }}">View</a>{% endif %}</td>
 		</tr>
 	{% endfor %}
 	</table>

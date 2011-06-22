@@ -150,26 +150,4 @@ class ItemController extends BaseController {
 		
 		return $item;
 	}
-	
-	/**
-	 * Returns the Current ItemStatus
-	 * @throws ControllerException
-	 */
-	public function executeItemStatusImage()
-	{
-		if (!$this->getRequest()->isXmlHttpRequest()) {
-			throw new ControllerException("Method not allowed.");
-		}
-
-		$id = $this->getRequest()->get('id');
-		$item = Item::find($id);
-		
-		if (is_null($item)) {
-			throw new ControllerException("Item does not exist.");
-		}
-		$imgPath = Delivery::getMarkerImageByStatus(0, $item);
-		
-		return $imgPath;
-	}
-	
 }

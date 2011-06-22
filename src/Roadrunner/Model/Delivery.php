@@ -177,19 +177,6 @@ class Delivery extends BaseDocument {
 		return $temp;
 	}
 	
-	static public function getMarkerImageByStatus($rid, $item)
-	{
-		switch($item->getStatusLogType()) {
-			case ItemStatus::LOAD:
-			case ItemStatus::UNLOAD:	
-				return Deilivery::getMarkerImage($rid);
-			case ItemStatus::REGISTER:
-				return '/img/marker_registered.png';
-			case ItemStatus::UNREGISTER:
-				return '/img/marker_delivered.png';
-		}
-	}
-	
 	/**
 	 * Marks the route with the Container Image Path
 	 * Image may be a truck
