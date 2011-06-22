@@ -10,7 +10,7 @@ class Cache
 	public function __construct() 
 	{
 		$this->directory = dirname(__FILE__) . '/../../../web/cache/';
-		$this->linkpath = '/cache/';
+		$this->linkpath  = '/cache/';
 	}
 	
 	public function writeRaw($filename, $data)
@@ -30,8 +30,7 @@ class Cache
 	
 	public function getPath($filename)
 	{
-		if ($this->exists($filename))
-		{
+		if ($this->exists($filename)) {
 			return $this->linkpath . $filename;
 		}
 		return false;
