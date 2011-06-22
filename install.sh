@@ -78,9 +78,4 @@ install_git Monolog https://github.com/Seldaek/monolog.git origin/master
 # Twig
 install_git Twig https://github.com/fabpot/Twig.git origin/master
 
-cd ../web/js
- 
-# GeoJason
-install_git geojason https://github.com/JasonSanford/GeoJSON-to-Google-Maps.git origin/master
-
 cd ..
