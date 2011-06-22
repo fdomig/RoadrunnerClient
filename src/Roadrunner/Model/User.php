@@ -11,7 +11,8 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class User extends BaseDocument {
 	
-	public final function __construct() {
+	public final function __construct()
+	{
         parent::__construct('user');
     }
 		
@@ -27,36 +28,41 @@ class User extends BaseDocument {
 	/** @Field(type="string") */
 	private $salt;
 
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 	
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
-		$this->id = 'org.couchdb.user:' . $name;
+		$this->id   = 'org.couchdb.user:' . $name;
 	}
 		
-	public function getRoles() {
+	public function getRoles()
+	{
 		return $this->roles;
 	}
 	
-	public function setRoles($roles) {
+	public function setRoles($roles)
+	{
 		$this->roles = $roles;
 	}
 	
-	public function setPassword($password)  {
-		$salt = time();
-		$password_sha = sha1($password . $salt);
-		
-		$this->salt = $salt;
-		$this->password_sha = $password_sha;
+	public function setPassword($password)
+	{
+		$salt               = time();
+		$this->salt         = $salt;
+		$this->password_sha = sha1($password . $salt);
 	}
 	
-	static public function getAll()  {
+	static public function getAll() 
+	{
 		return self::createQuery('users')->execute();
 	}
 	
-	static public function createQuery($viewName) {
+	static public function createQuery($viewName)
+	{
 		return new Query(
 			self::getManager()->getConfiguration()->getHTTPClient(),
 			'_users',
