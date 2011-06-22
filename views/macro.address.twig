@@ -7,3 +7,13 @@
 </div>
 
 {% endmacro %}
+
+{% macro addressprint(name, street, zip, city, country) %}
+
+<div style="width: 100%;">
+	<p>{{ name }}<br />
+	{{ street }}<br />
+	{{ country }} - {{ zip }} {{ city }}</p>
+</div>
+
+{% endmacro %}

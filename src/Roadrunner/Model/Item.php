@@ -63,13 +63,39 @@ class Item extends BaseDocument {
 		}
 		return '/cache/' . $file;
 	}
+	
+	public function getPrintData()
+	{
+		return array(
+			'mintemp' => $this->tempMin,
+			'maxtemp' => $this->tempMax,
+			'qrcode' => $this->getImage(),
+		);
+	}
 
-	public function getStatus()  {
+	public function getDelivery()
+	{
+		$result = self::createQuery('deliveryforitem')
+			->setKey($this->getId())
+			->execute();
+		return Delivery::find($result[0]['id']);
+	}
+	
+	public function getStatus()
+	{
 		$result = self::createQuery('itemstatus')
 			->setKey($this->getId())
 			->execute()->toArray();
-			
 		return $result[0]['value']['status'];
+	}
+	
+	public function getStatusLogType()
+	{
+		$result = self::createQuery('itemstatus')
+			->setKey($this->getId())
+			->execute()->toArray();
+		return (array_key_exists('logType', $result[0]['value'])) 
+			? $result[0]['value']['logType'] : ItemStatus::REGISTER;
 	}
 	
 	public function getRoute()
@@ -78,7 +104,6 @@ class Item extends BaseDocument {
 			->setStartKey(array($this->getId()))
 			->setEndKey(array($this->getId(), '', ''))
 			->setGroupLevel(3);
-			
 		return $result->execute();
 	}
 	

@@ -55,6 +55,7 @@ $app->get('/delivery/edit/{id}', array(new DeliveryController($app), 'executeEdi
 $app->post('/delivery/update/{id}', array(new DeliveryController($app), 'executeUpdate'));
 $app->get('/delivery/directions/{id}', array(new DeliveryController($app), 'executeDirections'));
 $app->get('/delivery/routes/{id}', array(new DeliveryController($app), 'executeRoutes'));
+$app->get('/delivery/print/{id}', array(new DeliveryController($app), 'executePrint'));
 
 /*
  * User controller

@@ -176,6 +176,28 @@ class DeliveryController extends BaseController {
 		return json_encode($delivery->getDirections());
 	}
 	
+	/**
+	 * Returns the print formular
+	 * @return string
+	 */
+	public function executePrint()
+	{
+		$delivery = Delivery::find($this->getRequest()->get('id'));
+		
+		if (is_null($delivery)) {
+			throw new ControllerException("Delivery does not exist.");
+		}
+		$items = $delivery->getItems();
+		$itemdata = array();
+		foreach($items as $k => $item) {
+			$itemdata[] = $item->getPrintData();
+		}
+		
+		return $this->render('delivery.print.twig', array(
+			'delivery' => $delivery,
+			'items' => $itemdata,
+		));
+	}
 	
 	/**
 	 * Returns all Routes w.r.t. it's Delivery

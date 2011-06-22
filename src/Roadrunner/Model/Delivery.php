@@ -133,13 +133,14 @@ class Delivery extends BaseDocument {
 			$pos = $item->getPositionLogs();
 			$route = array();
 			$result = array();
-			
+
 			foreach($pos as $p) {
 				// $p['value']['value'] => {lng, lat}
 				$count = count($route);
 				
 				// if new timestamp and same position take new log for that value 
-				if (!empty($route) && $p['value']['timestamp'] > $route[$count-1]['value']['timestamp'] 
+				if ('POSERROR' != $p['value']['logType'] && !empty($route) 
+					&& $p['value']['timestamp'] > $route[$count-1]['value']['timestamp'] 
 					&& ($p['value']['value'] == $route[$count-1]['value']['value'])) {
 					
 					$route[$count-1] = $p;
@@ -147,25 +148,22 @@ class Delivery extends BaseDocument {
 				
 				// if no first timestamp has been set OR
 				// if new timestamp 
-				} elseif (empty($route) || $p['value']['timestamp'] > $route[$count-1]['value']['timestamp']
+				} elseif ('POSERROR' != $p['value']['logType'] 
+					&& empty($route) || $p['value']['timestamp'] > $route[$count-1]['value']['timestamp']
 					&& ($p['value']['value'] != $route[$count-1]['value']['value'])) {
 					$route[] = $p;
 					$result[] = $this->createPosition($p, $rid, $this->getMarkerImage($rid));
 				}	
 			}
-			
 			// if first route add this route to all routes
 			if (empty($routes)) {
 				$routes[] = $route;
 				$results[] = $result;
-				$itemRoutes[] = array('id' => $item->getId(), 'img' => $this->getMarkerImage($rid));
 			} else {
 				foreach($routes as $r) {
 					if ($r != $route) {
 						$routes[] = $route;
-						$temp = $this->refactorRoute($result, ++$rid, $item);
-						$results[] = $temp['route'];
-						$itemRoutes = array_merge($itemRoutes, $temp['items']);
+						$results[] = $this->refactorRoute($result, ++$rid);
 						break;
 					}
 				}
@@ -173,9 +171,23 @@ class Delivery extends BaseDocument {
 			if (!empty($results)) {
 				$results[count($results)-1] = $this->markContainer($results[count($results)-1]);
 			}
+			$itemRoutes[] = array('id' => $item->getId(), 'img' => Delivery::getMarkerImage($rid));
 		}
 		$temp = array('results' => $results, 'items' => $itemRoutes);
 		return $temp;
+	}
+	
+	static public function getMarkerImageByStatus($rid, $item)
+	{
+		switch($item->getStatusLogType()) {
+			case ItemStatus::LOAD:
+			case ItemStatus::UNLOAD:	
+				return Deilivery::getMarkerImage($rid);
+			case ItemStatus::REGISTER:
+				return '/img/marker_registered.png';
+			case ItemStatus::UNREGISTER:
+				return '/img/marker_delivered.png';
+		}
 	}
 	
 	/**
@@ -188,7 +200,7 @@ class Delivery extends BaseDocument {
 	{
 		if (!empty($route)) {
 			$container = count($route)-1;
-			$route[$container]['img']['path'] = $this->getMarkerImage($route[$container]['rid'], true);
+			$route[$container]['img']['path'] = Delivery::getMarkerImage($route[$container]['rid'], true);
 			$route[$container]['img']['width'] = 48;
 			$route[$container]['img']['height'] = 32;
 		}
@@ -201,16 +213,13 @@ class Delivery extends BaseDocument {
 	 * @param integer $rid
 	 * @return array
 	 */
-	protected function refactorRoute($route, $rid, $item)
+	protected function refactorRoute($route, $rid)
 	{
 		foreach($route as $k => $r) {
 			$route[$k]['rid'] = $rid;
-			$route[$k]['img']['path'] = $this->getMarkerImage($rid);
+			$route[$k]['img']['path'] = Delivery::getMarkerImage($rid);
 		}
-		$res = array();
-		$res['route'] = $route;
-		$res['items'][] = array('id' => $item->getId(), 'img' => $this->getMarkerImage($rid));
-		return $res;
+		return $route;
 	}
 	
 	/**
@@ -218,12 +227,12 @@ class Delivery extends BaseDocument {
 	 * @param integer $rid
 	 * @return string
 	 */
-	protected function getMarkerImage($rid, $current = false) 
+	static public function getMarkerImage($rid, $current = false) 
 	{
 		if ($current) {
 			return '/img/marker_truck.png';
 		}
-		return '/img/marker_' . $this->mapRoute2Image($rid) . '.png';	
+		return '/img/marker_' . Delivery::mapRoute2Image($rid) . '.png';	
 	}
 	
 	/**
@@ -232,7 +241,7 @@ class Delivery extends BaseDocument {
 	 * @param route Integer
 	 * @return String color
 	 */
-	protected function mapRoute2Image($rid) {
+	static public function mapRoute2Image($rid) {
 		
 		switch($rid) {
 			case 1:
