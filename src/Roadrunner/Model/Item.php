@@ -111,7 +111,7 @@ class Item extends BaseDocument {
 		return $result->execute();
 	}
 	
-	protected function getStatusMarkerImage()
+	public function getStatusMarkerImage()
 	{
 		$type = $this->getStatusLogType();
 		switch($type) {

@@ -24,6 +24,8 @@ $app->get('/item/list', array(new ItemController($app), 'executeList'));
 $app->post('/item/create', array(new ItemController($app), 'executeCreate'));
 $app->post('/item/update/{id}', array(new ItemController($app), 'executeUpdate'));
 $app->get('/item/edit/{id}',array(new ItemController($app), 'executeEdit'));
+$app->get('/item/statusimg/{id}', array(new ItemController($app), 'executeItemStatusImage'));
+
 // ajax
 $app->get('/item/status/{id}', array(new ItemController($app), 'executeStatus'));
 $app->get('/item/route/{id}', array(new ItemController($app), 'executeRoute'));
