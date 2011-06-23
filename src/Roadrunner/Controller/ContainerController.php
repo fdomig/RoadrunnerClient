@@ -52,7 +52,8 @@ class ContainerController extends BaseController
 		$sensorCreateList = explode(',', $this->app->escape($this->getRequest()->get('create-sensor-list')));
 		
 		// add sensors
-		for ($i=0; $i < count($sensorCreateList); $i++) {
+		$nrOfCreations = count($sensorCreateList);
+		for ($i=0; $i < $nrOfCreations; $i++) {
 			(!empty($sensorCreateList[$i])) ? $container->addSensor($sensorCreateList[$i]) : null;
 		}
 		
@@ -85,9 +86,9 @@ class ContainerController extends BaseController
 		$errors = $validator->validateContainer($name);
 		
 		$sensorCreateList = explode(',', $this->app->escape($this->getRequest()->get('create-sensor-list')));
-		
+		$nrOfCreations = count($sensorCreateList);
 		// add sensors
-		for ($i=0; $i < count($sensorCreateList); $i++) {
+		for ($i=0; $i < $nrOfCreations; $i++) {
 			(!empty($sensorCreateList[$i])) ? $container->addSensor($sensorCreateList[$i]) : null;
 		}
 		
