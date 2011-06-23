@@ -10,6 +10,11 @@ jQuery(function() {
 		$.getJSON('/item/status/' + $(this).parent().attr('id'), function(data) {
 			$('#' + data.id).find('.item-status').text(data.status);
 		});
+		
+		$.getJSON('/item/statusimg/' + $(this).parent().attr('id'), function(data) {
+			$('#' + data.id).find('.item-status-img').append('<img style="height: 20px;" src="' + data.img + '" />');
+		});
+		
 		// temp tracking
 		$.getJSON('/item/templogs/' + $(this).parent().attr('id'), function(data) {
 			tempdata.push(data);
@@ -64,7 +69,6 @@ jQuery(function() {
 	function getData(logs) {
 		data = [];
 		$.each(logs, function(index) {
-			console.log(logs[index]);
 			if (logs[index].state != 'NORMAL') {
 				data.push({y: logs[index].value, marker: {symbol: 'url(/img/tempstate.png)'}});
 			} else {

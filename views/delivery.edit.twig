@@ -11,19 +11,17 @@
 		<fieldset>
 			
 			<div class="span-20 last">
-				<div class="span-4">
+				<div class="span-10">
 					<h3>Sender</h3>
-		
-						{{ input.address("from", delivery.fromAddress) }}
+						{{ input.address("from", delivery.fromAddress, errors) }}
 				</div>
 		
-				<div class="span-4 last">
+				<div class="span-10 last">
 					<h3>Recipient</h3>
-		
-					{{ input.address("to", delivery.toAddress) }}
+					{{ input.address("to", delivery.toAddress, errors) }}
 				</div>
-				
-				<div class="prepend-2 span-10 last">
+				<!-- div class="prepend-1 span-6{% if errors %} error{% endif %} last">{% if errors %}Please correct the highlighted Entries{% endif %}</div -->
+				<div class="span-20 last">
 					<h3>Items</h3>
 					
 					<table id="item-list">
@@ -37,12 +35,12 @@
 						</thead>
 						<tbody>
 							{% for item in delivery.items %}
-							<tr class="persistent">
-								<td class="item-id">{{ item.id }}</td>
-								<td>{{ item.name }}</td>
-								<td><a href="/item/view/{{ item.id }}">View</a></td>
-								<td><a href="" class="remove-item-from-delivery">Remove</a></td>
-							</tr>
+								<tr class="persistent">
+									<td class="item-id">{{ item.id }}</td>
+									<td>{{ item.name }}</td>
+									<td><a href="/item/view/{{ item.id }}">View</a></td>
+									<td><a href="" class="remove-item-from-delivery">Remove</a></td>
+								</tr>
 							{% endfor %}
 						</tbody>
 					</table>
@@ -56,7 +54,7 @@
 			</div>
 		
 			<div class="first">
-				<input class="create-delivery-button" type="submit" value="Save changes" />
+				<input class="create-delivery-button" type="submit" value="Save Changes" />
 			</div>
 		
 		</fieldset>

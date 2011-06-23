@@ -22,6 +22,11 @@ wget http://jqueryui.com/download/jquery-ui-1.8.13.custom.zip
 unzip -u jquery-ui-1.8.13.custom.zip -d jquery
 rm -rf jquery-ui-1.8.13.custom.zip jquery/development-bundle jquery/index.html
 
+# jQuery Validation
+cd jquery/js
+wget http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.min.js
+cd ../../
+
 # highcharts
 wget http://www.highcharts.com/downloads/zips/Highcharts-2.1.4.zip
 unzip -u Highcharts-2.1.4.zip -d highcharts
@@ -32,6 +37,7 @@ rm -rf highcharts/examples highcharts/exporting-server highcharts/index.htm
 wget http://nyromodal.googlecode.com/files/nyroModal-1.6.2.zip
 unzip -u nyroModal-1.6.2.zip
 rm -rf nyroModal-1.6.2.zip
+
 
 cd ../../vendor
 
@@ -71,10 +77,5 @@ install_git Monolog https://github.com/Seldaek/monolog.git origin/master
 
 # Twig
 install_git Twig https://github.com/fabpot/Twig.git origin/master
-
-cd ../web/js
- 
-# GeoJason
-install_git geojason https://github.com/JasonSanford/GeoJSON-to-Google-Maps.git origin/master
 
 cd ..

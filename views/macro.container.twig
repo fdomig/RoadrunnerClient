@@ -1,18 +1,18 @@
-{% macro addContainerForm(form_action) %}
+{% macro addContainerForm(form_action, container, errors) %}
 	<form class="form-create-container" action="{{ form_action }}" method="post">
 		<fieldset>
-			{{ _self.unitInputs() }}
+			{{ _self.unitInputs('',errors) }}
 			{{ _self.sensorBlock() }}
 			{{ _self.submitButton("Create Transport Unit") }}
 		</fieldset>
 	</form>
 {% endmacro %}
 
-{% macro editContainerForm(form_action, name, sensors) %}
+{% macro editContainerForm(form_action, container, errors) %}
 	<form class="form-create-container" action="{{ form_action }}" method="post">
 		<fieldset>
-			{{ _self.unitInputs(name) }}
-			{{ _self.sensorBlock(sensors) }}
+			{{ _self.unitInputs(container.name, errors) }}
+			{{ _self.sensorBlock(container.sensors) }}
 			{{ _self.submitButton("Save Transport Unit") }}
 		</fieldset>
 	</form>
@@ -24,18 +24,18 @@
 	</div>
 {% endmacro %}
 
-{% macro unitInputs(name) %}
-	<div class="span-6">
+{% macro unitInputs(name, errors) %}
+	<div class="span-10">
 		<h3>Unit</h3>
-		<div>
-			Name</ br>
-			<input class="input-name" type="text" value="{{ name }}" name="name" />
+		<div {% if errors['container-name'] is defined %} class="error" {% endif %}>
+			<label for="name">Name</label></ br>
+			<input class="input-name required" type="text" value="{{ name }}" name="name" />
 		</div>
 	</div>
 {% endmacro %}
 
 {% macro sensorBlock(sensors) %}
-	<div class="prepend-2 span-10 last">
+	<div class="prepend-1 span-10 last">
 		<h3>Sensors</h3>
 		
 		<table id="sensor-list">

@@ -1,0 +1,63 @@
+{% extends "print.twig" %}
+
+{% macro itemblock(item, delivery) %}
+{% import "macro.address.twig" as address %}
+
+
+<div class="print-item block border">
+	<table class="delivery-title  border">
+		<tbody>
+			<tr><td><strong>Delivery: </strong><code>{{ delivery.id }}</code></td></tr>
+		</tbody>
+	</table>
+	<table class="delivery-table" cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr>
+				<td><div class="delivery-address block">
+						<strong>From:</strong>
+						<div class="indent-10">
+							{{ address.addressprint(delivery.fromAddress.name,
+								delivery.fromAddress.street, delivery.fromAddress.zip, delivery.fromAddress.city, 
+								delivery.fromAddress.country) }}
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="block" style="text-align: left;">
+						<strong>Temperature</strong>
+						<div class="indent-10">
+							<table class="temperature-table">
+								<tr><td>MIN: </td><td>{{ item.mintemp }}°C</td></tr>
+								<tr><td>MAX</td><td>{{ item.maxtemp }}°C</td></tr>
+							</table>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="delivery-address block">
+						<strong>To:</strong>
+						<div class="indent-10">
+						{{ address.addressprint(delivery.toAddress.name,
+							delivery.toAddress.street, delivery.toAddress.zip, delivery.toAddress.city, 
+							delivery.toAddress.country) }}
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="" style="text-align: center">
+						<img class="delivery-qrcode" src="{{ item.qrcode }}" />
+					</div>			
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endmacro %}
+
+{% block content %}
+	{% for item in items %}
+		{{ _self.itemblock(item, delivery) }}
+	{% endfor %}
+{% endblock %}

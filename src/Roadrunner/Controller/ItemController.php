@@ -1,6 +1,10 @@
 <?php
 namespace Roadrunner\Controller;
 
+use Roadrunner\Model\Delivery;
+
+use Roadrunner\Model\Validator\ItemValidator;
+
 use Roadrunner\Model\Item;
 
 class ItemController extends BaseController {
@@ -10,7 +14,7 @@ class ItemController extends BaseController {
 		return $this->executeList();
 	}
 	
-	public function executeList()
+	public function executeList()  
 	{
 		return $this->render('item.list.twig', array(
 			'item_list' => Item::getAll(),
@@ -45,6 +49,8 @@ class ItemController extends BaseController {
 	
 	public function executeUpdate()
 	{
+		$errors = array();
+		$validator = new ItemValidator();
 		
 		$item = Item::find($this->getRequest()->get('id'));
 		
@@ -52,14 +58,21 @@ class ItemController extends BaseController {
 		$tempMin = $this->app->escape($this->getRequest()->get('tempMin'));
 		$tempMax = $this->app->escape($this->getRequest()->get('tempMax'));
 		
+		$errors = $validator->validateSingleItem($name, $tempMin, $tempMax);
+		
 		$item->setName($name);
 		$item->setTempMin($tempMin);
 		$item->setTempMax($tempMax);
 		
-		// FIXME: VALIDATE
-		$item->save();
-		
-		return $this->redirect('/item/view/' . $item->getId());
+		if (count($errors) == 0) {
+			$item->save();
+			return $this->redirect('/item/view/' . $item->getId());
+		}
+		return $this->render('item.edit.twig', array(
+			'item' => $item,
+			'errors' => $errors,
+			'form_action' => "/item/update/" . $item->getId(),
+		)); 
 	}
 	
 	/**
@@ -67,22 +80,29 @@ class ItemController extends BaseController {
 	 */
 	public function executeCreate()
 	{			
+		$errors = array();
+		$validator = new ItemValidator();
+		
 		$name = $this->app->escape($this->getRequest()->get('name'));
 		$tempMin = $this->app->escape($this->getRequest()->get('tempMin'));
 		$tempMax = $this->app->escape($this->getRequest()->get('tempMax'));
 		
-		if (empty($name)) {
-			throw new ControllerException("Name of item is not set.");
-		}
+		$errors = $validator->validateSingleItem($name, $tempMin, $tempMax);
 		
 		$item = new Item();
 		$item->setName($name);
 		$item->setTempMin($tempMin);
 		$item->setTempMax($tempMax);
 		
-		$item->save();
-		
-		return $this->redirect('/item/view/' . $item->getId());
+		if (count($errors) == 0) {
+			$item->save();
+			return $this->redirect('/item/view/' . $item->getId());
+		}
+		return $this->render('item.add.twig', array(
+			'item' => $item,
+			'errors' => $errors,
+			'form_action' => '/item/create',
+		));
 	}
 	
 	public function executeStatus()
@@ -132,4 +152,26 @@ class ItemController extends BaseController {
 		return $item;
 	}
 	
+	/**
+	 * Returns the Current ItemStatus
+	 * @throws ControllerException
+	 */
+	public function executeItemStatusImage()
+	{
+		if (!$this->getRequest()->isXmlHttpRequest()) {
+			throw new ControllerException("Method not allowed.");
+		}
+
+		$id = $this->getRequest()->get('id');
+		$item = Item::find($id);
+		
+		if (is_null($item)) {
+			throw new ControllerException("Item does not exist.");
+		}
+		return json_encode(array(
+			'id' => $item->getId(), 
+			'img' => $item->getStatusMarkerImage()
+		));
+		
+	}
 }

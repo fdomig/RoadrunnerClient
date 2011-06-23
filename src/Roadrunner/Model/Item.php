@@ -1,6 +1,8 @@
 <?php
 namespace Roadrunner\Model;
 
+use Roadrunner\Provider\Service;
+
 use Doctrine\ODM\CouchDB\View\Query;
 use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
 
@@ -70,14 +72,41 @@ class Item extends BaseDocument {
 		}
 		return '/cache/' . $file;
 	}
+	
+	public function getPrintData()
+	{
+		return array(
+			'mintemp' => $this->tempMin,
+			'maxtemp' => $this->tempMax,
+			'qrcode' => $this->getImage(),
+		);
+	}
 
+	
+	
+	public function getDelivery()
+	{
+		$result = self::createQuery('deliveryforitem')
+			->setKey($this->getId())
+			->execute();
+		return Delivery::find($result[0]['id']);
+	}
+	
 	public function getStatus()
 	{
 		$result = self::createQuery('itemstatus')
 			->setKey($this->getId())
 			->execute()->toArray();
-			
 		return $result[0]['value']['status'];
+	}
+	
+	public function getStatusLogType()
+	{
+		$result = self::createQuery('itemstatus')
+			->setKey($this->getId())
+			->execute()->toArray();
+		return (array_key_exists('logType', $result[0]['value'])) 
+			? $result[0]['value']['logType'] : ItemStatus::REGISTER;
 	}
 	
 	public function getRoute()
@@ -86,8 +115,48 @@ class Item extends BaseDocument {
 			->setStartKey(array($this->getId()))
 			->setEndKey(array($this->getId(), '', ''))
 			->setGroupLevel(3);
-			
 		return $result->execute();
+	}
+	
+	public function getStatusMarkerImage()
+	{
+		$type = $this->getStatusLogType();
+		switch($type) {
+			case ItemStatus::REGISTER:
+				return '/img/marker_registered.png';
+			case ItemStatus::UNREGISTER:
+				return '/img/marker_delivered.png';
+			default:
+				return '/img/marker_truck.png';
+		}
+	}
+	
+	public function getSignature()
+	{
+		foreach(Log::getForItemId($this->getId()) as $log) {
+			
+			if (ItemStatus::UNREGISTER == $log['value']['logType']) {
+				$ass = Log::find($log['id'])->getAttachments();
+				if (array_key_exists('signature.png', $ass)) {
+					
+					/* 
+					 * Store the file with prefix 'signature_' appending the
+					 * item ID for this specific Log with extension 'png' if 
+					 * it does not already exist in our Cache 
+					 * $log['key']['0'] == item id for this log
+					 */
+					$filename = 'signature_'.$log['id'] . '.png';
+					if (!Service::getService('cache')->exists($filename)) 
+					{
+						$config = Service::getService('config');
+						Service::getService('cache')->writeRaw($filename, 
+							$ass[$config['img.state.delivered']]->getRawData());
+					}
+					return Service::getService('cache')->getPath($filename);
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -131,7 +200,7 @@ class Item extends BaseDocument {
 			// do we have to add it because of a critical temp
 			if ($i-- < 1 || $this->getTempState($v) != self::STATE_NORMAL) {		
 				$data[] = array(
-					'timestamp' => (int)$log['value']['timestamp'],
+					'timestamp' => (int) $log['value']['timestamp'],
 					'value' => round($v, 2),
 					'state' => $this->getTempState($v), 
 				);

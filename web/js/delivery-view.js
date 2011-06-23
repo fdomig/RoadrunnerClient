@@ -110,8 +110,9 @@ jQuery(function() {
 	
 	function drawPositions(id) {
 		$.getJSON('/delivery/routes/' + id, function(routes) {
-			for (var i = 0; i < routes.length; i++) {
-				var route = routes[i];
+			
+			for (var i = 0; i < routes.results.length; i++) {
+				var route = routes.results[i];
 				for (var j = 0; j < route.length; j++) {
 					var cr = route[j];
 					addMarker(
@@ -119,33 +120,17 @@ jQuery(function() {
 						cr.info.msg + '<br>' + new Date(cr.info.time*1000) + '<br>Route: ' + cr.rid,
 						createMarkerImage(cr.img.path, cr.img.width, cr.img.height)
 					);
-//					if (j+1 < route.length) {
-//						drawLine(cr.pos, route[j+1].pos);
-//					}
 				}
 			}
+			setItemMarkers(routes.items);
 		});
 	}
 	
-//	function drawLine(a, b) {
-//		line = [[parseFloat(a.lng), parseFloat(a.lat)],[parseFloat(b.lng), parseFloat(b.lat)]];
-//		var geojson = {
-//				"type": "LineString",
-//				"coordinates": line
-//			};
-//		
-//		console.log(geojson);
-//
-//			var options = {
-//				strokeColor: "#FFFF00",
-//				strokeWeight: 3,
-//				strokeOpacity: 1.0,
-//				map: map
-//			};
-//
-//			var vector = new GeoJSON(geojson, options);
-//			vector.setMap(map);
-//	} 
+	var setItemMarkers = function(items) {
+		for (var k=0; k < items.length; k++) {
+			$('#'+items[k].id + ' > .item-route').html('<img src="' + items[k].img +'" style="height: 20px;"/>');
+		}
+	}
 
 	initialize();
 
