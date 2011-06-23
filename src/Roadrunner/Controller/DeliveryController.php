@@ -191,7 +191,7 @@ class DeliveryController extends BaseController {
 		}
 		$items = $delivery->getItems();
 		$itemdata = array();
-		foreach($items as $k => $item) {
+		foreach($items as $item) {
 			$itemdata[] = $item->getPrintData();
 		}
 		
