@@ -208,7 +208,6 @@ class DeliveryController extends BaseController {
 	 */
 	public function executeRoutes()
 	{
-		
 		if (!$this->getRequest()->isXmlHttpRequest()) {
 			throw new ControllerException("Method not allowed.");
 		}
