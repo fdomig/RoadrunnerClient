@@ -82,8 +82,6 @@ class Item extends BaseDocument {
 		);
 	}
 
-	
-	
 	public function getDelivery()
 	{
 		$result = self::createQuery('deliveryforitem')
