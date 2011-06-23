@@ -79,6 +79,7 @@ class Item extends BaseDocument {
 			'mintemp' => $this->tempMin,
 			'maxtemp' => $this->tempMax,
 			'qrcode' => $this->getImage(),
+			'name' => $this->getName(),
 		);
 	}
 

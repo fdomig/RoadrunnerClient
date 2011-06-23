@@ -16,11 +16,9 @@ class UserController extends BaseController
 	
 	public function executeAdd()
 	{
-		return $this->render('user.add.twig', 
-			array(
-				'form_action' => '/user/create',
-			)
-		);
+		return $this->render('user.add.twig', array(
+			'form_action' => '/user/create',
+		));
 	}
 			
 	public function executeCreate()

@@ -4,6 +4,7 @@ jQuery(function() {
 	var chart;
 	var tempdata = [];
 	var itemCount = $('.item-status').length;
+	var draw = false;
 	
 	$('.item-status').each(function() {
 		// item status
@@ -17,12 +18,24 @@ jQuery(function() {
 		
 		// temp tracking
 		$.getJSON('/item/templogs/' + $(this).parent().attr('id'), function(data) {
-			tempdata.push(data);
-			if (tempdata.length == itemCount) {
-				drawChart();
+			tempdata.push(data);	
+			if (canDrawChart(data) || draw) {
+				draw = true;
+				if(tempdata.length == itemCount) {
+					drawChart();
+				}
+			}
+			if (tempdata.length == itemCount && !draw) {
+				$('#delivery-temp-tracking').append(
+					'<strong>The Temperature has not been tracked yet.</strong>'
+				).css({padding: 5, border: '1px solid black', marginBottom: 10});
 			}
 		});
 	});
+	
+	function canDrawChart(data) {
+		return (data.logs.length > 0) ? true : false;
+	}
 	
 	function drawChart() {
 		chart = new Highcharts.Chart({
