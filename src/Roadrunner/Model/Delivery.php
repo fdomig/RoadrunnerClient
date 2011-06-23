@@ -33,9 +33,6 @@ class Delivery extends BaseDocument {
 	{
         parent::__construct('delivery');
         $this->items       = new ArrayCollection();
-        $curTime           = time();
-        $this->created_at  = $curTime;
-		$this->modified_at = $curTime;
     }
     
 	/**
@@ -107,7 +104,7 @@ class Delivery extends BaseDocument {
     /**
      * @return number
      */
-    public function getCreated_At()
+    public function getCreatedAt()
     {
     	return $this->created_at;
     }
@@ -399,6 +396,16 @@ class Delivery extends BaseDocument {
 				'msg' => 'Position reached at: '
 			),
 		);
+	}
+	
+	public function save($flush = true)
+	{
+		$curTime = time();
+		if ($this->created_at <= 0) {
+			$this->created_at = $curTime;
+		}   
+		$this->modified_at = $curTime;
+		parent::save($flush);
 	}
 	
 	static public function getAll()

@@ -63,7 +63,6 @@ class DeliveryController extends BaseController {
 		
 		$delivery->setFromAddress(new Address($fromAddress));
 		$delivery->setToAddress(new Address($toAddress));			
-		$delivery->setModifiedAt(time());
 		
 		$createItemList = explode(',',$this->app->escape($this->getRequest()->get('create-item-list')));
 		$nrToRemove = (int)$this->getRequest()->get('nr-of-items-to-remove');
