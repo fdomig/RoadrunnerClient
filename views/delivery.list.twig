@@ -14,7 +14,6 @@
 	<table>
 		<thead>
 			<tr>
-				<th>ID</th>
 				<th>From</th>
 				<th>To</th>
 				<th>View</th>
@@ -22,7 +21,6 @@
 		</thead>
 		{% for delivery in delivery_list %}
 			<tr>
-				<td><code>{{ delivery.key }}</code></td>
 				<td>{{ _self.address(delivery.value.from_address) }}</td>
 				<td>{{ _self.address(delivery.value.to_address) }}</td>
 				<td><a href="/delivery/view/{{delivery.key}}">View</a></td>
