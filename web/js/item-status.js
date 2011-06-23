@@ -24,12 +24,6 @@ jQuery(function() {
 		});
 	});
 	
-	$('.item-status-img').each(function(){
-		// item status image
-		
-		
-	});
-	
 	function drawChart() {
 		chart = new Highcharts.Chart({
 			chart: {
