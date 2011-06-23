@@ -18,11 +18,17 @@ jQuery(function() {
 		// temp tracking
 		$.getJSON('/item/templogs/' + $(this).parent().attr('id'), function(data) {
 			tempdata.push(data);
-			if (tempdata.length == itemCount) {
-				drawChart();
+			if (canDrawChart(data)) {
+				if (tempdata.length == itemCount) {
+					drawChart();
+				}
 			}
 		});
 	});
+	
+	function canDrawChart(data) {
+		return (data.logs.length > 0) ? true : false;
+	}
 	
 	function drawChart() {
 		chart = new Highcharts.Chart({
