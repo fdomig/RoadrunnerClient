@@ -112,8 +112,8 @@ abstract class AbstractValidator implements Validator
 	 * @param string $value
 	 * @return multitype:multitype:unknown  
 	 */
-	protected function createCheckable($validationName, $value, $prefix = '', $suffix = '') {
-		
+	protected function createCheckable($validationName, $value, $prefix = '', $suffix = '')
+	{	
 		return array(
 			$prefix . $validationName . $suffix => array(
 				'name'  => $validationName,
