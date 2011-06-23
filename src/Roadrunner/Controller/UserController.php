@@ -5,8 +5,8 @@ use Roadrunner\Model\Validator\UserValidator;
 
 use Roadrunner\Model\User;
 
-class UserController extends BaseController {
-	
+class UserController extends BaseController 
+{	
 	public function executeList()
 	{
 		return $this->render('user.list.twig', array(
@@ -16,10 +16,13 @@ class UserController extends BaseController {
 	
 	public function executeAdd()
 	{
-		return $this->render('user.add.twig', array(
-			'form_action' => '/user/create',
-		));
+		return $this->render('user.add.twig', 
+			array(
+				'form_action' => '/user/create',
+			)
+		);
 	}
+			
 	public function executeCreate()
 	{		
 		$name = $this->getRequest()->get('name');
