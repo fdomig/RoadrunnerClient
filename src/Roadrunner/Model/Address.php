@@ -40,47 +40,58 @@ class Address {
 		}
 	}
     
-    public function setName($name) {
+    public function setName($name)
+    {
     	$this->name = $name;
     }
     
-    public function getName() {
+    public function getName()
+    {
     	return $this->name;
     }
     
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
     }
 
-    public function setZip($zip) {
+    public function setZip($zip)
+    {
         $this->zip = $zip;
     }
 
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
     }
-    
-	public function setStreet($street) {
+
+    public function setStreet($street)
+    {
     	$this->street = $street;
     }
     
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
-    public function getZip() {
+    public function getZip()
+    {
         return $this->zip;
     }
 
-    public function getCity() {
+    public function getCity()
+    {
         return $this->city;
     }
     
-    public function getStreet() {
+    public function getStreet()
+    {
     	return $this->street;
     }
 

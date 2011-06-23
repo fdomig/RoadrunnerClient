@@ -7,19 +7,21 @@ use Roadrunner\Model\User;
 
 class UserController extends BaseController {
 	
-	public function executeList() {	
+	public function executeList()
+	{
 		return $this->render('user.list.twig', array(
 			'user_list' => User::getAll(),
 		));
 	}
 	
-	public function executeAdd()  {
+	public function executeAdd()
+	{
 		return $this->render('user.add.twig', array(
 			'form_action' => '/user/create',
 		));
 	}
-	public function executeCreate()  {			
-		
+	public function executeCreate()
+	{		
 		$name = $this->getRequest()->get('name');
 		$password = $this->getRequest()->get('password');
 		$roles = $this->getRequest()->get('roles');

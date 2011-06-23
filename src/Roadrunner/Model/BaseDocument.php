@@ -11,9 +11,10 @@ use Doctrine\ODM\CouchDB\View\DoctrineAssociations;
  */
 class BaseDocument {
 	
- 	public function __construct($type) {
-        $this->type = $type;
-    }
+	public function __construct($type)
+	{
+		$this->type = $type;
+	}
 	
 	/** @Id */
 	protected $id;
@@ -21,7 +22,8 @@ class BaseDocument {
 	/** @Field(type="string") */
 	protected $type;
 	
-	public function getId() {
+	public function getId()
+	{
 		return $this->id;
 	}
 	
@@ -31,7 +33,8 @@ class BaseDocument {
 	 * @param bool $includeDocs
 	 * @return \Doctrine\ODM\CouchDB\View\Query
 	 */
-	static public function createQuery($view, $includeDocs = false) {
+	static public function createQuery($view, $includeDocs = false)
+	{
 		$query = new Query(
 			self::getManager()->getConfiguration()->getHTTPClient(),
 			self::getManager()->getConfiguration()->getDatabase(),
@@ -48,7 +51,8 @@ class BaseDocument {
 		return Service::getService('document_manager');
 	}
 	
-	public function save($flush = true) {
+	public function save($flush = true)
+	{
 		self::getManager()->persist($this);
 		if ($flush) {
 			self::getManager()->flush();

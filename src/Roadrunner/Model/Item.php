@@ -17,7 +17,8 @@ class Item extends BaseDocument {
 	const STATE_LOW = "LOW";
 	const STATE_NORMAL = "NORMAL";
 	
-	public final function __construct() {
+	public final function __construct()
+	{
         parent::__construct('item');
     }
 	
@@ -30,27 +31,33 @@ class Item extends BaseDocument {
 	/** @Field(type="integer") */	
 	private $tempMax;
 		
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 	}
 	
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 	
-	public function setTempMin($temp) {
+	public function setTempMin($temp)
+	{
 		$this->tempMin = $temp;
 	}
 
-	public function getTempMin() {
+	public function getTempMin()
+	{
 		return $this->tempMin;
 	}
 		
-	public function setTempMax($temp) {
+	public function setTempMax($temp)
+	{
 		$this->tempMax = $temp;
 	}
 		
-	public function getTempMax() {
+	public function getTempMax()
+	{
 		return $this->tempMax;
 	}
 	

@@ -29,25 +29,28 @@ class Delivery extends BaseDocument {
      */
 	private $items;
 	
-	public final function __construct() {
+	public final function __construct()
+	{
         parent::__construct('delivery');
-        $this->items = new ArrayCollection();
-        $curTime = time();
-        $this->created_at = $curTime;
+        $this->items       = new ArrayCollection();
+        $curTime           = time();
+        $this->created_at  = $curTime;
 		$this->modified_at = $curTime;
     }
     
 	/**
 	 * @return Address
 	 */
-	public function getFromAddress() {
+	public function getFromAddress()
+	{
 		return $this->from_address;
 	}
 	
 	/**
 	 * @param Address $address
 	 */
-	public function setFromAddress(Address $address) {
+	public function setFromAddress(Address $address)
+	{
 		if ($this->from_address !== $address) {
 			$this->from_address = $address;
 		}
@@ -56,14 +59,16 @@ class Delivery extends BaseDocument {
 	/**
 	 * @return Address
 	 */
-	public function getToAddress() {
+	public function getToAddress()
+	{
 		return $this->to_address;
 	}
 	
 	/**
 	 * @param Address $address
 	 */
-	public function setToAddress(Address $address) {
+	public function setToAddress(Address $address)
+	{
 		if ($this->to_address !== $address) {
 			$this->to_address = $address;
 		}
@@ -72,22 +77,25 @@ class Delivery extends BaseDocument {
 	/**
 	 * @param Item $item
 	 */
- 	public function addItem(Item $item) {
-        $this->items[] = $item;
-    }
+	public function addItem(Item $item)
+	{
+		$this->items[] = $item;
+	}
     
-    /**
-     * @return Ambigous <\Doctrine\Common\Collections\ArrayCollection, Item>
-     */
-    public function getItems() {
-    	return $this->items;
-    }
+	/**
+	 * @return Ambigous <\Doctrine\Common\Collections\ArrayCollection, Item>
+	 */
+	public function getItems()
+	{
+		return $this->items;
+	}
     
     /**
      * Removes an Item from this delivery
      * @param int $id
      */
-    public function removeItem($id) {
+    public function removeItem($id)
+    {
     	foreach ($this->items as $i => $v) {
     		if ($v->getId() == $id) {
     			unset($this->items[$i]);
@@ -99,18 +107,21 @@ class Delivery extends BaseDocument {
     /**
      * @return number
      */
-    public function getCreated_At() {
+    public function getCreated_At()
+    {
     	return $this->created_at;
     }
     
     /**
      * @return number
      */
-    public function getModifiedAt() {
+    public function getModifiedAt()
+    {
     	return $this->modified_at;
     }
     
-    public function setModifiedAt() {
+    public function setModifiedAt()
+    {
     	$this->modified_at = time();
     }
 
@@ -228,8 +239,8 @@ class Delivery extends BaseDocument {
 	 * @param route Integer
 	 * @return String color
 	 */
-	static public function mapRoute2Image($rid) {
-		
+	static public function mapRoute2Image($rid)
+	{	
 		switch($rid) {
 			case 1:
 				return 'orange';

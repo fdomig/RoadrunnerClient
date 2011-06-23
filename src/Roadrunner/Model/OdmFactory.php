@@ -31,7 +31,10 @@ class OdmFactory {
 	
 	static private function loadDriverForDocuments(array $path, $namespace)
 	{
-		if (empty($path)) $path = array('__DIR__');
+		if (empty($path)) {
+			$path = array('__DIR__');
+		}
+		
 		$driver = self::loadDriver($namespace);
 		$driver->addPaths($path);
 		
@@ -40,7 +43,7 @@ class OdmFactory {
 	
 	static private function loadDriver($namespace)
 	{
-		$cache = new ArrayCache();
+		$cache  = new ArrayCache();
         $reader = new AnnotationReader($cache);
         $reader->setDefaultAnnotationNamespace($namespace);
 

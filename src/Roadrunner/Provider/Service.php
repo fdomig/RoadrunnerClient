@@ -8,7 +8,13 @@ class Service {
 	
 	static private $provider = null;
 	
-	private function __construct() {}
+	/**
+	 * This class has just static methods.
+	 */
+	private function __construct()
+	{
+		
+	}
 	
 	static public function registerProvider($provider)
 	{

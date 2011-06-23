@@ -11,14 +11,16 @@ abstract class BaseController {
 	/**
 	 * @param Silex\Application $app
 	 */
-	public final function __construct(Application $app) {
+	public final function __construct(Application $app)
+	{
 		$this->app = $app;
 	}
 	
 	/**
 	 * @return Symfony\Component\BrowserKit\Request $request
 	 */
-	protected function getRequest() {
+	protected function getRequest()
+	{
 		return $this->app['request'];
 	}
 	
@@ -27,7 +29,8 @@ abstract class BaseController {
 	 * 
 	 *  @return Doctrine\ODM\CouchDB\DocumentManager $manager;
 	 */
-	protected function getUsersManager() {
+	protected function getUsersManager()
+	{
 		return $this->app['users_manager'];
 	}
 	
@@ -36,7 +39,8 @@ abstract class BaseController {
 	 * @param string $template
 	 * @param array $values
 	 */
-	protected function render($template, array $values)  {
+	protected function render($template, array $values)
+	{
     	return $this->app['twig']->render($template, $values);
 	}
 	

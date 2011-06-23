@@ -48,7 +48,7 @@ class ContainerController extends BaseController
 		$errors = $validator->validateContainer($name);
 		
 		// add new sensors
-		$nrToRemove = (int) $this->getRequest()->get('nr-of-sensors-to-remove');
+		$nrToRemove = (int)$this->getRequest()->get('nr-of-sensors-to-remove');
 		$sensorCreateList = explode(',', $this->app->escape($this->getRequest()->get('create-sensor-list')));
 		
 		// add sensors
