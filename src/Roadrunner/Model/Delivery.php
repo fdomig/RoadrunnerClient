@@ -140,52 +140,165 @@ class Delivery extends BaseDocument {
 		$routes = array();
 		$rid = 1;
 		$itemRoutes = array();
+		
 		foreach($items as $item) {
 			$pos = $item->getPositionLogs();
 			$route = array();
 			$result = array();
 
 			foreach($pos as $p) {
-				// $p['value']['value'] => {lng, lat}
-				$count = count($route);
-				$position = $p['value'];
-				$timestamp = $position['timestamp'];
-				
-				// if new timestamp and same position take new log for that value 
-				if (!empty($route) 
-					&& $timestamp > $route[$count-1]['value']['timestamp'] 
-					&& ($position['value'] == $route[$count-1]['value']['value'])) {
-					
-					$route[$count-1] = $p;
-					$result[$count-1] = $this->createPosition($p, $rid, Delivery::getMarkerImage($rid));
-				
-				// if no first timestamp has been set OR if new timestamp 
-				} elseif (empty($route) 
-					|| $timestamp > $route[$count-1]['value']['timestamp']
-					&& ($position['value'] != $route[$count-1]['value']['value'])) {
-					$route[] = $p;
-					$result[] = $this->createPosition($p, $rid, Delivery::getMarkerImage($rid));
-				}	
+				$temp = $this->createRoutePos($p, $route, $result, $rid);
+				$route = $temp['route'];
+				$result = $temp['result'];
 			}
-			// if first route add this route to all routes
-			if (empty($routes)) {
-				$routes[] = $route;
-				$results[] = $result;
-			} else {
-				foreach($routes as $r) {
-					if ($r != $route) {
-						$routes[] = $route;
-						$results[] = $this->refactorRoute($result, ++$rid);
-						break;
-					}
+			$temp = $this->addAndRefactorRoute($routes, $route, $results, $result, $rid);
+			$routes = $temp['routes'];
+			$results = $temp['results'];
+			$rid = $temp['rid'];
+			
+			$itemRoutes[] = $this->newItemRoute($item, $rid);
+		}
+		return array(
+			'results' => $results, 
+			'items' => $itemRoutes,
+		);
+	}
+	
+	/**
+	 * getRoute Utility Function
+	 * @param array $p
+	 * @param array $route
+	 * @param array $result
+	 * @param integer $rid
+	 * @return array 
+	 */
+	private function createRoutePos($p, $route, $result, $rid)
+	{
+		// $p['value']['value'] => {lng, lat}
+		$count = count($route);
+		$position = $p['value'];
+		$timestamp = $position['timestamp'];
+		$add = false;
+		// if new timestamp and same position take new log for that value 
+		if ($this->isNewRecentLog($route, $position, $timestamp)) {
+			$add = $count-1;
+		// if no first timestamp has been set OR if new timestamp 
+		} elseif ($this->isFirstOrNewLog($route, $position, $timestamp)) {
+			$add = $count;
+		}
+		if (false !== $add) {
+			$route[$add] = $p;
+			$result[$add] = $this->createPosition(
+				$p, $rid, Delivery::getMarkerImage($rid)
+			);
+		}
+		return array(
+			'route' => $route,
+			'result' => $result,
+		);
+	}
+	
+	
+	/**
+	 * getRoute() Utility Function
+	 * Checks if the log is the first or a newer one
+	 * @return boolean
+	 */
+	private function isFirstOrNewLog($route, $position, $timestamp)
+	{
+		$count = count($route);
+		return (
+			empty($route) 
+			|| $timestamp > $route[$count-1]['value']['timestamp']
+			&& ($position['value'] != $route[$count-1]['value']['value']) 
+			? true : false
+		);
+	}
+	
+	/**
+	 * getRoute() Utility Function
+	 * Checks if a Log is newer and has another Position than the last
+	 * @param array $route
+	 * @param double $position
+	 * @param integer $timestamp
+	 * @return boolean
+	 */
+	private function isNewRecentLog($route, $position, $timestamp)
+	{
+		$count = count($route);
+		return (
+			!empty($route) 
+			&& $timestamp > $route[$count-1]['value']['timestamp'] 
+			&& ($position['value'] == $route[$count-1]['value']['value']) 
+			? true : false
+		);
+	}
+	
+	/**
+	 * getRoute() Utility Function
+	 * 
+	 * Adds and Refactores the latest Route
+	 * 
+	 * @param array $routes
+	 * @param array $route
+	 * @param array $results
+	 * @param array $result
+	 * @param integer $rid
+	 * @return array 
+	 */
+	private function addAndRefactorRoute($routes, $route, $results, $result, $rid)
+	{
+		if (empty($routes)) {
+			$routes[] = $route;
+			$results[] = $result;
+		} else {
+			foreach($routes as $r) {
+				if ($r != $route) {
+					$routes[] = $route;
+					$results[] = $this->refactorRoute($result, ++$rid);
+					break;
 				}
 			}
-			if (!empty($results)) {
-				$results[count($results)-1] = $this->markContainer($results[count($results)-1]);
-			}
-			$itemRoutes[] = array('id' => $item->getId(), 'img' => Delivery::getMarkerImage($rid));
 		}
-		return array('results' => $results, 'items' => $itemRoutes);
+		$results = $this->markPositionAsContainer($results, count($results)-1);
+		
+		return array(
+			'results' => $results,
+			'routes' => $routes,
+			'rid'	=> $rid,
+		);
+	}
+	
+	/**
+	 * getRoute Utility Function
+	 * Marks a Position with a Container Image
+	 * @param array $results
+	 * @param integer $index
+	 * @return array
+	 */
+	private function markPositionAsContainer($results, $index)
+	{
+		if (!empty($results)) {
+			$results[$index] = $this->markContainer($results[$index]);
+		}
+		return $results;
+	}
+	
+	/**
+	 * getRoute() Utility Function
+	 * 
+	 * Returns a new valid ItemRoute array
+	 * 
+	 * @param Item $item
+	 * @param integer $rid
+	 * @return array 
+	 */
+	private function newItemRoute($item, $rid)
+	{
+		return array(
+			'id' => $item->getId(), 
+			'img' => Delivery::getMarkerImage($rid)
+		);
 	}
 	
 	/**
