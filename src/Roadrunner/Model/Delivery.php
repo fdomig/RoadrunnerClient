@@ -213,7 +213,7 @@ class Delivery extends BaseDocument {
 	 */
 	protected function refactorRoute($route, $rid)
 	{
-		foreach($route as $k => $r) {
+		foreach($route as $k) {
 			$route[$k]['rid'] = $rid;
 			$route[$k]['img']['path'] = Delivery::getMarkerImage($rid);
 		}
