@@ -67,8 +67,9 @@ class DeliveryController extends BaseController {
 		
 		$createItemList = explode(',',$this->app->escape($this->getRequest()->get('create-item-list')));
 		$nrToRemove = (int)$this->getRequest()->get('nr-of-items-to-remove');
-	
-		for ($i=0; $i < count($createItemList); $i++) {
+		$nrOfCreations = count($createItemList); 
+		
+		for ($i=0; $i < $nrOfCreations; $i++) {
 			
 			if (!empty($createItemList[$i])) {
 				$properties = explode('|', $createItemList[$i]);
@@ -124,8 +125,9 @@ class DeliveryController extends BaseController {
 		$delivery->setToAddress(new Address($toAddress));
 		
 		$createItemList = explode(',',$this->app->escape($this->getRequest()->get('create-item-list')));
+		$nrOfCreations = count($createItemList); 
 		
-		for ($i=0; $i < count($createItemList); $i++) {
+		for ($i=0; $i < $nrOfCreations; $i++) {
 			if (!empty($createItemList[$i])) {
 				
 				$properties = explode('|', $createItemList[$i]);
