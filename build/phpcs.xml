@@ -15,7 +15,6 @@
 
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
 
- <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
  <rule ref="Generic.NamingConventions.ConstructorName"/>
