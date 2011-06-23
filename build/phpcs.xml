@@ -13,8 +13,6 @@
 
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
 
- <rule ref="Generic.Files.LineEndings"/>
-
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
 
  <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
